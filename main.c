@@ -9,6 +9,7 @@
 ///probando git
 /// prueba
 
+editando en git para mostrar el pull :
 
 int main()
 {
