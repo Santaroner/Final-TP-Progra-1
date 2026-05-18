@@ -15,7 +15,7 @@ int main()
     stPaciente rafael;
     stLaboratorios mitre;
     stPracticas Nose;
-
+asdasd
     printf("Ingreso:");
     fgets(rafael.nombre,30,stdin);
 
