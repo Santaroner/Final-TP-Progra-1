@@ -1,0 +1,9 @@
+# depslib dependency file v1.0
+1779068750 source:c:\users\rafa\documents\tp final ras\tp lab\pila.c
+	<stdio.h>
+	"pila.h"
+
+1779068751 c:\users\rafa\documents\tp final ras\tp lab\pila.h
+
+1779069850 source:c:\users\rafa\documents\tp final ras\tp lab\structs.c
+
