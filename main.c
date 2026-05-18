@@ -7,7 +7,7 @@
 #include "Structs.h" /// libreria para crear estructuras .h
 
 ///probando git
-
+/// prueba
 
 
 int main()
@@ -15,14 +15,11 @@ int main()
     stPaciente rafael;
     stLaboratorios mitre;
     stPracticas Nose;
-asdasd
     printf("Ingreso:");
     fgets(rafael.nombre,30,stdin);
-
     printf("Ingrese idpaciente:\n");
     scanf("%i",&mitre.idPaciente);
     printf("nombre : %s, id:%i\n", rafael.nombre, mitre.idPaciente);
-
 
 
     return 0;
