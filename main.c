@@ -21,6 +21,7 @@ int main()
     printf("Ingrese idpaciente:\n");
     scanf("%i",&mitre.idPaciente);
     printf("nombre : %s, id:%i\n", rafael.nombre, mitre.idPaciente);
+    printf("hola")
 
 
     return 0;
