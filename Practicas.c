@@ -1,3 +1,4 @@
+
 typedef struct
  {
      int idPractica;/// Campo único y autoincremental
