@@ -22,6 +22,7 @@ int main()
     scanf("%i",&mitre.idPaciente);
     printf("nombre : %s, id:%i\n", rafael.nombre, mitre.idPaciente);
     printf("hola")
+        probando pullear con adri
 
 
     return 0;
