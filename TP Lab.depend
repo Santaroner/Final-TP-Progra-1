@@ -7,3 +7,28 @@
 
 1779069850 source:c:\users\rafa\documents\tp final ras\tp lab\structs.c
 
+1779383831 source:c:\users\usuario\documents\github\final-tp-progra-1\laboratorios.c
+
+1779385240 source:c:\users\usuario\documents\github\final-tp-progra-1\main.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<time.h>
+	<ctype.h>
+	"pila.h"
+	"Structs.h"
+
+1779383005 c:\users\usuario\documents\github\final-tp-progra-1\pila.h
+
+1779385333 c:\users\usuario\documents\github\final-tp-progra-1\structs.h
+
+1779383890 source:c:\users\usuario\documents\github\final-tp-progra-1\menus.c
+
+1779383687 source:c:\users\usuario\documents\github\final-tp-progra-1\pacientes.c
+
+1779383005 source:c:\users\usuario\documents\github\final-tp-progra-1\pila.c
+	<stdio.h>
+	"pila.h"
+
+1779383005 source:c:\users\usuario\documents\github\final-tp-progra-1\structs.c
+

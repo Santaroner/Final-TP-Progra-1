@@ -6,23 +6,15 @@
 #include "pila.h"
 #include "Structs.h" /// libreria para crear estructuras .h
 
-///probando git
-/// prueba
 
-editando en git para mostrar el pull :
+
+
+
 
 int main()
 {
-    stPaciente rafael;
-    stLaboratorios mitre;
-    stPracticas Nose;
-    printf("Ingreso:");
-    fgets(rafael.nombre,30,stdin);
-    printf("Ingrese idpaciente:\n");
-    scanf("%i",&mitre.idPaciente);
-    printf("nombre : %s, id:%i\n", rafael.nombre, mitre.idPaciente);
-    printf("hola")
-        probando pullear con adri
+
+
 
 
     return 0;

@@ -31,9 +31,33 @@
 		<Compiler>
 			<Add option="-Wall" />
 		</Compiler>
+		<Unit filename="Laboratorios.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="Laboratorios.h" />
+		<Unit filename="Menus.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="Menus.h" />
+		<Unit filename="Pacientes.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="Pacientes.h" />
+		<Unit filename="Practicas.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="Practicas.h" />
+		<Unit filename="Structs.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="Structs.h" />
 		<Unit filename="main.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="pila.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="pila.h" />
 		<Extensions>
 			<lib_finder disable_auto="1" />
 		</Extensions>
