@@ -1,5 +1,8 @@
 #ifndef LABORATORIOS_H_INCLUDED
 #define LABORATORIOS_H_INCLUDED
+#include <stdio.h>
+#include <string.h>
+#include <ctype.h>
 
 typedef struct
  {

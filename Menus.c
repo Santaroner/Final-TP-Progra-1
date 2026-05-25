@@ -1,3 +1,7 @@
+#include "Pacientes.h"
+#include "Practicas.h"
+#include <stdio.h>
+
 void mainMenu();
 void pacientesMenu();
 void laboratoriosMenu();
@@ -36,15 +40,15 @@ void pacientesMenu() /// USAR ESTE MENU PARA PROBAR EJERCICIOS DE PACIENTE
     int optionswitch = 0;
     do
     {
-        printf("1-Ejercicio 1\n2-Ejercicio 2\n3-Ejercicio 3\n0-Salir\n");
+        printf("1-Cargar paciente.\n2-Mostrar pacientes\n3-Ejercicio 3\n0-Salir\n");
         scanf("%i",&optionswitch);
         switch(optionswitch)
         {
         case 1:
-            printf("Ejercicio 1\n");
+            cargarPacientes();
             break;
         case 2:
-            printf("Ejercicio 2\n");
+            mostrarPacientes(pacientes,validos);
             break;
         case 3:
             printf("Ejercicio 3\n");
@@ -92,7 +96,7 @@ void practicasMenu() /// USAR ESTE MENU PARA PROBAR EJERCICIOS DE PRACTICA
     int optionswitch = 0;
     do
     {
-        printf("1-Ejercicio 1\n2-Ejercicio 2\n3-Ejercicio 3\n0-Salir\n");
+        printf("1-Cargar practica\n2-Ejercicio 2\n3-Ejercicio 3\n0-Salir\n");
         scanf("%i",&optionswitch);
         switch(optionswitch)
         {

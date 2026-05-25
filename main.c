@@ -6,15 +6,8 @@
 #include "pila.h"
 #include "Structs.h" /// libreria para crear estructuras .h
 
-
-
-
-
-
 int main()
 {
-
-
     mainMenu();
 
     return 0;
