@@ -17,15 +17,16 @@ typedef struct
 void cargarPacientes(); /// Bucle para cargar pacientes
 void cargaPaciente();  /// Llama a las diferentes funciones con validaciones y integra los datos en el archivo
 
-/// --------------------------
+/// -------------------------- C A R G A   P A C I E N T E S -------------------------------------------------------- ///
  int cargarIDPaciente ();
  void cargarNombrePaciente(char nombre[30]);
  void cargarApellidoPaciente(char apellido[]);
  void cargarDNIPaciente(char DNI[]);
  void cargarMovilPaciente(char movil[]);
  void cargarEstadoPaciente();
- /// -------------------------
+/// -------------------------- M U E S T R A  //// V A L I D O S  -------------------------------------------------------- ///
  void mostrarPacientes(stPaciente *pacientes,int validos);
+ int mostrarArchivo();
  extern stPaciente *pacientes;
  extern validos;
 

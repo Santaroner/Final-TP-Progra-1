@@ -53,21 +53,21 @@
 	<stdio.h>
 	"pila.h"
 
-1779388013 source:c:\users\laptop\documents\github\final-tp-progra-1\practicas.c
+1779722971 source:c:\users\laptop\documents\github\final-tp-progra-1\practicas.c
 
-1779721904 source:c:\users\laptop\documents\github\final-tp-progra-1\pacientes.c
+1779807397 source:c:\users\laptop\documents\github\final-tp-progra-1\pacientes.c
 	<stdio.h>
 	<string.h>
 	<ctype.h>
 	"Pacientes.h"
 	"Utilities.h"
 
-1779722148 source:c:\users\laptop\documents\github\final-tp-progra-1\menus.c
+1779807425 source:c:\users\laptop\documents\github\final-tp-progra-1\menus.c
 	"Pacientes.h"
 	"Practicas.h"
 	<stdio.h>
 
-1779722147 c:\users\laptop\documents\github\final-tp-progra-1\pacientes.h
+1779801085 c:\users\laptop\documents\github\final-tp-progra-1\pacientes.h
 	<stdio.h>
 	<string.h>
 	<ctype.h>
@@ -75,8 +75,8 @@
 
 1779387521 c:\users\laptop\documents\github\final-tp-progra-1\practicas.h
 
-1779711512 source:c:\users\laptop\documents\github\final-tp-progra-1\utilities.c
+1779801085 source:c:\users\laptop\documents\github\final-tp-progra-1\utilities.c
 	<stdio.h>
 
-1779711512 c:\users\laptop\documents\github\final-tp-progra-1\utilities.h
+1779801085 c:\users\laptop\documents\github\final-tp-progra-1\utilities.h
 

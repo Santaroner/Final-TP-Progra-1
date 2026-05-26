@@ -7,3 +7,5 @@ int GetIDPacientes ()
     IDEstatico ++;
     return aux;
 }
+
+

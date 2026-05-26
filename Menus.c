@@ -7,6 +7,9 @@ void pacientesMenu();
 void laboratoriosMenu();
 void practicasMenu();
 
+/// Variables
+int validosPacientes = 0;
+
 
 void mainMenu()
 {
@@ -48,10 +51,14 @@ void pacientesMenu() /// USAR ESTE MENU PARA PROBAR EJERCICIOS DE PACIENTE
             cargarPacientes();
             break;
         case 2:
-            mostrarPacientes(pacientes,validos);
+            validosPacientes = mostrarArchivo();
+            printf("Validos vale:%i\n",validosPacientes);
             break;
         case 3:
             printf("Ejercicio 3\n");
+            break;
+        case 9:
+            mostrarArchivo();
             break;
         case 0:
             printf("Vuelva pronto.\n");
