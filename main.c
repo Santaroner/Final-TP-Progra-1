@@ -3,12 +3,15 @@
 #include <string.h>
 #include <time.h>
 #include <ctype.h>
-#include "pila.h"
-#include "Structs.h" /// libreria para crear estructuras .h
+#include "Practicas.h"
+
 
 int main()
 {
-    mainMenu();
+    /// mainMenu();
+    stPracticas practicas[20];
+    int validos;
+    validos=cargarPracticas(practicas);
 
     return 0;
 }

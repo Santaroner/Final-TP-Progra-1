@@ -1,11 +1,11 @@
-
-typedef struct
- {
-     int idPractica;/// Campo único y autoincremental
-     char nombre[30];
-     int costo; /// valores enteros entre 1000 y 10000 como mínimos y máximos respectivamente
-     int baja; /// 0 si está activo, 1 si está eliminado.
- } stPracticas;
+#include "Practicas.h"
+//typedef struct
+// {
+//     int idPractica;/// Campo único y autoincremental
+//     char nombre[30];
+//     int costo; /// valores enteros entre 1000 y 10000 como mínimos y máximos respectivamente
+//     int baja; /// 0 si está activo, 1 si está eliminado.
+// } stPracticas;
 
 int cargarPracticas(stPracticas practicas[20])
 {
@@ -23,7 +23,7 @@ int cargarPracticas(stPracticas practicas[20])
         flag=buscarNombrePractica(practicas, validos);
         if(flag==0)
         {
-            printf("La practica ya esta ingresada");
+            printf("La practica ya esta ingresada, ingrese una nuevamente\n");
         }
         }while(flag==0);
         printf("Ingrese el costo de la practica: ");
@@ -42,7 +42,7 @@ int buscarNombrePractica(stPracticas practicas[20], int validos)
     int flag=1;
     for(int i=0;i<validos && flag!=0;i++)
     {
-        int res=strcmpi(practicas[i].nombre, practicas[i-1].nombre);
+        int res=strcmpi(practicas[i].nombre, practicas[i+1].nombre);
         if(res==0)
         {
             flag=0;
