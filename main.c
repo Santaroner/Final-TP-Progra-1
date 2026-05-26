@@ -4,14 +4,12 @@
 #include <time.h>
 #include <ctype.h>
 #include "Practicas.h"
+#include "Menus.h"
 
 
 int main()
 {
-    /// mainMenu();
-    stPracticas practicas[20];
-    int validos;
-    validos=cargarPracticas(practicas);
+    mainMenu();
 
     return 0;
 }

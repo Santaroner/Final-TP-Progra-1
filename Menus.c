@@ -10,7 +10,7 @@ void practicasMenu();
 /// Variables
 int validosPacientes = 0;
 
-
+stPracticas practicas[20];
 void mainMenu()
 {
     int optionswitch = 0;
@@ -103,21 +103,22 @@ void practicasMenu() /// USAR ESTE MENU PARA PROBAR EJERCICIOS DE PRACTICA
     int optionswitch = 0;
     do
     {
-        printf("1-Cargar practica\n2-Ejercicio 2\n3-Ejercicio 3\n0-Salir\n");
+        printf("1-Cargar practica\n2-Modificar practica\n3-Mostrar listado de practicas \n0-Salir\n");
         scanf("%i",&optionswitch);
         switch(optionswitch)
         {
         case 1:
-            printf("Ejercicio 1");
+            printf("La cantidad maxima de practicas para cargar son 20\n");
+            validos=cargarPracticas(practicas);
             break;
         case 2:
-            printf("Ejercicio 2");
+            modificarPacientes(practicas, validos);
             break;
         case 3:
-            printf("Ejercicio 3");
+            mostrarPracticas(practicas, validos);
             break;
         case 0:
-            printf("Vuelva pronto.");
+            printf("Vuelva pronto.\n");
             break;
         default :
             printf("Numero incorrecto\n0 para salir.");
