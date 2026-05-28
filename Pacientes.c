@@ -187,8 +187,8 @@ int mostrarArchivo ()
     int optionswitch;
     printf("1-\n2-\n3-\4-\n");
     scanf("%i",&optionswitch);
-FILE *PrePacientes;
-        stPaciente aux;
+    FILE *PrePacientes;
+    stPaciente aux;
     switch(optionswitch)
     {
     case 1:
@@ -267,19 +267,160 @@ FILE *PrePacientes;
 
 /// ----------------------------------------------------- M O D I F I C A R    P A C I E N T E S ------------------------------------------------------ ///
 
-//void modificarPaciente(stPaciente *pacientes, int validos)
-//{
-//    char aux[30];
-//    int optionswitch;
-//    printf("Ingrese el DNI del paciente a modificar");
-//    fgets(aux,30,stdin);
-//    aux [strcspn(aux,"\n")] == '\0';
-//    if (strcmpi(aux, pacientes[i].dni) == 0)
-//    {
-//        printf("El paciente ha sido encontrado.\Ingrese el dato a modificar:\n1-Nombre2-Apellido\n4-Movil"\n);
-//    }
-//
-//}
+void buscarPaciente(stPaciente *pacientes, int validos)
+{
+    FILE *archi = fopen("Heroes.bin","rb");
+    int pos = 0; /// posicion a enviar
+    printf("Entra");
+    char aux[30];
+    stPaciente busqueda;
+    printf("Ingrese el nombre del paciente a modificar");
+    getchar();
+    fgets(aux,30,stdin);
+    aux [strcspn(aux,"\n")] = '\0';
+    for (int i = 0 ; i < validos ; i ++)
+    {
+        printf("pos:%i",pos);
+        fread(&busqueda,sizeof(stPaciente),1,archi);
+        if (strcmpi(aux, busqueda.nombre) == 0)
+        {
+            menuModificarPaciente(pos+1);
+        }
+        pos++;
+    }
+    fclose(archi);
+}
+
+void menuModificarPaciente (int pos)
+{
+//    system("pause");
+//    system("cls");
+    int optionswitch;
+    printf("El paciente ha sido encontrado.\Ingrese el dato a modificar:\n1-Nombre\n2-Apellido\n3-Movil\n");
+    scanf("%i",&optionswitch);
+    switch(optionswitch)
+    {
+    case 1:
+        cambiarNombrePaciente(pos);
+        break;
+    case 2:
+        cambiarApellidoPaciente();
+        break;
+    case 3:
+        cambiarMovilPaciente();
+        break;
+    default :
+        printf("Opcion incorrecta.\n");
+        break;
+    }
+}
+
+void cambiarNombrePaciente(int pos)
+{
+    char aux [30];
+    stPaciente auxiliar;
+    int flag = 0;
+    do
+    {
+        printf("pos : %i",pos);
+        printf("Ingrese el nombre actualizado del paciente:\n");
+        getchar();
+        fgets(aux, 30,stdin);
+        if (strchr(aux,'\n') != NULL) ///
+        {
+            aux [strcspn(aux, "\n")] = '\0';
+            printf("Nombre dentro de los parametros acordados\n");
+            flag = 1;
+        }
+        else
+        {
+            while (getchar () != '\n'); ///
+            printf("No se pueden ingresar mas de 30 numeros\n");
+        }
+    }
+    while (flag == 0);
+
+
+    FILE *archi = fopen("Heroes.bin","r+b");
+
+    fseek(archi, (pos-1) * sizeof(stPaciente), SEEK_SET); /// Busca posicion menos 1
+    fread(&auxiliar,sizeof(stPaciente),1,archi); /// Lee en auxiliar y avanza una posicion
+    printf("%i,%s,%s,%s",auxiliar.idPaciente,auxiliar.nombre,auxiliar.apellido,auxiliar.dni); /// probando que el paciente este cargado en auxiliar
+
+
+//    fseek(archi, 1 * sizeof(stPaciente),SEEK_CUR); /// Retrocede la posicion adelantada por el fread
+//    fread(&auxiliar,sizeof(stPaciente),1,archi); /// Lee en auxiliar y avanza una posicion
+    printf("%i,%s,%s,%s",auxiliar.idPaciente,auxiliar.nombre,auxiliar.apellido,auxiliar.dni); /// probando que el paciente este cargado en auxiliar
+    strcpy(auxiliar.nombre,aux); /// Copia el nombre cargado por usuario (aux) en la estructura
+    printf("%i,%s,%s,%s",auxiliar.idPaciente,auxiliar.nombre,auxiliar.apellido,auxiliar.dni); /// probando que el paciente este cargado en auxiliar
+
+    fseek(archi, -sizeof(stPaciente), SEEK_CUR);
+    fwrite(&auxiliar,sizeof(stPaciente),1,archi);
+
+
+    printf("nombre strcpy: %s",auxiliar.nombre);
+
+
+
+
+
+//    fwrite()
+
+//    fread(&auxiliar,sizeof(stPaciente),1,archi);
+//    printf("asdasddas %s",auxiliar.nombre);
+
+
+}
+
+void cambiarApellidoPaciente()
+{
+    char aux [30];
+    int flag = 0;
+    do
+    {
+        printf("Ingrese el Apellido actualizado del paciente:\n");
+        getchar();
+        fgets(aux, 12,stdin);
+        if (strchr(aux,'\n') != NULL)
+        {
+            aux [strcspn(aux, "\n")] = '\0';
+            printf("Apellido dentro de los parametros acordados\n");
+            flag = 1;
+        }
+        else
+        {
+            while (getchar () != '\n');
+            printf("No se pueden ingresar mas de 30 letras\n");
+        }
+    }
+    while (flag == 0);
+}
+
+void cambiarMovilPaciente()
+{
+    char aux [30];
+    int flag = 0;
+    do
+    {
+        printf("Ingrese el celular actualizado del paciente:\n");
+        getchar();
+        fgets(aux, 12,stdin);
+        if (strchr(aux,'\n') != NULL)
+        {
+            aux [strcspn(aux, "\n")] = '\0';
+            printf("Nombre dentro de los parametros acordados\n");
+            flag = 1;
+        }
+        else
+        {
+            while (getchar () != '\n');
+            printf("No se pueden ingresar mas de 12 numeros\n");
+        }
+    }
+    while (flag == 0);
+}
+
+
 
 /// ----------------------------------------------------- M O D I F I C A R    P A C I E N T E S ------------------------------------------------------ ///
 

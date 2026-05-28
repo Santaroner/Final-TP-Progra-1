@@ -55,14 +55,14 @@
 
 1779722971 source:c:\users\laptop\documents\github\final-tp-progra-1\practicas.c
 
-1779807397 source:c:\users\laptop\documents\github\final-tp-progra-1\pacientes.c
+1779822468 source:c:\users\laptop\documents\github\final-tp-progra-1\pacientes.c
 	<stdio.h>
 	<string.h>
 	<ctype.h>
 	"Pacientes.h"
 	"Utilities.h"
 
-1779807425 source:c:\users\laptop\documents\github\final-tp-progra-1\menus.c
+1779814541 source:c:\users\laptop\documents\github\final-tp-progra-1\menus.c
 	"Pacientes.h"
 	"Practicas.h"
 	<stdio.h>

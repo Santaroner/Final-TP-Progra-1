@@ -55,7 +55,7 @@ void pacientesMenu() /// USAR ESTE MENU PARA PROBAR EJERCICIOS DE PACIENTE
             printf("Validos vale:%i\n",validosPacientes);
             break;
         case 3:
-            printf("Ejercicio 3\n");
+            buscarPaciente(pacientes,validosPacientes);
             break;
         case 9:
             mostrarArchivo();
