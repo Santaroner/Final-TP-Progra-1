@@ -29,5 +29,13 @@ void cargaPaciente();  /// Llama a las diferentes funciones con validaciones y i
  int mostrarArchivo();
  extern stPaciente *pacientes;
  extern validos;
+ /// ----------------------------------------------------- M O D I F I C A R    P A C I E N T E S ------------------------------------------------------ ///
+
+void buscarPaciente(stPaciente *pacientes, int validos);
+void menuModificarPaciente (int pos);
+void cambiarNombrePaciente(int pos);
+void cambiarApellidoPaciente(int pos);
+void cambiarMovilPaciente(int pos);
+void cambiarDNIPaciente(int pos);
 
 #endif // PACIENTES_H_INCLUDED

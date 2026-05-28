@@ -20,7 +20,7 @@ int cargarPracticas(stPracticas practicas[20])
             printf("La practica ya esta ingresada, ingrese una nuevamente\n");
         }
         }while(flag==0);
-        printf("Ingrese el costo de la practica (1000$ a 10000$): ");
+        printf("Ingrese el costo de la practica (1000$ a 10000$): "); /// <<<<<<<<<<<<< FALTA IF, DEJA INGRESAR +10000
         scanf("%i", &practicas[validos].costo);
         printf("Esta de baja la practica(1) o esta activa(0)? ");
         scanf("%i", &practicas[validos].baja);
@@ -55,7 +55,7 @@ void modificarPacientes(stPracticas practicas[20], int validos)
     printf("Costo: %i\n", practicas[indice].costo);
     printf("Baja: %i\n", practicas[indice].baja);
     int opcionSwitch=0;
-    do
+    do /// Repite el while aunque hayas modificado algo
     {
     printf("Que desea modificar? 1-nombre, 2-costo, 3-baja, 0-salir\n");
     scanf("%i", &opcionSwitch);
@@ -64,7 +64,7 @@ void modificarPacientes(stPracticas practicas[20], int validos)
     case 1:
         {
             printf("Ingrese el nuevo nombre de la practica %i: ", practicas[indice].idPractica);
-            scanf("%s", practicas[indice].nombre);
+            scanf("%s", &practicas[indice].nombre);
         }
         break;
     case 2:

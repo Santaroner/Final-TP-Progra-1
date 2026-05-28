@@ -43,7 +43,7 @@ void pacientesMenu() /// USAR ESTE MENU PARA PROBAR EJERCICIOS DE PACIENTE
     int optionswitch = 0;
     do
     {
-        printf("1-Cargar paciente.\n2-Mostrar pacientes\n3-Ejercicio 3\n0-Salir\n");
+        printf("1-Cargar paciente.\n2-Mostrar pacientes\n3-Modificar Paciente 3\n0-Salir\n");
         scanf("%i",&optionswitch);
         switch(optionswitch)
         {

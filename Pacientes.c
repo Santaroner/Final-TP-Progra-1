@@ -43,19 +43,21 @@ void cargaPaciente()
 {
     int ID ;
     FILE *Pacientes;
-    Pacientes = fopen("Heroes.bin", "ab");
+    Pacientes = fopen("TestPacientes.bin", "ab");
     ID = cargarIDPaciente();
     pacientes[validos].idPaciente = ID;
     cargarNombrePaciente(pacientes[validos].nombre);
     cargarApellidoPaciente(pacientes[validos].apellido);
     cargarDNIPaciente(pacientes[validos].dni);
     cargarMovilPaciente(pacientes[validos].movil);
+    cargarEstadoPaciente(pacientes[validos].eliminado);
     fwrite(&pacientes[validos],sizeof(stPaciente),1,Pacientes);
-    printf("Paciente: %s, %s, %s, %s\n",
+    printf("Paciente: %s, %s, %s, %s, Estado:%i\n",
            pacientes[validos].nombre,
            pacientes[validos].apellido,
            pacientes[validos].dni,
-           pacientes[validos].movil);
+           pacientes[validos].movil,
+           pacientes[validos].eliminado);
     fclose(Pacientes);
 }
 
@@ -162,6 +164,27 @@ void cargarMovilPaciente(char movil[])
     }
     while (flag == 0);
 }
+
+void cargarEstadoPaciente(int activo[])
+{
+    int aux = 0;
+    int flag = 0;
+    do
+    {
+        printf("El paciente esta activo?\n0:Activo ||| 1:Baja\n");
+        scanf("%i",&aux);
+        if (aux == 0 || aux == 1)
+        {
+            flag = aux;
+            printf("Estado del paciente cargado correctamente.\n");
+        }
+        else
+        {
+            printf("Ingrese la opcion correcta por favor.\nEstado activo:0\nPaciente de baja:1.\n");
+        }
+    } while ( 0 != flag && flag != 1);
+}
+
 // void cargarEstadoPaciente();
 
 /// ------------------------------------------------------ C A R G A  P A C I E N T E S ---------------------------------------------------------------- ///
@@ -185,14 +208,13 @@ int mostrarArchivo ()
     int validos = 0;
 
     int optionswitch;
-    printf("1-\n2-\n3-\4-\n");
+    printf("1-TestPacientes\n2-Heroes ------- PROBANDO ACA\n3-PrePacientes\4-\n");
     scanf("%i",&optionswitch);
     FILE *PrePacientes;
     stPaciente aux;
     switch(optionswitch)
     {
     case 1:
-
         PrePacientes = fopen("TestPacientes.bin","rb");
         while (fread(&aux,sizeof(stPaciente),1,PrePacientes) > 0 )
         {
@@ -238,30 +260,7 @@ int mostrarArchivo ()
         return validos;
         break;
     }
-
-//    FILE *PrePacientes;
-//    stPaciente aux;
-//    PrePacientes = fopen("TestPacientes.bin","rb");
-//    while (fread(&aux,sizeof(stPaciente),1,PrePacientes) > 0 )
-//    {
-//        printf("ID :%i\nNombre:%s\nApellido:%s\nDNI:%s\nMovil:%s\n\n",
-//               aux.idPaciente,
-//               aux.nombre,
-//               aux.apellido,
-//               aux.dni,
-//               aux.movil);
-//        validos++;
-//    }
-//    fclose(PrePacientes);
-//    return validos;
-}
-
-//void cantidadValidosPacientes(stPacientes *pacientes)
-//{
-//    FILE *arch;
-//    arch = fopen("Pacientes.bin", "rb");
-//}
-
+    }
 /// ------------------------------------------------------- M U E S T R A ///  V A L I D O S ----------------------------------------------------------///
 
 
@@ -269,20 +268,19 @@ int mostrarArchivo ()
 
 void buscarPaciente(stPaciente *pacientes, int validos)
 {
-    FILE *archi = fopen("Heroes.bin","rb");
+    FILE *archi = fopen("TestPacientes.bin","rb");
     int pos = 0; /// posicion a enviar
-    printf("Entra");
     char aux[30];
     stPaciente busqueda;
-    printf("Ingrese el nombre del paciente a modificar");
+    printf("Ingrese el apellido del paciente a modificar\n");
     getchar();
     fgets(aux,30,stdin);
     aux [strcspn(aux,"\n")] = '\0';
     for (int i = 0 ; i < validos ; i ++)
     {
-        printf("pos:%i",pos);
+        printf("pos:%i",pos); /// testeando posicion
         fread(&busqueda,sizeof(stPaciente),1,archi);
-        if (strcmpi(aux, busqueda.nombre) == 0)
+        if (strcmpi(aux, busqueda.apellido) == 0)
         {
             menuModificarPaciente(pos+1);
         }
@@ -293,8 +291,6 @@ void buscarPaciente(stPaciente *pacientes, int validos)
 
 void menuModificarPaciente (int pos)
 {
-//    system("pause");
-//    system("cls");
     int optionswitch;
     printf("El paciente ha sido encontrado.\Ingrese el dato a modificar:\n1-Nombre\n2-Apellido\n3-Movil\n");
     scanf("%i",&optionswitch);
@@ -304,10 +300,13 @@ void menuModificarPaciente (int pos)
         cambiarNombrePaciente(pos);
         break;
     case 2:
-        cambiarApellidoPaciente();
+        cambiarApellidoPaciente(pos);
         break;
     case 3:
-        cambiarMovilPaciente();
+        cambiarMovilPaciente(pos);
+        break;
+    case 4:
+        cambiarDNIPaciente(pos);
         break;
     default :
         printf("Opcion incorrecta.\n");
@@ -337,53 +336,32 @@ void cambiarNombrePaciente(int pos)
             while (getchar () != '\n'); ///
             printf("No se pueden ingresar mas de 30 numeros\n");
         }
-    }
-    while (flag == 0);
+    }while (flag == 0);
 
-
-    FILE *archi = fopen("Heroes.bin","r+b");
-
+    FILE *archi = fopen("TestPacientes.bin","r+b");
     fseek(archi, (pos-1) * sizeof(stPaciente), SEEK_SET); /// Busca posicion menos 1
     fread(&auxiliar,sizeof(stPaciente),1,archi); /// Lee en auxiliar y avanza una posicion
-    printf("%i,%s,%s,%s",auxiliar.idPaciente,auxiliar.nombre,auxiliar.apellido,auxiliar.dni); /// probando que el paciente este cargado en auxiliar
-
-
-//    fseek(archi, 1 * sizeof(stPaciente),SEEK_CUR); /// Retrocede la posicion adelantada por el fread
-//    fread(&auxiliar,sizeof(stPaciente),1,archi); /// Lee en auxiliar y avanza una posicion
-    printf("%i,%s,%s,%s",auxiliar.idPaciente,auxiliar.nombre,auxiliar.apellido,auxiliar.dni); /// probando que el paciente este cargado en auxiliar
     strcpy(auxiliar.nombre,aux); /// Copia el nombre cargado por usuario (aux) en la estructura
-    printf("%i,%s,%s,%s",auxiliar.idPaciente,auxiliar.nombre,auxiliar.apellido,auxiliar.dni); /// probando que el paciente este cargado en auxiliar
-
-    fseek(archi, -sizeof(stPaciente), SEEK_CUR);
-    fwrite(&auxiliar,sizeof(stPaciente),1,archi);
-
-
+    fseek(archi, -sizeof(stPaciente), SEEK_CUR); /// Vuelve la posicion que sumo el fread arriba
+    fwrite(&auxiliar,sizeof(stPaciente),1,archi); /// la estructura entera en la posicion
     printf("nombre strcpy: %s",auxiliar.nombre);
-
-
-
-
-
-//    fwrite()
-
-//    fread(&auxiliar,sizeof(stPaciente),1,archi);
-//    printf("asdasddas %s",auxiliar.nombre);
-
+    fclose(archi); /// cerrar
 
 }
 
-void cambiarApellidoPaciente()
+void cambiarApellidoPaciente(int pos)
 {
-    char aux [30];
+    char nuevoApellido [30];
+    stPaciente aux;
     int flag = 0;
     do
     {
         printf("Ingrese el Apellido actualizado del paciente:\n");
         getchar();
-        fgets(aux, 12,stdin);
-        if (strchr(aux,'\n') != NULL)
+        fgets(nuevoApellido, 12,stdin);
+        if (strchr(nuevoApellido,'\n') != NULL)
         {
-            aux [strcspn(aux, "\n")] = '\0';
+            nuevoApellido [strcspn(nuevoApellido, "\n")] = '\0';
             printf("Apellido dentro de los parametros acordados\n");
             flag = 1;
         }
@@ -394,20 +372,35 @@ void cambiarApellidoPaciente()
         }
     }
     while (flag == 0);
+
+    FILE *archi = fopen("TestPacientes.bin","r+b");
+    fseek(archi,(pos-1) * sizeof(stPaciente),SEEK_SET);
+    fread(&aux,sizeof(stPaciente),1,archi);
+    strcpy(aux.apellido,nuevoApellido);
+    printf("ID :%i\nNombre:%s\nApellido:%s\nDNI:%s\nMovil:%s\n\n",
+                   aux.idPaciente,
+                   aux.nombre,
+                   aux.apellido,
+                   aux.dni,
+                   aux.movil);
+    fseek(archi, -sizeof(stPaciente),SEEK_CUR);
+    fwrite(&aux,sizeof(stPaciente),1,archi);
+    fclose(archi);
 }
 
-void cambiarMovilPaciente()
+void cambiarMovilPaciente(int pos)
 {
-    char aux [30];
+    char nuevoMovil [30];
+    stPaciente aux;
     int flag = 0;
     do
     {
         printf("Ingrese el celular actualizado del paciente:\n");
         getchar();
-        fgets(aux, 12,stdin);
-        if (strchr(aux,'\n') != NULL)
+        fgets(nuevoMovil, 12,stdin);
+        if (strchr(nuevoMovil,'\n') != NULL)
         {
-            aux [strcspn(aux, "\n")] = '\0';
+            nuevoMovil [strcspn(nuevoMovil, "\n")] = '\0';
             printf("Nombre dentro de los parametros acordados\n");
             flag = 1;
         }
@@ -418,13 +411,62 @@ void cambiarMovilPaciente()
         }
     }
     while (flag == 0);
+
+    FILE *archi = fopen("TestPacientes.bin","r+b");
+    fseek(archi,(pos-1)* sizeof(stPaciente), SEEK_SET);
+    fread(&aux,sizeof(stPaciente),1,archi);
+    fseek(archi,-sizeof(stPaciente),SEEK_CUR);
+    fwrite(&aux,sizeof(stPaciente),1,archi);
+    fclose(archi);
 }
 
+void cambiarDNIPaciente(int pos)
+{
+    char nuevoDNI[12];
+    stPaciente aux;
+    int flag = 0;
+    do
+    {
+        printf("Ingrese el nuevo DNI del paciente:\n");
+        getchar();
+        fgets(nuevoDNI,12,stdin);
+        if (strchr(nuevoDNI,'\n') != NULL )
+        {
+            nuevoDNI[strcspn(nuevoDNI, "\n")] = '\0';
+            flag = 1;
+        }
+        else
+        {
+            while (getchar() != '\n');
+        }
+    } while (flag == 0);
 
+    printf("El nuevo dni del paciente va a ser : %s",nuevoDNI);
 
+    FILE *archi = fopen("TestPacientes.bin","r+b");
+    fseek(archi,(pos-1)*sizeof(stPaciente),SEEK_SET);
+    fread (&aux,sizeof(stPaciente),1,archi);
+    printf("ID :%i\nNombre:%s\nApellido:%s\nDNI:%s\nMovil:%s\n\n",
+                   aux.idPaciente,
+                   aux.nombre,
+                   aux.apellido,
+                   aux.dni,
+                   aux.movil);
+    strcpy(aux.dni,nuevoDNI);
+    fseek(archi,-sizeof(stPaciente),SEEK_CUR);
+    fwrite(&aux,sizeof(stPaciente),1,archi);
+    fclose(archi);
+}
 /// ----------------------------------------------------- M O D I F I C A R    P A C I E N T E S ------------------------------------------------------ ///
 
 /// --------------------------------------- T E S T    A R C H I V O S ------------------------------------------------------------------------------ ///
+//printf("ID :%i\nNombre:%s\nApellido:%s\nDNI:%s\nMovil:%s\n\n",
+//                   aux.idPaciente,
+//                   aux.nombre,
+//                   aux.apellido,
+//                   aux.dni,
+//                   aux.movil);
+
 
 // void TestPCarga()
 // {
