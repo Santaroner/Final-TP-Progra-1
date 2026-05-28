@@ -109,13 +109,13 @@ void practicasMenu() /// USAR ESTE MENU PARA PROBAR EJERCICIOS DE PRACTICA
         {
         case 1:
             printf("La cantidad maxima de practicas para cargar son 20\n");
-            validos=cargarPracticas(practicas);
+            validos=cargarPracticas("Practicas.bin");
             break;
         case 2:
-            modificarPacientes(practicas, validos);
+            modificarPracticas(practicas, validos);
             break;
         case 3:
-            mostrarPracticas(practicas, validos);
+            mostrarPracticas(practicas);
             break;
         case 0:
             printf("Vuelva pronto.\n");
