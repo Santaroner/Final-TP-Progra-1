@@ -3,8 +3,9 @@
 #include <string.h>
 #include <time.h>
 #include <ctype.h>
-#include "pila.h"
-#include "Structs.h" /// libreria para crear estructuras .h
+#include "Practicas.h"
+#include "Menus.h"
+
 
 int main()
 {

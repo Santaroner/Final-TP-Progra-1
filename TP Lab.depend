@@ -7,24 +7,32 @@
 
 1779069850 source:c:\users\rafa\documents\tp final ras\tp lab\structs.c
 
-1779383831 source:c:\users\usuario\documents\github\final-tp-progra-1\laboratorios.c
+1779812938 source:c:\users\usuario\documents\github\final-tp-progra-1\laboratorios.c
 
-1779386856 source:c:\users\usuario\documents\github\final-tp-progra-1\main.c
+1779815332 source:c:\users\usuario\documents\github\final-tp-progra-1\main.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
 	<time.h>
 	<ctype.h>
-	"pila.h"
-	"Structs.h"
+	"Practicas.h"
+	"Menus.h"
 
 1779383005 c:\users\usuario\documents\github\final-tp-progra-1\pila.h
 
 1779385333 c:\users\usuario\documents\github\final-tp-progra-1\structs.h
 
-1779386536 source:c:\users\usuario\documents\github\final-tp-progra-1\menus.c
+1779816942 source:c:\users\usuario\documents\github\final-tp-progra-1\menus.c
+	"Pacientes.h"
+	"Practicas.h"
+	<stdio.h>
 
-1779387371 source:c:\users\usuario\documents\github\final-tp-progra-1\pacientes.c
+1779812938 source:c:\users\usuario\documents\github\final-tp-progra-1\pacientes.c
+	<stdio.h>
+	<string.h>
+	<ctype.h>
+	"Pacientes.h"
+	"Utilities.h"
 
 1779383005 source:c:\users\usuario\documents\github\final-tp-progra-1\pila.c
 	<stdio.h>
@@ -32,7 +40,8 @@
 
 1779383005 source:c:\users\usuario\documents\github\final-tp-progra-1\structs.c
 
-1779386850 source:c:\users\usuario\documents\github\final-tp-progra-1\practicas.c
+1779817147 source:c:\users\usuario\documents\github\final-tp-progra-1\practicas.c
+	"Practicas.h"
 
 1779384415 source:c:\users\laptop\documents\github\final-tp-progra-1\laboratorios.c
 
@@ -79,4 +88,35 @@
 	<stdio.h>
 
 1779801085 c:\users\laptop\documents\github\final-tp-progra-1\utilities.h
+
+1779812938 c:\users\usuario\documents\github\final-tp-progra-1\pacientes.h
+	<stdio.h>
+	<string.h>
+	<ctype.h>
+	"Utilities.h"
+
+1779812938 c:\users\usuario\documents\github\final-tp-progra-1\utilities.h
+
+1779812938 source:c:\users\usuario\documents\github\final-tp-progra-1\utilities.c
+	<stdio.h>
+
+1779813703 c:\users\usuario\documents\github\final-tp-progra-1\practicas.h
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<time.h>
+	<ctype.h>
+
+1779812938 c:\users\usuario\documents\github\final-tp-progra-1\menus.h
+	<stdio.h>
+	<string.h>
+	<ctype.h>
+	"Laboratorios.h"
+	"Pacientes.h"
+	"Practicas.h"
+
+1779812938 c:\users\usuario\documents\github\final-tp-progra-1\laboratorios.h
+	<stdio.h>
+	<string.h>
+	<ctype.h>
 
