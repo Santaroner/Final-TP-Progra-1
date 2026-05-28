@@ -288,7 +288,7 @@ void buscarPaciente(stPaciente *pacientes, int validos)
     }
     fclose(archi);
 }
-
+/// puto
 void menuModificarPaciente (int pos)
 {
     int optionswitch;
