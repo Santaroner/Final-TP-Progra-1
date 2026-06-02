@@ -40,5 +40,6 @@ void cambiarNombrePaciente(int pos);
 void cambiarApellidoPaciente(int pos);
 void cambiarMovilPaciente(int pos);
 void cambiarDNIPaciente(int pos);
+void bajaPaciente();
 
 #endif // PACIENTES_H_INCLUDED

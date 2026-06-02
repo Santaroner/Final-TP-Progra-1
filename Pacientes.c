@@ -4,13 +4,12 @@
 #include <ctype.h>
 #include "Pacientes.h"
 #include "Utilities.h"
-/// preguntar arreglo dinamico en cargarPacientes (cuando hacer el free) (si despues de llenar el archivo)
+/// FALTAN VALIDACIONES ARCHIVOS SI NO SE ABREN MENSAJE DE ERROR AL ABRIR
+/// Funcion volver a dar de alta de lista de eliminados
+/// Implementar ToUpper en primera letra de strings en nombres, apellidos.
+/// ordenar y comentar codigo
 stPaciente *pacientes = NULL;
 int validos = 0; /// validos para el arreglo dinamico
-
-/// ID - nombre - apellido - dni - movil - eliminado
-
-
 
 
 /// ---------------------------------------------- C A R G A   P A C I E N T E S ------------------------------------------------------------------
@@ -68,7 +67,7 @@ void cargaPaciente()
 
 int cargarIDPaciente() /// Diferentes funciones para hacer las validaciones correspondientes
 {
-    int ID = getIDVPacientes();
+    int ID = getIDVPacientes(); /// IDV Recorre el archivo para incrementar los ID
     if (ID != 0)
     {
         return ID;
@@ -133,22 +132,21 @@ void cargarDNIPaciente(char DNI[])
         printf("Ingrese el DNI del paciente:\n");
         fgets(aux,10,stdin);
         aux [strcspn(aux,"\n" )] = '\0';
-        validar = validarDNI(aux);
+        validar = validarDNI(aux); /// Si devuelve 1 el DNI no está duplicado
 //        if (strchr(aux,'\n') != NULL && strlen(aux) > 1 ) /// Si se ingresan mas de 10 letras fgets no tiene espacio para \n por lo que la condicion no se cumple
-        if (strlen(aux) == 0 || strlen(aux) < 10) /// Si se ingresan mas de 10 letras fgets no tiene espacio para \n por lo que la condicion no se cumple
+        if (strlen(aux) > 0 && strlen(aux) < 10) /// Si se ingresan mas de 10 letras fgets no tiene espacio para \n por lo que la condicion no se cumple
         {
             if (validar == 1)
             {
-//                aux [strcspn(aux,"\n" )] = '\0';
+                aux [strcspn(aux,"\n" )] = '\0';
                 printf("DNI guardado.\n"); /// test ------------------------------------------------------------------- borrar deps
                 strcpy(DNI,aux);
-                flag = 1; /// Si se cambia la flag es porque es ingreso el nombre correctamente > fin de bucle
+                flag = 1; /// Si se cambia la flag es porque es ingreso el DNI correctamente > fin de bucle
             }
 //            } else {validar = validarDNI(aux);}
         }
         else
         {
-            while (getchar () != '\n'); /// Si se añaden mas de 10 caracteres los limpia
             printf("No puede exceder los 10 caracteres, intente de nuevo.\n");
         }
     }
@@ -227,9 +225,6 @@ int validarDNI (char DNI[])
         return 1;
     }
 }
-
-// void cargarEstadoPaciente();
-
 /// ------------------------------------------------------ C A R G A  P A C I E N T E S ---------------------------------------------------------------- ///
 
 /// ------------------------------------------------------- M U E S T R A ///  V A L I D O S ----------------------------------------------------------///
@@ -331,8 +326,8 @@ void mostrarEliminados ()
 {
     printf("Entra la funcion,");
     stPaciente aux;
-    FILE *archi = fopen ("TestPacientes","rb");
-    while (fread(&archi,sizeof(stPaciente),1,archi))
+    FILE *archi = fopen ("TestPacientes.bin","rb");
+    while (fread(&aux,sizeof(stPaciente),1,archi) > 0)
     {
         if (aux.eliminado == 1)
         {
@@ -358,15 +353,17 @@ void buscarPaciente(stPaciente *pacientes, int validos)
     int pos = 0; /// posicion a enviar
     char aux[30];
     stPaciente busqueda;
-    printf("Ingrese el apellido del paciente a modificar\n");
+    printf("Ingrese el DNI del paciente a modificar\n");
     getchar();
-    fgets(aux,30,stdin);
+    fgets(aux,10,stdin);
     aux [strcspn(aux,"\n")] = '\0';
+    printf("Aux vale:%s",aux);
     for (int i = 0 ; i < validos ; i ++)
     {
+        printf("Entra al bucle\n");
         printf("pos:%i",pos); /// testeando posicion
         fread(&busqueda,sizeof(stPaciente),1,archi);
-        if (strcmpi(aux, busqueda.apellido) == 0)
+        if (strcmpi(aux, busqueda.dni) == 0)
         {
             menuModificarPaciente(pos+1);
         }
@@ -542,6 +539,44 @@ void cambiarDNIPaciente(int pos)
     fwrite(&aux,sizeof(stPaciente),1,archi);
     fclose(archi);
 }
+
+void bajaPaciente()
+{
+    int i = 0; /// contador de iteracion
+    int contadorPos = 0; /// contador para SEEK_CUR
+    char aux [10];
+    stPaciente paciente;  /// estructura para recorrer
+    stPaciente eliminado; /// estructura usada de auxiliar
+    printf("Ingrese el DNI del paciente a dar de baja:\n");
+    getchar();
+    fgets(aux,10,stdin);
+    aux[strcspn(aux, "\n")] = '\0';
+    FILE *archi = fopen("TestPacientes.bin","r+b");
+    while (fread(&paciente,sizeof(stPaciente),1,archi) > 0 )
+    {
+        printf("AUX: %s||DNI P: %s\n",aux,paciente.dni); /// borrar desp, viendo posiciones
+        if (strcmpi(aux,paciente.dni) == 0)
+        {
+            contadorPos = i ;
+            printf("Paciente encontrado.\n");
+            paciente.eliminado = 1;
+            eliminado = paciente; /// Copia el paciente para que no cambie en la nueva iteracion del bucle
+            printf("Paciente dado de baja\n");
+        }
+        i++;
+    }
+        printf("Posicion:%i",contadorPos); /// borrar desp, probando posiciones
+        fseek(archi, (contadorPos ) * sizeof(stPaciente),SEEK_SET); /// se mueve desde el principio las posiciones ya contadas en el while
+        paciente = eliminado; /// cambio
+        fwrite (&paciente,sizeof(stPaciente),1,archi);
+    fclose(archi);
+}
+
+//void cambiarEstadoPaciente(char dni[])
+//{
+//
+//}
+
 /// ----------------------------------------------------- M O D I F I C A R    P A C I E N T E S ------------------------------------------------------ ///
 
 /// --------------------------------------- T E S T    A R C H I V O S ------------------------------------------------------------------------------ ///

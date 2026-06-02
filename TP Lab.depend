@@ -198,7 +198,7 @@
 	"Utilities.h"
 	"Practicas.h"
 
-1780357386 c:\users\chiche\documents\github\final-tp-progra-1\pacientes.h
+1780372189 c:\users\chiche\documents\github\final-tp-progra-1\pacientes.h
 	<stdio.h>
 	<string.h>
 	<ctype.h>
@@ -242,13 +242,13 @@
 1780364400 source:c:\users\chiche\documents\github\final-tp-progra-1\practicas.c
 	"Practicas.h"
 
-1780363596 source:c:\users\chiche\documents\github\final-tp-progra-1\utilities.c
+1780364459 source:c:\users\chiche\documents\github\final-tp-progra-1\utilities.c
 	<stdio.h>
 	"Pacientes.h"
 	"Practicas.h"
 	"Laboratorios.h"
 
-1780357524 source:c:\users\chiche\documents\github\final-tp-progra-1\pacientes.c
+1780441935 source:c:\users\chiche\documents\github\final-tp-progra-1\pacientes.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
@@ -256,7 +256,7 @@
 	"Pacientes.h"
 	"Utilities.h"
 
-1780364407 source:c:\users\chiche\documents\github\final-tp-progra-1\menus.c
+1780436232 source:c:\users\chiche\documents\github\final-tp-progra-1\menus.c
 	"Pacientes.h"
 	"Practicas.h"
 	<stdio.h>

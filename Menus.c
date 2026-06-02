@@ -16,7 +16,12 @@ void mainMenu()
     int optionswitch = 0;
     do
 {
-    printf("1-Ingrese menu Pacientes\n2-Ingrese menu Laboratorios\n3-Ingrese menu Practicas\n\n0-Salir\n");
+    printf("\n------------------------------------------------------------------------------------------------------------------------------------------------------");
+    printf("\n1-Pacientes");
+    printf("\n2-Laboratorios");
+    printf("\n3-Practicas");
+    printf("\n0-Salir");
+    printf("\n------------------------------------------------------------------------------------------------------------------------------------------------------\n");
     scanf("%i",&optionswitch);
     switch(optionswitch)
     {
@@ -43,7 +48,13 @@ void pacientesMenu() /// USAR ESTE MENU PARA PROBAR EJERCICIOS DE PACIENTE
     int optionswitch = 0;
     do
     {
-        printf("1-Cargar paciente.\n2-Mostrar pacientes\n3-Modificar Paciente\n4-Mostrar pacientes de baja.\n0-Salir\n");
+        printf("\n------------------------------------------------------------------------------------------------------------------------------------------------------");
+        printf("\n1-Cargar paciente");
+        printf("\n2-Mostrar Pacientes.");
+        printf("\n3-Modificar Pacientes.");
+        printf("\n4-Dar de baja un paciente");
+        printf("\n5-Mostrar pacientes de baja.");
+        printf("\n------------------------------------------------------------------------------------------------------------------------------------------------------\n");
         scanf("%i",&optionswitch);
         switch(optionswitch)
         {
@@ -60,6 +71,9 @@ void pacientesMenu() /// USAR ESTE MENU PARA PROBAR EJERCICIOS DE PACIENTE
             buscarPaciente(pacientes,validosPacientes);
             break;
         case 4:
+            bajaPaciente();
+            break;
+        case 5:
             printf("entra al menu,");
             mostrarEliminados();
             break;
