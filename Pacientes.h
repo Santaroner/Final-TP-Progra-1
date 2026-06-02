@@ -4,6 +4,7 @@
 #include <string.h>
 #include <ctype.h>
 #include "Utilities.h"
+
 //extern APacientes[];
 typedef struct
  {
@@ -23,12 +24,14 @@ void cargaPaciente();  /// Llama a las diferentes funciones con validaciones y i
  void cargarApellidoPaciente(char apellido[]);
  void cargarDNIPaciente(char DNI[]);
  void cargarMovilPaciente(char movil[]);
- void cargarEstadoPaciente();
+ int cargarEstadoPaciente();
 /// -------------------------- M U E S T R A  //// V A L I D O S  -------------------------------------------------------- ///
  void mostrarPacientes(stPaciente *pacientes,int validos);
+ int validarDNI (char DNI[]);
  int mostrarArchivo();
+ void mostrarEliminados ();
  extern stPaciente *pacientes;
- extern validos;
+ extern int validos;
  /// ----------------------------------------------------- M O D I F I C A R    P A C I E N T E S ------------------------------------------------------ ///
 
 void buscarPaciente(stPaciente *pacientes, int validos);

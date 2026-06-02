@@ -11,9 +11,13 @@ typedef struct
      int anio;
      int mes;
      int dia; /// 1 a ... dependiendo el mes.
-     int practicaRealizada;
+     int practicaRealizada; /// Validar que la practica existe
      int baja; /// 0 si está activo, 1 si está eliminado.
  } stLaboratorios;
 
+
+ void buscandoIDPacientes(); /// rafa probando busca id
+ void muestraTSP();
+void mostrarPracticasSanti ();
 
 #endif // LABORATORIOS_H_INCLUDED

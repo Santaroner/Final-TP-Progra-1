@@ -43,7 +43,7 @@ void pacientesMenu() /// USAR ESTE MENU PARA PROBAR EJERCICIOS DE PACIENTE
     int optionswitch = 0;
     do
     {
-        printf("1-Cargar paciente.\n2-Mostrar pacientes\n3-Modificar Paciente 3\n0-Salir\n");
+        printf("1-Cargar paciente.\n2-Mostrar pacientes\n3-Modificar Paciente\n4-Mostrar pacientes de baja.\n0-Salir\n");
         scanf("%i",&optionswitch);
         switch(optionswitch)
         {
@@ -51,14 +51,20 @@ void pacientesMenu() /// USAR ESTE MENU PARA PROBAR EJERCICIOS DE PACIENTE
             cargarPacientes();
             break;
         case 2:
+            getIDVPacientes();
+            getIDVPracticas();
             validosPacientes = mostrarArchivo();
             printf("Validos vale:%i\n",validosPacientes);
             break;
         case 3:
             buscarPaciente(pacientes,validosPacientes);
             break;
+        case 4:
+            printf("entra al menu,");
+            mostrarEliminados();
+            break;
         case 9:
-            mostrarArchivo();
+            deletearchi();
             break;
         case 0:
             printf("Vuelva pronto.\n");
@@ -69,24 +75,34 @@ void pacientesMenu() /// USAR ESTE MENU PARA PROBAR EJERCICIOS DE PACIENTE
         }
     } while (optionswitch != 0) ;
 }
-
+void deletearchi()
+{
+    FILE *archi = fopen("TestPacientes.bin", "wb");
+    fclose(archi);
+}
 void laboratoriosMenu() /// USAR ESTE MENU PARA PROBAR EJERCICIOS DE LABORATORIO
 {
     int optionswitch = 0;
     do
     {
-        printf("1-Ejercicio 1\n2-Ejercicio 2\n3-Ejercicio 3\n0-Salir");
+        printf("1-buscando ID  1\n2-Ejercicio 2\n3-Ejercicio 3\n88-Archivo precargado Practicas\n99-Archivo precargado pacientes\n0-Salir");
         scanf("%i",&optionswitch);
         switch(optionswitch)
         {
         case 1:
-            printf("Ejercicio 1\n");
+            buscandoIDPacientes();
             break;
         case 2:
             printf("Ejercicio 2\n");
             break;
         case 3:
             printf("Ejercicio 3\n");
+            break;
+        case 88:
+            mostrarPracticasSanti();
+            break;
+        case 99: /// ABRE ARCHIVO PACIENTES-SANTI.
+            muestraTSP();
             break;
         case 0:
             printf("Vuelva pronto.\n");
@@ -110,12 +126,13 @@ void practicasMenu() /// USAR ESTE MENU PARA PROBAR EJERCICIOS DE PRACTICA
         case 1:
             printf("La cantidad maxima de practicas para cargar son 20\n");
             validos=cargarPracticas("Practicas.bin");
+///            validos=cargarPracticas("PracticasSanti.bin");
             break;
         case 2:
             modificarPracticas(practicas, validos);
             break;
         case 3:
-            mostrarPracticas(practicas);
+//            mostrarPracticas(practicas);
             break;
         case 0:
             printf("Vuelva pronto.\n");

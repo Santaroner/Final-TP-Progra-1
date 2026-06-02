@@ -6,5 +6,12 @@
 #include "Laboratorios.h"
 #include "Pacientes.h"
 #include "Practicas.h"
+#include "Utilities.h"
+
+
+void mainMenu();
+void pacientesMenu();
+void laboratoriosMenu();
+void practicasMenu();
 
 #endif // MENUS_H_INCLUDED

@@ -1,9 +1,10 @@
 #include "Practicas.h"
 
-int generaId()
+int generaId() ///
 {
-    int static id = 0;
+    int id = getIDVPracticas(); /// Funcion de utilities, recorre la cantidad de pacientes que hay
     id++;
+    printf("ID VALE :%i",id);
     return id;
 }
 
@@ -19,26 +20,26 @@ stPracticas cargarUnaPractica()
         scanf("%i", &unaPractica.baja);
 
         return unaPractica;
-
 }
 
 int cargarPracticas(char ArchivoPracticas[30])
 {
-    FILE *archi_Practicas=fopen(ArchivoPracticas, "wb");
-
     int validos=0;
     char seguir='s';
     stPracticas nuevaPractica;
 
     while(seguir=='s')
     {
+        ///FILE *archi_Practicas=fopen(ArchivoPracticas, "ab"); /// si se declara el archivo arriba y se cierra despues del while no se llega a actualizar el buffer del ID al poner nueva practica
+        FILE *archi_Practicas=fopen(ArchivoPracticas, "wb");
         nuevaPractica = cargarUnaPractica();
         fwrite(&nuevaPractica, sizeof(stPracticas), 1, archi_Practicas);
         printf("Desea seguir ingresando practicas? (s para seguir)");
         scanf(" %c", &seguir);
         validos++;
+        fclose(archi_Practicas);
     }
-    fclose(archi_Practicas);
+
     return validos;
 }
 /**int buscarNombrePractica(stPracticas practicas, int validos)
@@ -131,3 +132,8 @@ void mostrarUnaPractica(stPracticas practicasAux)
     printf("Costo: %i\n", practicasAux.costo);
     printf("Baja (0 activo, 1 baja): %i\n", practicasAux.baja);
 }
+
+
+
+/// -------------------------------------- T E S T /// R A  F A /// ------------------------------------------ ///
+
