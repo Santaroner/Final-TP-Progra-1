@@ -87,4 +87,16 @@ int getIDVPracticas() /// Recorre el archivo de practicas para hacer saber cuant
     return IDAux;
 }
 
-
+int getIDVLaboratorio()
+{
+    stLaboratorios aux;
+    int IDAux = 0;
+    FILE * archi = fopen(ARCHIVO_LABORATORIOS, "rb");
+    while (fread(&aux, sizeof(stLaboratorios),1,archi) > 0)
+    {
+        IDAux++;
+    }
+    IDAux++;
+    fclose(archi);
+    return IDAux;
+}

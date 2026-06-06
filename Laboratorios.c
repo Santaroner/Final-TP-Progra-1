@@ -14,33 +14,56 @@ int validosL = 0;
 
 void cargarLaboratorio(stLaboratorios *lab) /// Duda si agregar pac y prac.
 {
-   do {
-    printf("Ingrese año: ");
-    scanf("%d", &lab->anio);
-    printf("Ingrese mes (1-12): ");
-    scanf("%d", &lab->mes);
-    printf("Ingrese dia: ");
-    scanf("%d", &lab->dia);
-    } while (!validarFecha(lab->anio, lab->mes, lab->dia)); /// ! pide mientras no sea valida.
 
-    printf("Ingrese ID del paciente: ");
+//    printf("Ingrese ID del paciente: ");
 //    scanf("%d", &lab->); /// func
 
-    printf("Ingrese ID de la practica: ");
+//    printf("Ingrese ID de la practica: ");
 //    scanf("%d", &lab->); /// func
-
-//    lab->idLab = getIDVLaboratorio();
+    char seguir = 's';
+    lab->idLab = getIDVLaboratorio();
     printf("ID asignado: %d\n", lab->idLab);
 
+//    int aux=buscandoIDPacientes();
+//    printf("%d", &aux);
+    int aux = 0;
+    while (seguir == 's')
+    {
+        aux = validarAnio();
+        lab->anio = aux;
+        aux = validarMes();
+        lab ->mes = aux;
+        aux = validarDia(aux);
+        lab ->dia = aux;
+
+        printf("Presione 's' para continuar:\n");
+        scanf(" %c",&seguir);
+    }
+
+
+
+//    printf("Ingrese ID del paciente: ");
+//    scanf("%d", &lab->); /// func
+
+//    printf("Ingrese ID de la practica: ");
+//    scanf("%d", &lab->); /// func
+
     lab->baja = 0;
+    printf("Mostrar listado?\n");
+    int muestra = 0;
+    if (muestra == 0)
+    {
+        mostrarLaboratorios(laboratorios,validosL);
+    }
 }
 
-void cargarLaboratorios()
+stLaboratorios * cargarLaboratorios()
 {
     char seguir = 's';
+    stLaboratorios *aux;
     while (tolower(seguir) == 's')
     {
-        stLaboratorios *aux = realloc(laboratorios, (validosL + 1) * sizeof(stLaboratorios));
+        aux = realloc(laboratorios, (validosL + 1) * sizeof(stLaboratorios));
         if (aux != NULL)
         {
             laboratorios = aux;
@@ -56,6 +79,8 @@ void cargarLaboratorios()
         scanf(" %c", &seguir);
     }
     printf("Carga finalizada.\n");
+
+    return aux;
 }
 
 int validarFecha(int anio, int mes, int dia)
@@ -69,6 +94,181 @@ int validarFecha(int anio, int mes, int dia)
     return 1;
 }
 
+int validarAnio()
+{
+    int flag =1 ;
+    int aux = 0;
+    do
+    {
+    printf("Ingrese el anio: ");
+    scanf("%d", &aux);
+    if (aux < 1990 || aux > 2026)
+        printf("Año equivocado, recuerde (entre 1990 y 2026) ");
+    else
+        {
+            printf("Anio %d", aux);
+            flag = 0; /// si se ingreso el año correctmante, flag  0
+            return aux;
+        }
+    }while (flag != 0);
+
+
+}
+
+int validarMes()
+{
+    int flag = 1;
+    int aux = 0;
+    do
+    {
+    printf("Ingrese el mes: ");
+    scanf("%d", &aux);
+    if (aux < 1 || aux > 12)
+        printf("Error, recuerde entre 1 y 12 ");
+    else
+        printf("Mes %d", aux);
+    } while (aux < 1 || aux > 12);
+     return aux;
+}
+
+int validarDia(int mes)
+{
+    int dia;
+    int flag = 1;
+
+    do
+    {
+        printf("Ingrese el dia: ");
+        scanf("%d", &dia);
+    /// ---------------------------------------------------------------------------------------------------------------------------------------
+       if (mes == 1)
+    {
+        if (dia <= 31 && dia >= 1 )
+        {
+            flag = 0;
+            return dia;
+        }
+        else printf("Enero tiene 31 dias.\n");
+    }
+
+    if (mes == 2)
+    {
+        if (dia <= 28 && dia >= 1 )
+        {
+            flag = 0;
+            return dia;
+        }
+        else printf("Febrero tiene 28 dias\n");
+    }
+    if (mes == 3)
+    {
+        if (dia <= 31 && dia >=1)
+        {
+            flag = 0;
+            return dia;
+        }
+        else printf("Marzo tiene 31 dias\n");
+    }
+    if (mes == 4)
+    {
+        if (dia <= 30 && dia >= 1 )
+        {
+            flag = 0;
+            return dia;
+        }
+        else printf("Abril tiene 30 dias\n");
+    }
+     if (mes == 5)
+     {
+         if (dia <= 31 && dia >= 1 )
+         {
+             flag = 0;
+             return dia;
+         }
+        else printf("Mayo tiene 31 dias\n");
+     }
+     if (mes == 6)
+     {
+         if (dia <= 30 && dia >= 1 )
+         {
+             flag = 0;
+             return dia;
+         }
+         else printf("Junio tiene 30 dias\n");
+     }
+     if (mes == 7)
+     {
+         if (dia <= 31 && dia >= 1)
+         {
+             flag = 0;
+             return dia;
+         }
+         else printf("Julio tiene 31 dias\n");
+     }
+     if (mes == 8)
+     {
+         if (dia <= 31 && dia >= 1)
+         {
+             flag = 0;
+             return dia;
+         }
+         else printf("Agosto tiene 31 dias\n");
+     }
+     if (mes == 9)
+     {
+         if (dia <= 30 && dia >= 1)
+         {
+             flag = 0;
+             return dia;
+         }
+         else printf("Septiembre tiene 30 dias\n");
+     }
+     if (mes == 10)
+     {
+         if (dia <= 31 && dia >= 1)
+         {
+             flag = 0;
+             return dia;
+         }
+         else printf("Octubre tiene 31 dias\n");
+     }
+     if (mes == 11)
+     {
+         if (dia <= 30 && dia >= 1)
+         {
+             flag = 0;
+             return dia;
+         }
+         else printf("Noviembre tiene 30 dias\n");
+     }
+     if (mes == 12)
+     {
+         if (dia <= 31 && dia >= 1)
+         {
+             flag = 0;
+             return dia;
+         }
+         else printf("Diciembre tiene 31 dias\n");
+     }
+    } while (flag != 0);
+
+
+}
+
+
+void mostrarLaboratorios(stLaboratorios *laboratorios,int validosL)
+{
+    for(int i = 0; i < validosL+1; i++)
+    {
+        printf("Laboratorio: %d, %d, %d, %d\n",
+               laboratorios[i].idLab,
+               laboratorios[i].anio,
+               laboratorios[i].mes,
+               laboratorios[i].dia);
+    }
+}
+
+
 
 //int GetIdLaboratorios()
 //{
@@ -81,21 +281,23 @@ int validarFecha(int anio, int mes, int dia)
 
 
 
-void buscandoIDPacientes() /// rafa probando busca id - - - - - - - funcion en utilities
+int buscandoIDPacientes() /// rafa probando busca id - - - - - - - funcion en utilities
 {
     int newID = 0;
     int aux;
     printf("Ingrese el ID a buscar:\”");
     scanf("%i",&newID);
-    compararIDLP(newID);
+    aux = compararIDLP(newID);
     if ( aux == 0)
     {
         printf("El id ha sido encontrado.\n”");
+        return newID;
     }
     else if (aux == 1)
     {
         printf("El ID no existe. Si desea crear uno vaya al apartado pacientes.\n");
     }
+    return 1;
 }
 
 void muestraTSP () /// TEST SANTI PACIENTES

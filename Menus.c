@@ -10,7 +10,7 @@ void practicasMenu();
 
 /// Variables
 int validosPacientes = 0;
-
+stLaboratorios *arregloDinamico = NULL;
 stPracticas practicas[20];
 void mainMenu()
 {
@@ -100,15 +100,15 @@ void laboratoriosMenu() /// USAR ESTE MENU PARA PROBAR EJERCICIOS DE LABORATORIO
     int optionswitch = 0;
     do
     {
-        printf("1-buscando ID  1\n2-Ejercicio 2\n3-Ejercicio 3\n88-Archivo precargado Practicas\n99-Archivo precargado pacientes\n0-Salir");
+        printf("1-Cargar laboratorio  1\n2-Ejercicio 2\n3-Ejercicio 3\n88-Archivo precargado Practicas\n99-Archivo precargado pacientes\n0-Salir");
         scanf("%i",&optionswitch);
         switch(optionswitch)
         {
         case 1:
-//            cargarLaboratorio();
+            cargarLaboratorios();
             break;
         case 2:
-            printf("Ejercicio 2\n");
+//            mostrarLaboratorios(arregloDinamico);
             break;
         case 3:
             printf("Ejercicio 3\n");
