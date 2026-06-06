@@ -16,7 +16,7 @@ typedef struct
  } stPracticas;
 
 stPracticas cargarUnaPractica();
-int cargarPracticas(char ArchivoPracticas[30]);
+void cargarPracticas(char ArchivoPracticas[30]);
 void modificarPracticas(stPracticas practicas[20], int validos);
 void mostrarPracticas();
 void mostrarUnaPractica(stPracticas practicasAux);

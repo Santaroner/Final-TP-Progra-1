@@ -1,6 +1,9 @@
 #include "Pacientes.h"
 #include "Practicas.h"
 #include <stdio.h>
+#define ARCHIVO_PACIENTES "TestPacientes.bin"
+#define ARCHIVO_PRACTICAS "Practicas.bin"
+#define ARCHIVO_LABORATORIOS "Laboratorios.bin"
 
 void mainMenu();
 void pacientesMenu();
@@ -78,7 +81,7 @@ void pacientesMenu() /// USAR ESTE MENU PARA PROBAR EJERCICIOS DE PACIENTE
             mostrarEliminados();
             break;
         case 9:
-//            deletearchi();
+///            deletearchi();
             break;
         case 0:
             printf("Vuelva pronto.\n");
@@ -138,15 +141,14 @@ void practicasMenu() /// USAR ESTE MENU PARA PROBAR EJERCICIOS DE PRACTICA
         switch(optionswitch)
         {
         case 1:
-            printf("La cantidad maxima de practicas para cargar son 20\n");
-            validos=cargarPracticas("Practicas.bin");
+            cargarPracticas(ARCHIVO_PRACTICAS);
 ///            validos=cargarPracticas("PracticasSanti.bin");
             break;
         case 2:
             modificarPracticas(practicas, validos);
             break;
         case 3:
-            mostrarPracticas();
+//            mostrarPracticas(practicas);
             break;
         case 0:
             printf("Vuelva pronto.\n");
