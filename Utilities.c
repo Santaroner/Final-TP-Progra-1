@@ -89,3 +89,10 @@ int getIDVPracticas() /// Recorre el archivo de practicas para hacer saber cuant
 }
 
 
+int GetIdLaboratorios()
+{
+    static int aux = 0;
+    aux++;
+    return aux;
+}
+

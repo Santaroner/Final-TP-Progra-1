@@ -3,6 +3,9 @@
 #include <stdio.h>
 #include <string.h>
 #include <ctype.h>
+#include "Pacientes.h"
+#include "Utilities.h"
+#include "Practicas.h"
 
 typedef struct
  {
@@ -14,6 +17,11 @@ typedef struct
      int practicaRealizada; /// Validar que la practica existe
      int baja; /// 0 si está activo, 1 si está eliminado.
  } stLaboratorios;
+
+
+ void cargarLaboratorio(stLaboratorios *lab);
+ void cargarLaboratorios();
+ int validarFecha(int anio, int mes, int dia);
 
 
  void buscandoIDPacientes(); /// rafa probando busca id

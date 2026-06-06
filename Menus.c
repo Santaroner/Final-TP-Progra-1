@@ -78,7 +78,7 @@ void pacientesMenu() /// USAR ESTE MENU PARA PROBAR EJERCICIOS DE PACIENTE
             mostrarEliminados();
             break;
         case 9:
-            deletearchi();
+//            deletearchi();
             break;
         case 0:
             printf("Vuelva pronto.\n");
@@ -146,7 +146,7 @@ void practicasMenu() /// USAR ESTE MENU PARA PROBAR EJERCICIOS DE PRACTICA
             modificarPracticas(practicas, validos);
             break;
         case 3:
-//            mostrarPracticas(practicas);
+            mostrarPracticas();
             break;
         case 0:
             printf("Vuelva pronto.\n");

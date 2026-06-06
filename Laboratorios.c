@@ -6,7 +6,7 @@
 #include "Utilities.h"
 #include "Practicas.h"
 stLaboratorios *laboratorios = NULL;
-int validos = 0;
+int validosL = 0;
 
 // idLab - idPac - año - mes - dia - idPrac - baja o alta
 
@@ -14,14 +14,14 @@ int validos = 0;
 
 void cargarLaboratorio(stLaboratorios *lab) /// Duda si agregar pac y prac.
 {
+   do {
     printf("Ingrese año: ");
     scanf("%d", &lab->anio);
-
     printf("Ingrese mes (1-12): ");
     scanf("%d", &lab->mes);
-
     printf("Ingrese dia: ");
     scanf("%d", &lab->dia);
+    } while (!validarFecha(lab->anio, lab->mes, lab->dia)); /// ! pide mientras no sea valida.
 
     printf("Ingrese ID del paciente: ");
 //    scanf("%d", &lab->); /// func
@@ -40,13 +40,13 @@ void cargarLaboratorios()
     char seguir = 's';
     while (tolower(seguir) == 's')
     {
-        stLaboratorios *aux = realloc(laboratorios, (validos + 1) * sizeof(stLaboratorios));
+        stLaboratorios *aux = realloc(laboratorios, (validosL + 1) * sizeof(stLaboratorios));
         if (aux != NULL)
         {
             laboratorios = aux;
-            cargarLaboratorio(&laboratorios[validos]);
-            validos++;
-            printf("Laboratorio cargado correctamente. Total: %i\n", validos);
+            cargarLaboratorio(&laboratorios[validosL]);
+            validosL++;
+            printf("Laboratorio cargado correctamente. Total: %i\n", validosL);
         }
         else
         {
@@ -58,15 +58,25 @@ void cargarLaboratorios()
     printf("Carga finalizada.\n");
 }
 
-
-
-int GetIdLaboratorios()
+int validarFecha(int anio, int mes, int dia)
 {
-    static int aux = 0;
-    aux++;
-    return aux;
+    int diasPorMes[] = {0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31}; // el 0 para que el primer mes sea 1ero
+
+    if (anio < 2000 || anio > 2026) return 0; /// sale si invalido
+    if (mes < 1 || mes > 12) return 0;  /// sale si invalido
+    if (dia < 1 || dia > diasPorMes[mes]) return 0;  /// sale si invalido
+
+    return 1;
 }
 
+
+//int GetIdLaboratorios()
+//{
+//    static int aux = 0;
+//    aux++;
+//    return aux;
+//}
+//
 
 
 
