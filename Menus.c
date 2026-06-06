@@ -1,9 +1,7 @@
 #include "Pacientes.h"
 #include "Practicas.h"
 #include <stdio.h>
-#define ARCHIVO_PACIENTES "TestPacientes.bin"
-#define ARCHIVO_PRACTICAS "Practicas.bin"
-#define ARCHIVO_LABORATORIOS "Laboratorios.bin"
+
 
 void mainMenu();
 void pacientesMenu();
@@ -145,10 +143,10 @@ void practicasMenu() /// USAR ESTE MENU PARA PROBAR EJERCICIOS DE PRACTICA
 ///            validos=cargarPracticas("PracticasSanti.bin");
             break;
         case 2:
-            modificarPracticas(practicas, validos);
+            modificarPracticas(ARCHIVO_PRACTICAS);
             break;
         case 3:
-//            mostrarPracticas(practicas);
+            mostrarPracticas(ARCHIVO_PRACTICAS);
             break;
         case 0:
             printf("Vuelva pronto.\n");

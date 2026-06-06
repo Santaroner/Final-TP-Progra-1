@@ -7,7 +7,7 @@
 
 1779069850 source:c:\users\rafa\documents\tp final ras\tp lab\structs.c
 
-1780769249 source:c:\users\usuario\documents\github\final-tp-progra-1\laboratorios.c
+1780771105 source:c:\users\usuario\documents\github\final-tp-progra-1\laboratorios.c
 	<stdio.h>
 	<string.h>
 	<stdlib.h>
@@ -29,7 +29,7 @@
 
 1779385333 c:\users\usuario\documents\github\final-tp-progra-1\structs.h
 
-1780770422 source:c:\users\usuario\documents\github\final-tp-progra-1\menus.c
+1780776722 source:c:\users\usuario\documents\github\final-tp-progra-1\menus.c
 	"Pacientes.h"
 	"Practicas.h"
 	<stdio.h>
@@ -48,7 +48,7 @@
 
 1779383005 source:c:\users\usuario\documents\github\final-tp-progra-1\structs.c
 
-1780770211 source:c:\users\usuario\documents\github\final-tp-progra-1\practicas.c
+1780776661 source:c:\users\usuario\documents\github\final-tp-progra-1\practicas.c
 	"Practicas.h"
 
 1779384415 source:c:\users\laptop\documents\github\final-tp-progra-1\laboratorios.c
@@ -109,18 +109,19 @@
 	<ctype.h>
 	"Utilities.h"
 
-1780769249 c:\users\usuario\documents\github\final-tp-progra-1\utilities.h
+1780770599 c:\users\usuario\documents\github\final-tp-progra-1\utilities.h
 	"Pacientes.h"
 	"Practicas.h"
 	"Laboratorios.h"
 
-1780770402 source:c:\users\usuario\documents\github\final-tp-progra-1\utilities.c
+1780773333 source:c:\users\usuario\documents\github\final-tp-progra-1\utilities.c
 	<stdio.h>
 	"Pacientes.h"
 	"Practicas.h"
 	"Laboratorios.h"
+	"Menus.h"
 
-1780770341 c:\users\usuario\documents\github\final-tp-progra-1\practicas.h
+1780776767 c:\users\usuario\documents\github\final-tp-progra-1\practicas.h
 	"Utilities.h"
 	"Pacientes.h"
 	<stdio.h>

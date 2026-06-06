@@ -2,6 +2,7 @@
 #include "Pacientes.h"
 #include "Practicas.h"
 #include "Laboratorios.h"
+#include "Menus.h"
 
 //int GetIDPacientes ()
 //{
@@ -76,12 +77,12 @@ int getIDVPracticas() /// Recorre el archivo de practicas para hacer saber cuant
     stPracticas aux;
     int IDAux = 0;
 //   FILE * archi = fopen("PracticasSanti.bin", "rb");
-    FILE * archi = fopen("Practicas.bin", "rb");
+    FILE * archi = fopen(ARCHIVO_PRACTICAS, "rb");
     while (fread(&aux,sizeof(stPracticas),1,archi) > 0 )
     {
         IDAux ++;
     }
-    printf("IDPracticasAux vale:%i",IDAux);
+    ///printf("IDPracticasAux vale:%i",IDAux);
     fclose(archi);
     return IDAux;
 }

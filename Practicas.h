@@ -7,6 +7,10 @@
 #include <string.h>
 #include <time.h>
 #include <ctype.h>
+#define ARCHIVO_PACIENTES "TestPacientes.bin"
+#define ARCHIVO_PRACTICAS "Practicas.bin"
+#define ARCHIVO_LABORATORIOS "Laboratorios.bin"
+
 typedef struct
  {
      int idPractica;/// Campo único y autoincremental
@@ -17,8 +21,9 @@ typedef struct
 
 stPracticas cargarUnaPractica();
 void cargarPracticas(char ArchivoPracticas[30]);
-void modificarPracticas(stPracticas practicas[20], int validos);
-void mostrarPracticas();
+void modificarPracticas(char ArchivoPractica[30]);
+stPracticas menuModificarPractica(stPracticas unaPractica);
+void mostrarPracticas(char ArchivoPracticas[30]);
 void mostrarUnaPractica(stPracticas practicasAux);
 
 #endif // PRACTICAS_H_INCLUDED
