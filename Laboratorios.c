@@ -14,14 +14,14 @@ int validos = 0;
 
 void cargarLaboratorio(stLaboratorios *lab) /// Duda si agregar pac y prac.
 {
+   do {
     printf("Ingrese año: ");
     scanf("%d", &lab->anio);
-
     printf("Ingrese mes (1-12): ");
     scanf("%d", &lab->mes);
-
     printf("Ingrese dia: ");
     scanf("%d", &lab->dia);
+    } while (!validarFecha(lab->anio, lab->mes, lab->dia)); /// ! pide mientras no sea valida.
 
     printf("Ingrese ID del paciente: ");
 //    scanf("%d", &lab->); /// func
@@ -58,6 +58,16 @@ void cargarLaboratorios()
     printf("Carga finalizada.\n");
 }
 
+int validarFecha(int anio, int mes, int dia)
+{
+    int diasPorMes[] = {0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31}; // el 0 para que el primer mes sea 1ero
+
+    if (anio < 2000 || anio > 2026) return 0; /// sale si invalido
+    if (mes < 1 || mes > 12) return 0;  /// sale si invalido
+    if (dia < 1 || dia > diasPorMes[mes]) return 0;  /// sale si invalido
+
+    return 1;
+}
 
 
 int GetIdLaboratorios()

@@ -16,6 +16,11 @@ typedef struct
  } stLaboratorios;
 
 
+ void cargarLaboratorio(stLaboratorios *lab);
+ void cargarLaboratorios();
+ int validarFecha(int anio, int mes, int dia);
+
+
  void buscandoIDPacientes(); /// rafa probando busca id
  void muestraTSP();
 void mostrarPracticasSanti ();
