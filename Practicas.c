@@ -22,7 +22,7 @@ stPracticas cargarUnaPractica()
         return unaPractica;
 }
 
-int cargarPracticas(char ArchivoPracticas[30])
+void cargarPracticas(char ArchivoPracticas[30])
 {
     int validos=0;
     char seguir='s';
@@ -31,7 +31,7 @@ int cargarPracticas(char ArchivoPracticas[30])
     while(seguir=='s')
     {
         ///FILE *archi_Practicas=fopen(ArchivoPracticas, "ab"); /// si se declara el archivo arriba y se cierra despues del while no se llega a actualizar el buffer del ID al poner nueva practica
-        FILE *archi_Practicas=fopen(ArchivoPracticas, "wb");
+        FILE *archi_Practicas=fopen(ArchivoPracticas, "ab");
         nuevaPractica = cargarUnaPractica();
         fwrite(&nuevaPractica, sizeof(stPracticas), 1, archi_Practicas);
         printf("Desea seguir ingresando practicas? (s para seguir)");
@@ -39,8 +39,6 @@ int cargarPracticas(char ArchivoPracticas[30])
         validos++;
         fclose(archi_Practicas);
     }
-
-    return validos;
 }
 /**int buscarNombrePractica(stPracticas practicas, int validos)
 {

@@ -2,9 +2,7 @@
 #include "Pacientes.h"
 #include "Practicas.h"
 #include "Laboratorios.h"
-#define ARCHIVO_PACIENTES "TestPacientes.bin"
-#define ARCHIVO_PRACTICAS "Practicas.bin"
-#define ARCHIVO_LABORATORIOS "Laboratorios.bin"
+
 //int GetIDPacientes ()
 //{
 //    int aux;
@@ -88,11 +86,4 @@ int getIDVPracticas() /// Recorre el archivo de practicas para hacer saber cuant
     return IDAux;
 }
 
-
-int GetIdLaboratorios()
-{
-    static int aux = 0;
-    aux++;
-    return aux;
-}
 
