@@ -134,7 +134,7 @@ void practicasMenu() /// USAR ESTE MENU PARA PROBAR EJERCICIOS DE PRACTICA
     int optionswitch = 0;
     do
     {
-        printf("1-Cargar practica\n2-Modificar practica\n3-Mostrar listado de practicas \n0-Salir\n");
+        printf("1-Cargar practica\n2-Modificar practica\n3-Dar de baja una practica\n4-Dar de alta una practica\n5-Mostrar listado de practicas \n0-Salir\n");
         scanf("%i",&optionswitch);
         switch(optionswitch)
         {
@@ -146,6 +146,12 @@ void practicasMenu() /// USAR ESTE MENU PARA PROBAR EJERCICIOS DE PRACTICA
             modificarPracticas(ARCHIVO_PRACTICAS);
             break;
         case 3:
+            darDeBajaPracticas(ARCHIVO_PRACTICAS);
+            break;
+        case 4:
+            darDeAltaPracticas(ARCHIVO_PRACTICAS);
+            break;
+        case 5:
             mostrarPracticas(ARCHIVO_PRACTICAS);
             break;
         case 0:

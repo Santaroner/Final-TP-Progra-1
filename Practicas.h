@@ -25,5 +25,13 @@ void modificarPracticas(char ArchivoPractica[30]);
 stPracticas menuModificarPractica(stPracticas unaPractica);
 void mostrarPracticas(char ArchivoPracticas[30]);
 void mostrarUnaPractica(stPracticas practicasAux);
+void darDeBajaPracticas(char ArchivoPracticas[30]);
+void darDeAltaPracticas(char ArchivoPracticas[30]);
+stPracticas darDeAltaUnaPractica(stPracticas unaPractica);
+stPracticas darDeBajaUnaPractica(stPracticas unaPractica);
+void mostrarPracticasAlta(char archivoPracticas[30]);
+void mostrarPracticasBaja(char archivoPracticas[30]);
+void mostrarUnaPracticaAlta(stPracticas practicasAux);
+void mostrarUnaPracticaBaja(stPracticas practicasAux);
 
 #endif // PRACTICAS_H_INCLUDED
