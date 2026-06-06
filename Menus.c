@@ -104,7 +104,7 @@ void laboratoriosMenu() /// USAR ESTE MENU PARA PROBAR EJERCICIOS DE LABORATORIO
         switch(optionswitch)
         {
         case 1:
-            buscandoIDPacientes();
+//            cargarLaboratorio();
             break;
         case 2:
             printf("Ejercicio 2\n");

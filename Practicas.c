@@ -105,7 +105,6 @@ void mostrarPracticas()
 {
     FILE *archi_Practicas=fopen("Practicas.bin", "rb");
     stPracticas practicasAux;
-    printf("Error");
 
 //    while(!feof(archi_Practicas))
 //    {
@@ -120,8 +119,6 @@ void mostrarPracticas()
     while((fread(&practicasAux, sizeof(stPracticas), 1, archi_Practicas)) > 0)
     {
         mostrarUnaPractica(practicasAux);
-        system("pause");
-        system("cls");
     }
 
     fclose(archi_Practicas);

@@ -86,10 +86,18 @@ int getIDVPracticas() /// Recorre el archivo de practicas para hacer saber cuant
 }
 
 
-int GetIdLaboratorios()
+int getIDVLaboratorio() /// Recorre el archivo de practicas para hacer saber cuantos ID tiene
 {
-    static int aux = 0;
-    aux++;
-    return aux;
+    stLaboratorios aux;
+    int IDAux = 0;
+//   FILE * archi = fopen("PracticasSanti.bin", "rb");
+    FILE * archi = fopen("Laboratorios.bin", "rb");
+    while (fread(&aux,sizeof(stLaboratorios),1,archi) > 0 )
+    {
+        IDAux ++;
+    }
+    printf("ID Laboratorio vale:%i",IDAux);
+    fclose(archi);
+    return IDAux;
 }
 
