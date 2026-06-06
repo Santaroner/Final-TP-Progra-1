@@ -1,11 +1,75 @@
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
 #include <ctype.h>
 #include "Pacientes.h"
 #include "Utilities.h"
 #include "Practicas.h"
+stLaboratorios *laboratorios = NULL;
+int validos = 0;
 
 // idLab - idPac - año - mes - dia - idPrac - baja o alta
+
+// - - - - - - Carga Lab
+
+void cargarLaboratorio(stLaboratorios *lab) /// Duda si agregar pac y prac.
+{
+    printf("Ingrese año: ");
+    scanf("%d", &lab->anio);
+
+    printf("Ingrese mes (1-12): ");
+    scanf("%d", &lab->mes);
+
+    printf("Ingrese dia: ");
+    scanf("%d", &lab->dia);
+
+    printf("Ingrese ID del paciente: ");
+//    scanf("%d", &lab->); /// func
+
+    printf("Ingrese ID de la practica: ");
+//    scanf("%d", &lab->); /// func
+
+    lab->idLab = GetIdLaboratorios();
+    printf("ID asignado: %d\n", lab->idLab);
+
+    lab->baja = 0;
+}
+
+void cargarLaboratorios()
+{
+    char seguir = 's';
+    while (tolower(seguir) == 's')
+    {
+        stLaboratorios *aux = realloc(laboratorios, (validos + 1) * sizeof(stLaboratorios));
+        if (aux != NULL)
+        {
+            laboratorios = aux;
+            cargarLaboratorio(&laboratorios[validos]);
+            validos++;
+            printf("Laboratorio cargado correctamente. Total: %i\n", validos);
+        }
+        else
+        {
+            printf("Error al asignar memoria.\n");
+        }
+        printf("Desea cargar otro laboratorio? (s/n): ");
+        scanf(" %c", &seguir);
+    }
+    printf("Carga finalizada.\n");
+}
+
+
+
+int GetIdLaboratorios()
+{
+    static int aux = 0;
+    aux++;
+    return aux;
+}
+
+
+
+
 
 void buscandoIDPacientes() /// rafa probando busca id - - - - - - - funcion en utilities
 {
@@ -32,11 +96,11 @@ void muestraTSP () /// TEST SANTI PACIENTES
     while (fread(&aux,sizeof(stPaciente),1,archi) > 0 )
     {
         printf("ID :%i\nNombre:%s\nApellido:%s\nDNI:%s\nMovil:%s\n\n",
-                   aux.idPaciente,
-                   aux.nombre,
-                   aux.apellido,
-                   aux.dni,
-                   aux.movil);
+               aux.idPaciente,
+               aux.nombre,
+               aux.apellido,
+               aux.dni,
+               aux.movil);
     }
     fclose(archi);
 }
@@ -48,7 +112,7 @@ void mostrarPracticasSanti ()
     stPracticas aux;
     while (fread(&aux,sizeof(stPracticas),1,archi) > 0)
     {
-         printf("idPractica: %i\n", aux.idPractica);
+        printf("idPractica: %i\n", aux.idPractica);
         printf("Nombre: %s\n", aux.nombre);
         printf("Costo: %i\n", aux.costo);
         printf("Baja (0 activo, 1 baja): %i\n", aux.baja);
