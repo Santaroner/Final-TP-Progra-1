@@ -302,3 +302,80 @@
 	"Practicas.h"
 	"Laboratorios.h"
 
+1780767592 source:c:\users\rafa\documents\tp final ras\tp lab\final-tp-progra-1\laboratorios.c
+	<stdio.h>
+	<string.h>
+	<stdlib.h>
+	<ctype.h>
+	"Pacientes.h"
+	"Utilities.h"
+	"Practicas.h"
+
+1780765772 c:\users\rafa\documents\tp final ras\tp lab\final-tp-progra-1\pacientes.h
+	<stdio.h>
+	<string.h>
+	<ctype.h>
+	"Utilities.h"
+
+1780766290 c:\users\rafa\documents\tp final ras\tp lab\final-tp-progra-1\utilities.h
+	"Pacientes.h"
+	"Practicas.h"
+	"Laboratorios.h"
+
+1780768653 c:\users\rafa\documents\tp final ras\tp lab\final-tp-progra-1\practicas.h
+	"Utilities.h"
+	"Pacientes.h"
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<time.h>
+	<ctype.h>
+
+1780766129 c:\users\rafa\documents\tp final ras\tp lab\final-tp-progra-1\laboratorios.h
+	<stdio.h>
+	<string.h>
+	<ctype.h>
+	"Pacientes.h"
+	"Utilities.h"
+	"Practicas.h"
+
+1780765772 source:c:\users\rafa\documents\tp final ras\tp lab\final-tp-progra-1\main.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<time.h>
+	<ctype.h>
+	"Practicas.h"
+	"Menus.h"
+
+1780765772 c:\users\rafa\documents\tp final ras\tp lab\final-tp-progra-1\menus.h
+	<stdio.h>
+	<string.h>
+	<ctype.h>
+	"Laboratorios.h"
+	"Pacientes.h"
+	"Practicas.h"
+	"Utilities.h"
+
+1780765772 source:c:\users\rafa\documents\tp final ras\tp lab\final-tp-progra-1\pacientes.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<ctype.h>
+	"Pacientes.h"
+	"Utilities.h"
+
+1780765772 source:c:\users\rafa\documents\tp final ras\tp lab\final-tp-progra-1\utilities.c
+	<stdio.h>
+	"Pacientes.h"
+	"Practicas.h"
+	"Laboratorios.h"
+
+1780768630 source:c:\users\rafa\documents\tp final ras\tp lab\final-tp-progra-1\menus.c
+	"Pacientes.h"
+	"Practicas.h"
+	<stdio.h>
+
+1780768618 source:c:\users\rafa\documents\tp final ras\tp lab\final-tp-progra-1\practicas.c
+	"Practicas.h"
+

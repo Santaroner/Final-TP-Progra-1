@@ -27,11 +27,11 @@ int cargarPracticas(char ArchivoPracticas[30])
     int validos=0;
     char seguir='s';
     stPracticas nuevaPractica;
-
+//    FILE *archi_Practicas=fopen(ArchivoPracticas, "wb");
     while(seguir=='s')
     {
         ///FILE *archi_Practicas=fopen(ArchivoPracticas, "ab"); /// si se declara el archivo arriba y se cierra despues del while no se llega a actualizar el buffer del ID al poner nueva practica
-        FILE *archi_Practicas=fopen(ArchivoPracticas, "wb");
+        FILE *archi_Practicas=fopen(ArchivoPracticas, "ab");
         nuevaPractica = cargarUnaPractica();
         fwrite(&nuevaPractica, sizeof(stPracticas), 1, archi_Practicas);
         printf("Desea seguir ingresando practicas? (s para seguir)");
@@ -39,7 +39,7 @@ int cargarPracticas(char ArchivoPracticas[30])
         validos++;
         fclose(archi_Practicas);
     }
-
+//        fclose(archi_Practicas);
     return validos;
 }
 /**int buscarNombrePractica(stPracticas practicas, int validos)
@@ -100,21 +100,22 @@ void modificarPracticas(stPracticas practicas[20], int validos)
     }
     while(opcionSwitch!=0);
 }
-void mostrarPracticas(stPracticas practicas)
+//void mostrarPracticas(stPracticas practicas)
+void mostrarPracticas()
 {
     FILE *archi_Practicas=fopen("Practicas.bin", "rb");
     stPracticas practicasAux;
     printf("Error");
 
-/**    while(!feof(archi_Practicas))
-    {
-        if(!feof(archi_Practicas))
-        {
-        fread(&practicasAux, sizeof(stPracticas), 1, archi_Practicas);
-        mostrarUnaPractica(practicasAux);
-        }
-    }
-    */
+//    while(!feof(archi_Practicas))
+//    {
+//        if(!feof(archi_Practicas))
+//        {
+//        fread(&practicasAux, sizeof(stPracticas), 1, archi_Practicas);
+//        mostrarUnaPractica(practicasAux);
+//        }
+//    }
+
 
     while((fread(&practicasAux, sizeof(stPracticas), 1, archi_Practicas)) > 0)
     {

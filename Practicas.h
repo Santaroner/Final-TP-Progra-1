@@ -1,5 +1,7 @@
 #ifndef PRACTICAS_H_INCLUDED
 #define PRACTICAS_H_INCLUDED
+#include "Utilities.h"
+#include "Pacientes.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -16,7 +18,7 @@ typedef struct
 stPracticas cargarUnaPractica();
 int cargarPracticas(char ArchivoPracticas[30]);
 void modificarPracticas(stPracticas practicas[20], int validos);
-void mostrarPracticas(stPracticas practicas);
+void mostrarPracticas();
 void mostrarUnaPractica(stPracticas practicasAux);
 
 #endif // PRACTICAS_H_INCLUDED

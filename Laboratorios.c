@@ -6,7 +6,7 @@
 #include "Utilities.h"
 #include "Practicas.h"
 stLaboratorios *laboratorios = NULL;
-int validos = 0;
+int validosL = 0;
 
 // idLab - idPac - año - mes - dia - idPrac - baja o alta
 
@@ -40,13 +40,13 @@ void cargarLaboratorios()
     char seguir = 's';
     while (tolower(seguir) == 's')
     {
-        stLaboratorios *aux = realloc(laboratorios, (validos + 1) * sizeof(stLaboratorios));
+        stLaboratorios *aux = realloc(laboratorios, (validosL + 1) * sizeof(stLaboratorios));
         if (aux != NULL)
         {
             laboratorios = aux;
-            cargarLaboratorio(&laboratorios[validos]);
-            validos++;
-            printf("Laboratorio cargado correctamente. Total: %i\n", validos);
+            cargarLaboratorio(&laboratorios[validosL]);
+            validosL++;
+            printf("Laboratorio cargado correctamente. Total: %i\n", validosL);
         }
         else
         {
@@ -70,13 +70,13 @@ int validarFecha(int anio, int mes, int dia)
 }
 
 
-int GetIdLaboratorios()
-{
-    static int aux = 0;
-    aux++;
-    return aux;
-}
-
+//int GetIdLaboratorios()
+//{
+//    static int aux = 0;
+//    aux++;
+//    return aux;
+//}
+//
 
 
 
