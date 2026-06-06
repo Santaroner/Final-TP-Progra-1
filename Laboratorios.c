@@ -29,7 +29,7 @@ void cargarLaboratorio(stLaboratorios *lab) /// Duda si agregar pac y prac.
     printf("Ingrese ID de la practica: ");
 //    scanf("%d", &lab->); /// func
 
-    lab->idLab = getIDVLaboratorio();
+//    lab->idLab = getIDVLaboratorio();
     printf("ID asignado: %d\n", lab->idLab);
 
     lab->baja = 0;
