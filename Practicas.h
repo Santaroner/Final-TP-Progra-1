@@ -19,8 +19,10 @@ typedef struct
      int baja; /// 0 si está activo, 1 si está eliminado.
  } stPracticas;
 
+int generaId();
 stPracticas cargarUnaPractica();
 void cargarPracticas(char ArchivoPracticas[30]);
+int buscarNombreIgualPractica(char nombrePractica[30], char ArchivoPracticas[30]);
 void modificarPracticas(char ArchivoPractica[30]);
 stPracticas menuModificarPractica(stPracticas unaPractica);
 void mostrarPracticas(char ArchivoPracticas[30]);

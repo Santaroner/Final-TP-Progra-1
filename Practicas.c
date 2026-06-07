@@ -11,11 +11,27 @@ int generaId() ///
 stPracticas cargarUnaPractica()
 {
         stPracticas unaPractica;
+        int flag=0;
         unaPractica.idPractica=generaId();
+        do
+        {
         printf("Ingrese el nombre de la practica: ");
         scanf("%s", unaPractica.nombre);
+        flag=buscarNombreIgualPractica(unaPractica.nombre,ARCHIVO_PRACTICAS);
+        if(flag==1)
+        {
+            printf("La practica que quiere cargar ya esta ingresada, ingrese otra.\n");
+        }
+        }while(flag==1);
+        do
+        {
         printf("Ingrese el costo de la practica (1000$ a 10000$): ");
         scanf("%i", &unaPractica.costo);
+        if(unaPractica.costo<1000 || unaPractica.costo>10000)
+        {
+            printf("Error, el costo debe estar entre $1000 y $10000.\n");
+        }
+        }while(unaPractica.costo<1000 || unaPractica.costo>10000);
         printf("Esta de baja la practica(1) o esta activa(0)? ");
         scanf("%i", &unaPractica.baja);
 
@@ -24,7 +40,6 @@ stPracticas cargarUnaPractica()
 
 void cargarPracticas(char ArchivoPracticas[30])
 {
-    int validos=0;
     char seguir='s';
     stPracticas nuevaPractica;
 
@@ -39,6 +54,26 @@ void cargarPracticas(char ArchivoPracticas[30])
         validos++;
         fclose(archi_Practicas);
     }
+}
+int buscarNombreIgualPractica(char nombrePractica[30], char ArchivoPracticas[30])
+{
+    FILE *archivoPracticas=fopen(ArchivoPracticas,"rb");
+    int flag=0;
+    if(archivoPracticas==NULL)
+    {
+        flag=0;
+    }
+    stPracticas unaPractica;
+    while(fread(&unaPractica,sizeof(stPracticas),1,archivoPracticas)>0)
+    {
+        int res=strcmpi(unaPractica.nombre,nombrePractica);
+        if(res==0)
+        {
+            flag=1;
+        }
+    }
+    fclose(archivoPracticas);
+    return flag;
 }
 int contarPracticas(char ArchivoPracticas[30])
 {
