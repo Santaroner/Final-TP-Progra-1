@@ -54,7 +54,8 @@ void pacientesMenu() /// USAR ESTE MENU PARA PROBAR EJERCICIOS DE PACIENTE
         printf("\n2-Mostrar Pacientes.");
         printf("\n3-Modificar Pacientes.");
         printf("\n4-Dar de baja un paciente");
-        printf("\n5-Mostrar pacientes de baja.");
+        printf("\n5-Buscar paciente.");
+        printf("\n6-Mostrar pacientes de baja. -- Dar de alta paciente eliminado");
         printf("\n------------------------------------------------------------------------------------------------------------------------------------------------------\n");
         scanf("%i",&optionswitch);
         switch(optionswitch)
@@ -75,7 +76,9 @@ void pacientesMenu() /// USAR ESTE MENU PARA PROBAR EJERCICIOS DE PACIENTE
             bajaPaciente();
             break;
         case 5:
-            printf("entra al menu,");
+            busquedaPaciente();
+            break;
+        case 6:
             mostrarEliminados();
             break;
         case 9:

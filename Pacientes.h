@@ -42,4 +42,10 @@ void cambiarMovilPaciente(int pos);
 void cambiarDNIPaciente(int pos);
 void bajaPaciente();
 
+///---
+void busquedaPaciente ();
+void busquedaPorDNI (char DNI[]);
+void busquedaPorApellido (char apellido[]);
+void altaViejoPaciente ();
+
 #endif // PACIENTES_H_INCLUDED

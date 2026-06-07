@@ -340,6 +340,18 @@ void mostrarEliminados ()
         }
     }
     fclose(archi);
+    char alta;
+    printf("Desea dar de alta alguno de estos pacientes?(S/N)\n");
+    scanf(" %c",&alta);
+    if (alta == 's' || alta == 'S')
+    {
+        altaViejoPaciente();
+    }
+    else if (alta == 'n' || alta == 'N')
+    {
+        return;
+    }
+    else printf("Tecla incorrecta.\n");
 }
 
 /// ------------------------------------------------------- M U E S T R A ///  V A L I D O S ----------------------------------------------------------///
@@ -572,12 +584,135 @@ void bajaPaciente()
     fclose(archi);
 }
 
-//void cambiarEstadoPaciente(char dni[])
-//{
-//
-//}
 
 /// ----------------------------------------------------- M O D I F I C A R    P A C I E N T E S ------------------------------------------------------ ///
+/// ----------------------------------------------------- B U S C A R ---- P A C I E N T E  ------------------------------------------------------ ///
+
+void busquedaPaciente ()
+{
+    int optionswitch = 0;
+    char DNI [10];
+    char apellido[30];
+
+   printf("Desea buscar al paciente por DNI o por apellido?\n");
+    printf("1-DNI.\n");
+    printf("2-Apellido.\n");
+    printf("0-Salir.\n");
+    scanf("%i",&optionswitch);
+    switch(optionswitch)
+    {
+    case 1:
+        printf("Ingrese el DNI.\n");
+        getchar();
+        fgets(DNI,10,stdin);
+        DNI[strcspn(DNI,"\n")] = '\0';
+        busquedaPorDNI(DNI);
+        break;
+    case 2:
+        printf("Ingrese el apellido.\n");
+        getchar();
+        fgets(apellido,30,stdin);
+        apellido [strcspn(apellido,"\n")] = '\0';
+        busquedaPorApellido(apellido);
+        break;
+    case 0:
+        printf("Regrese pronto.\n");
+        break;
+    default :
+        printf("Opcion incorrecta.\n");
+        break;
+}
+}
+
+void busquedaPorDNI (char DNI[])
+{
+    stPaciente aux;
+    FILE * archi = fopen("TestPacientes.bin","rb");
+    if (archi == NULL)
+    {
+        printf("Error al abrir archivo.\n");
+        return;
+    }
+    while (fread(&aux,sizeof(stPaciente),1,archi) > 0)
+    {
+        if (strcmpi (DNI,aux.dni) == 0)
+        {
+            printf("Paciente encontrado.\n");
+            printf("Nombre:%s\n",aux.nombre);
+            printf("Apellido:%s\n",aux.apellido);
+            printf("Celular:%s\n",aux.movil);
+            printf("ID:%i\n",aux.idPaciente);
+            printf("---------------------------------------------------------\n");
+        }
+    }
+    fclose(archi);
+}
+
+void busquedaPorApellido (char apellido[])
+{
+    stPaciente aux;
+    FILE * archi = fopen("TestPacientes.bin","rb");
+    if (archi == NULL)
+    {
+        printf("Error al abrir archivo.\n");
+        return;
+    }
+    while (fread(&aux,sizeof(stPaciente),1,archi) > 0)
+    {
+        if (strcmpi (apellido,aux.apellido) == 0)
+        {
+            printf("Paciente encontrado.\n");
+            printf("Nombre:%s\n",aux.nombre);
+            printf("Apellido:%s\n",aux.apellido);
+            printf("Celular:%s\n",aux.movil);
+            printf("ID:%i\n",aux.idPaciente);
+            printf("---------------------------------------------------------\n");
+        }
+    }
+    fclose(archi);
+}
+/// ----------------------------------------------------- B U S C A R ---- P A C I E N T E  ------------------------------------------------------ ///
+
+/// ----------------------------------------------------- A L T A --- P A C I E N T E   ------------------------------------------------------ ///
+
+void altaViejoPaciente ()
+{
+    int aux = 0;
+    int flag = 0;
+    int pos = 0;
+    int auxPos = 0;
+    stPaciente paciente;
+    stPaciente copiar;
+    FILE *archi = fopen ("TestPacientes.bin","r + b");
+    if (archi == NULL)
+    {
+        printf("Error al abrir archivo.\n");
+        return;
+    }
+//    mostrarEliminados();
+    printf("Ingrese el ID del paciente a dar el alta por favor:\n");
+    scanf("%i",&aux);
+
+    while (fread(&paciente,sizeof(stPaciente),1,archi) > 0)
+    {
+        if (aux == paciente.idPaciente)
+        {
+            auxPos = pos;
+            paciente.eliminado = 0;
+            printf("Paciente dado de alta correctamente.\n");
+            copiar = paciente;
+        }
+        else if (flag == 0)
+        {
+            printf("El paciente no fue encontrado en los registros.\n");
+        }
+         pos++;
+    }
+    fseek(archi,auxPos * sizeof(stPaciente),SEEK_SET);
+    fwrite(&copiar,sizeof(stPaciente),1,archi);
+    fclose(archi);
+}
+
 
 /// --------------------------------------- T E S T    A R C H I V O S ------------------------------------------------------------------------------ ///
 //printf("ID :%i\nNombre:%s\nApellido:%s\nDNI:%s\nMovil:%s\n\n",
