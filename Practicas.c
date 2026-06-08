@@ -16,7 +16,7 @@ stPracticas cargarUnaPractica()
         do
         {
         printf("Ingrese el nombre de la practica: ");
-        scanf("%s", unaPractica.nombre);
+        fgets(unaPractica.nombre,30,stdin);
         flag=buscarNombreIgualPractica(unaPractica.nombre,ARCHIVO_PRACTICAS);
         if(flag==1)
         {
@@ -83,19 +83,6 @@ int contarPracticas(char ArchivoPracticas[30])
     fclose(archivoPracticas);
     return cantidadDePracticas;
 }
-/**int buscarNombrePractica(stPracticas practicas, int validos)
-{
-    int flag=1;
-    for(int i=0; i<validos && flag!=0; i++)
-    {
-        int res=strcmpi(practicas[i].nombre, practicas[i+1].nombre);
-        if(res==0)
-        {
-            flag=0;
-        }
-    }
-    return flag;
-}*/
 void modificarPracticas(char ArchivoPracticas[30])
 {
       FILE *archivoPracticas=fopen(ARCHIVO_PRACTICAS,"r+b");
@@ -133,16 +120,17 @@ void darDeBajaPracticas(char ArchivoPracticas[30])
       else
       {
     int nroPractica=0;
-          printf("Ingrese una practica para dar de baja (1 a %i)", cantidadDePracticas);
+          printf("Ingrese una practica para dar de baja (idPractica).");
           scanf("%i", &nroPractica);
           int posicion=nroPractica-1;
           fseek(archivoPracticas,posicion*sizeof(stPracticas),0);
           stPracticas unaPractica;
           fread(&unaPractica,sizeof(stPracticas),1,archivoPracticas);
-          mostrarUnaPractica(unaPractica);
           unaPractica=darDeBajaUnaPractica(unaPractica);
           fseek(archivoPracticas,-sizeof(stPracticas),SEEK_CUR);
           fwrite(&unaPractica,sizeof(stPracticas),1,archivoPracticas);
+          mostrarUnaPractica(unaPractica);
+          printf("La practica seleccionada ha sido dada de baja!\n");
       }
     fclose(archivoPracticas);
 }
@@ -163,16 +151,17 @@ void darDeAltaPracticas(char ArchivoPracticas[30])
       else
       {
     int nroPractica=0;
-          printf("Ingrese una practica para dar de alta (1 a %i)", cantidadDePracticas);
+          printf("Ingrese una practica para dar de alta (idPractica).");
           scanf("%i", &nroPractica);
           int posicion=nroPractica-1;
           fseek(archivoPracticas,posicion*sizeof(stPracticas),0);
           stPracticas unaPractica;
           fread(&unaPractica,sizeof(stPracticas),1,archivoPracticas);
-          mostrarUnaPractica(unaPractica);
           unaPractica=darDeAltaUnaPractica(unaPractica);
           fseek(archivoPracticas,-sizeof(stPracticas),SEEK_CUR);
           fwrite(&unaPractica,sizeof(stPracticas),1,archivoPracticas);
+          mostrarUnaPractica(unaPractica);
+          printf("La practica seleccionada ha sido dada de alta!\n");
       }
     fclose(archivoPracticas);
 }
@@ -212,7 +201,7 @@ stPracticas menuModificarPractica(stPracticas unaPractica)
     {
         case 1:
             printf("Ingrese un nuevo nombre: ");
-            scanf("%s", unaPractica.nombre);
+            fgets(unaPractica.nombre,30,stdin);
             break;
         case 2:
             printf("Ingrese un nuevo costo: ");
