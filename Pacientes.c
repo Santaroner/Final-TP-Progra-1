@@ -858,7 +858,7 @@ void menuMostrarLaboratoriosPorPaciente ()
             laboratoriosPorPacienteID();
             break;
         case 2:
-            printf("Aca 2.\n");
+            mostrarTodosLaboratoriosPorPaciente();
             break;
         case 0:
             printf("Vuelva pronto.\n");
@@ -899,6 +899,8 @@ void mostrarLaboratoriosUnPaciente (char DNI[]) ///
     int ID = 0;
     stLaboratorios lab;
     stPaciente paciente;
+    int precio = 0;
+    int total = 0;
     while (fread(&paciente,sizeof(stPaciente),1,bin) > 0 ) /// Conseguimos el ID del paciente a traves de su DNI
     {
         if (strcmpi(DNI,paciente.dni) == 0 )
@@ -912,16 +914,18 @@ void mostrarLaboratoriosUnPaciente (char DNI[]) ///
     {
         if (lab.idPaciente == ID)
         {
-            buscarPracticasRealizadas(lab.idLab,practicaRealizada); /// Buscamos el nombre de la practica a traves de su ID
-            printf("El paciente %s se realizo : %s\n" ,DNI,practicaRealizada); /// Printeamos el nombre de la practica que el paciente se realizo
+            buscarPracticasRealizadas(lab.idLab,practicaRealizada,&precio); /// Buscamos el nombre de la practica a traves de su ID
+            mostrarUnLaboratorio(DNI,practicaRealizada,precio); /// Printeamos el nombre de la practica que el paciente se realizo
+            total += precio;
         }
     }
+    printf("El gasto total del paciente fue de :%i\n",total);
     fclose(archi);
     fclose(bin);
 }
 
 
-void buscarPracticasRealizadas(int practicaID, char practicaRealizada[])
+void buscarPracticasRealizadas(int practicaID, char practicaRealizada[],int *precio)
 {
     FILE *archi = fopen("TestPracticas.bin","rb");
     stPracticas aux;
@@ -935,13 +939,63 @@ void buscarPracticasRealizadas(int practicaID, char practicaRealizada[])
         if (practicaID == aux.idPractica)
         {
             strcpy(practicaRealizada,aux.nombre);
+            *precio = aux.costo;
 //            printf("Nombre Practica realizada: %s\nNombre aux:%s\n",practicaRealizada,aux);
         }
     }
     fclose(archi);
 }
 
+void mostrarTodosLaboratoriosPorPaciente ()
+{
+    FILE *archi = fopen("Heroes.bin","rb");
+    FILE *bin = fopen("TestLaboratorios.bin","rb");
+    stPaciente auxPaciente;
+    stLaboratorios auxLab;
+    int precio = 0;
+    char practicaRealizada[30]; /// String a traer y printear
+    if (archi == NULL || bin == NULL)
+    {
+        printf("Error al recorrer registros.\n");
+        return;
+    }
+    while (fread(&auxPaciente,sizeof(stPaciente),1,archi) > 0 )
+    {
+        fseek(bin,0,SEEK_SET);
+        if (auxPaciente.eliminado == 0)
+        {
+           while (fread(&auxLab,sizeof(stLaboratorios),1,bin) > 0 )
+        {
+            if (auxPaciente.idPaciente == auxLab.idPaciente)
+            {
+                buscarPracticasRealizadas(auxLab.practicaRealizada,practicaRealizada,&precio);
+                mostrarUnLaboratorio(auxPaciente.nombre,practicaRealizada,precio);
+            }
+        }
+        }
+    }
+    fclose(archi);
+    fclose(bin);
+}
 
+void mostrarUnLaboratorio (char nombre[], char practica[], int precio)
+{
+    printf("------------------------------------------------\n");
+    printf("Nombre del paciente:%s\n",nombre);
+    printf("Nombre de la practica:%s\n",practica);
+    printf("Precio de la practica:%i",precio);
+    printf("\n------------------------------------------------\n");
+}
+
+//stPaciente * topSpenders (stPaciente aux, int *precio , int *cantidad)
+//{
+//
+//}
+//
+////void creandoMatrix (int precio, int cantidad)
+////{
+////
+////}
 
 /// --------------------------------------- T E S T    A R C H I V O S ------------------------------------------------------------------------------ ///
 

@@ -12,7 +12,8 @@ void practicasMenu();
 int validosPacientes = 0;
 stLaboratorios *arregloDinamico = NULL;
 int validosADP;
-stPaciente *ADP = NULL;
+stPaciente *ADP = NULL; /// arreglo dinamico pacientes para funcion mostrar
+stPaciente *TSP = NULL; /// Arreglo dinamico top spenders
 stPracticas practicas[20];
 void mainMenu()
 {
@@ -59,6 +60,7 @@ void pacientesMenu() /// USAR ESTE MENU PARA PROBAR EJERCICIOS DE PACIENTE
         printf("\n5-Buscar paciente.");
         printf("\n6-Mostrar pacientes de baja. -- Dar de alta paciente eliminado");
         printf("\n7-Menu mostrar laboratorios por paciente.\n");
+        printf("Buscar pacientes con mayor gasto economico:\n");
         printf("\n\n9-Arreglo dinamico --- Ordenamiento de apellidos");
         printf("\n------------------------------------------------------------------------------------------------------------------------------------------------------\n");
         scanf("%i",&optionswitch);
@@ -87,6 +89,9 @@ void pacientesMenu() /// USAR ESTE MENU PARA PROBAR EJERCICIOS DE PACIENTE
             break;
         case 7:
             menuMostrarLaboratoriosPorPaciente();
+            break;
+        case 8:
+            printf("Buscar pacientes con mayor gasto economico:\n");
             break;
         case 9:
             ADP = activosADinamicos(&validosADP);
