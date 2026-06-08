@@ -11,6 +11,8 @@ void practicasMenu();
 /// Variables
 int validosPacientes = 0;
 stLaboratorios *arregloDinamico = NULL;
+int validosADP;
+stPaciente *ADP = NULL;
 stPracticas practicas[20];
 void mainMenu()
 {
@@ -56,6 +58,8 @@ void pacientesMenu() /// USAR ESTE MENU PARA PROBAR EJERCICIOS DE PACIENTE
         printf("\n4-Dar de baja un paciente");
         printf("\n5-Buscar paciente.");
         printf("\n6-Mostrar pacientes de baja. -- Dar de alta paciente eliminado");
+        printf("\n7-Menu mostrar laboratorios por paciente.\n");
+        printf("\n\n9-Arreglo dinamico --- Ordenamiento de apellidos");
         printf("\n------------------------------------------------------------------------------------------------------------------------------------------------------\n");
         scanf("%i",&optionswitch);
         switch(optionswitch)
@@ -81,8 +85,17 @@ void pacientesMenu() /// USAR ESTE MENU PARA PROBAR EJERCICIOS DE PACIENTE
         case 6:
             mostrarEliminados();
             break;
+        case 7:
+            menuMostrarLaboratoriosPorPaciente();
+            break;
         case 9:
-///            deletearchi();
+            ADP = activosADinamicos(&validosADP);
+            ordenamientoSeleccionChar(ADP,validosADP);
+            break;
+        case 99:
+            cargarPacientesAB();
+            cargarPracticaTest();
+            cargarLaboTest();
             break;
         case 0:
             printf("Vuelva pronto.\n");

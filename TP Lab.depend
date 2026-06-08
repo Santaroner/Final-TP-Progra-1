@@ -329,7 +329,7 @@
 	"Practicas.h"
 	"Laboratorios.h"
 
-1780782197 source:c:\users\rafa\documents\tp final ras\tp lab\final-tp-progra-1\laboratorios.c
+1780891984 source:c:\users\rafa\documents\tp final ras\tp lab\final-tp-progra-1\laboratorios.c
 	<stdio.h>
 	<string.h>
 	<stdlib.h>
@@ -338,7 +338,7 @@
 	"Utilities.h"
 	"Practicas.h"
 
-1780789947 c:\users\rafa\documents\tp final ras\tp lab\final-tp-progra-1\pacientes.h
+1780892824 c:\users\rafa\documents\tp final ras\tp lab\final-tp-progra-1\pacientes.h
 	<stdio.h>
 	<string.h>
 	<ctype.h>
@@ -349,7 +349,7 @@
 	"Practicas.h"
 	"Laboratorios.h"
 
-1780783963 c:\users\rafa\documents\tp final ras\tp lab\final-tp-progra-1\practicas.h
+1780868270 c:\users\rafa\documents\tp final ras\tp lab\final-tp-progra-1\practicas.h
 	"Utilities.h"
 	"Pacientes.h"
 	<stdio.h>
@@ -384,7 +384,7 @@
 	"Practicas.h"
 	"Utilities.h"
 
-1780790775 source:c:\users\rafa\documents\tp final ras\tp lab\final-tp-progra-1\pacientes.c
+1780892551 source:c:\users\rafa\documents\tp final ras\tp lab\final-tp-progra-1\pacientes.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
@@ -392,18 +392,18 @@
 	"Pacientes.h"
 	"Utilities.h"
 
-1780778718 source:c:\users\rafa\documents\tp final ras\tp lab\final-tp-progra-1\utilities.c
+1780885514 source:c:\users\rafa\documents\tp final ras\tp lab\final-tp-progra-1\utilities.c
 	<stdio.h>
 	"Pacientes.h"
 	"Practicas.h"
 	"Laboratorios.h"
 	"Menus.h"
 
-1780789790 source:c:\users\rafa\documents\tp final ras\tp lab\final-tp-progra-1\menus.c
+1780892596 source:c:\users\rafa\documents\tp final ras\tp lab\final-tp-progra-1\menus.c
 	"Pacientes.h"
 	"Practicas.h"
 	<stdio.h>
 
-1780783963 source:c:\users\rafa\documents\tp final ras\tp lab\final-tp-progra-1\practicas.c
+1780868270 source:c:\users\rafa\documents\tp final ras\tp lab\final-tp-progra-1\practicas.c
 	"Practicas.h"
 

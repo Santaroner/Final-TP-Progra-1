@@ -18,14 +18,14 @@ typedef struct
 void cargarPacientes(); /// Bucle para cargar pacientes
 void cargaPaciente();  /// Llama a las diferentes funciones con validaciones y integra los datos en el archivo
 
-/// -------------------------- C A R G A   P A C I E N T E S -------------------------------------------------------- ///
+/// --------------------------------------------------------- C A R G A   P A C I E N T E S -------------------------------------------------------- ///
  int cargarIDPaciente ();
  void cargarNombrePaciente(char nombre[30]);
  void cargarApellidoPaciente(char apellido[]);
  void cargarDNIPaciente(char DNI[]);
  void cargarMovilPaciente(char movil[]);
  int cargarEstadoPaciente();
-/// -------------------------- M U E S T R A  //// V A L I D O S  -------------------------------------------------------- ///
+/// ------------------------------------------------------- M U E S T R A  //// V A L I D O S  -------------------------------------------------------- ///
  void mostrarPacientes(stPaciente *pacientes,int validos);
  int validarDNI (char DNI[]);
  int mostrarArchivo();
@@ -42,10 +42,34 @@ void cambiarMovilPaciente(int pos);
 void cambiarDNIPaciente(int pos);
 void bajaPaciente();
 
-///---
+/// ----------------------------------------------------- B U S Q U E D A      P A C I E N T E S  ----------------------------------------------------- ///
 void busquedaPaciente ();
-void busquedaPorDNI (char DNI[]);
-void busquedaPorApellido (char apellido[]);
+int busquedaPorDNI (char DNI[]);
+int busquedaPorApellido (char apellido[]);
 void altaViejoPaciente ();
+
+/// ----------------------------------------------------- O R D E N A M I E N T O /// A R R E G L O --- D I N A M I C O -------------------------------------------------- ///
+stPaciente * activosADinamicos (int *validosADP);
+stPaciente * creandoAD (stPaciente paciente, int *validosADP,stPaciente *ADP);
+void mostrarADP (stPaciente *aux, int *validosADP);
+int findMinorChar(stPaciente * ADR, int validosADP, int posicion);
+void ordenamientoSeleccionChar(stPaciente *ADR,int validosADR);
+
+/// ----------------------------------------  -------------------------------------------------- ///
+
+void menuMostrarLaboratoriosPorPaciente ();
+void laboratoriosPorPacienteID ();
+void mostrarLaboratoriosPorPacientes (int ID);
+void mostrarLaboratoriosUnPaciente (char DNI[]);
+void buscarPracticasRealizadas(int practicaID, char practicaRealizada[]); /// Devuelve el nombre de la practica a mostrarLaboratoriosPorPaciente
+
+
+/// ----- Carga de archivos para test
+void cargarPacientesAB(); /// Heroes
+void cargarPracticaTest(); /// Carga 15 practicas
+void cargarLaboTest(); /// Carga 40 laboratorios
+
+
+
 
 #endif // PACIENTES_H_INCLUDED

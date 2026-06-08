@@ -100,3 +100,5 @@ int getIDVLaboratorio()
     fclose(archi);
     return IDAux;
 }
+
+/// ----------------------------- PRE CARGA PARA TEST DE ARCHIVOS
