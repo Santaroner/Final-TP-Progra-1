@@ -7,34 +7,51 @@ int generaId() ///
     ///printf("ID VALE :%i",id);
     return id;
 }
-
+void ingreseNombre(char nombre[30])
+{
+    int flag=0;
+    do
+    {
+        printf("Ingrese el nombre de la practica: ");
+        getchar();
+        fgets(nombre,30,stdin);
+        nombre [strcspn(nombre,"\n")] = '\0';
+        flag=buscarNombreIgualPractica(nombre,ARCHIVO_PRACTICAS);
+        if(flag==1)
+        {
+            printf("La practica que quiere cargar ya esta ingresada, ingrese otra.\n");
+        }
+    }
+    while(flag==1);
+}
+int ingreseCosto(int costo)
+{
+    do
+    {
+        printf("Ingrese el costo de la practica (1000$ a 10000$): ");
+        scanf("%i", &costo);
+        if(costo<1000 || costo>10000)
+        {
+            printf("Error, el costo debe estar entre $1000 y $10000.\n");
+        }
+    }
+    while(costo<1000 || costo>10000);
+    return costo;
+}
+int ingreseBaja(int baja)
+{
+    printf("Esta de baja la practica(1) o esta activa(0)? ");
+    scanf("%i", &baja);
+    return baja;
+}
 stPracticas cargarUnaPractica()
 {
         stPracticas unaPractica;
         int flag=0;
         unaPractica.idPractica=generaId();
-        do
-        {
-        printf("Ingrese el nombre de la practica: ");
-        fgets(unaPractica.nombre,30,stdin);
-        flag=buscarNombreIgualPractica(unaPractica.nombre,ARCHIVO_PRACTICAS);
-        if(flag==1)
-        {
-            printf("La practica que quiere cargar ya esta ingresada, ingrese otra.\n");
-        }
-        }while(flag==1);
-        do
-        {
-        printf("Ingrese el costo de la practica (1000$ a 10000$): ");
-        scanf("%i", &unaPractica.costo);
-        if(unaPractica.costo<1000 || unaPractica.costo>10000)
-        {
-            printf("Error, el costo debe estar entre $1000 y $10000.\n");
-        }
-        }while(unaPractica.costo<1000 || unaPractica.costo>10000);
-        printf("Esta de baja la practica(1) o esta activa(0)? ");
-        scanf("%i", &unaPractica.baja);
-
+        ingreseNombre(unaPractica.nombre);
+        unaPractica.costo=ingreseCosto(unaPractica.costo);
+        unaPractica.baja=ingreseBaja(unaPractica.baja);
         return unaPractica;
 }
 
@@ -54,6 +71,16 @@ void cargarPracticas(char ArchivoPracticas[30])
         validos++;
         fclose(archi_Practicas);
     }
+}
+stPracticas *crearArregloDinamicoPracticas(char ArchivoPracticas[30])
+{
+    int cantPracticas=contarPracticas(ARCHIVO_PRACTICAS);
+    stPracticas *arregloDinamicoPracticas=(stPracticas *)malloc(cantPracticas*sizeof(stPracticas));
+    return arregloDinamicoPracticas;
+}
+void traspasoDatos(stPracticas *arregloDinamicoPracticas, int cantPracticas)
+{
+
 }
 int buscarNombreIgualPractica(char nombrePractica[30], char ArchivoPracticas[30])
 {
@@ -83,6 +110,64 @@ int contarPracticas(char ArchivoPracticas[30])
     fclose(archivoPracticas);
     return cantidadDePracticas;
 }
+void mostrarPracticas(char ArchivoPracticas[30])
+{
+    FILE *archi_Practicas=fopen(ArchivoPracticas, "rb");
+    stPracticas practicasAux;
+    while((fread(&practicasAux, sizeof(stPracticas), 1, archi_Practicas)) > 0)
+    {
+        mostrarUnaPractica(practicasAux);
+    }
+
+    fclose(archi_Practicas);
+}
+void mostrarUnaPractica(stPracticas practicasAux)
+{
+    printf("idPractica: %i\n", practicasAux.idPractica);
+    printf("Nombre: %s\n", practicasAux.nombre);
+    printf("Costo: %i\n", practicasAux.costo);
+    printf("Baja (0 activo, 1 baja): %i\n", practicasAux.baja);
+}
+void mostrarPracticasAlta(char archivoPracticas[30])
+{
+    FILE *archi_Practicas=fopen(archivoPracticas, "rb");
+    stPracticas practicasAux;
+    while((fread(&practicasAux, sizeof(stPracticas), 1, archi_Practicas)) > 0)
+    {
+        mostrarUnaPracticaAlta(practicasAux);
+    }
+    fclose(archi_Practicas);
+}
+void mostrarPracticasBaja(char archivoPracticas[30])
+{
+    FILE *archi_Practicas=fopen(archivoPracticas, "rb");
+    stPracticas practicasAux;
+    while((fread(&practicasAux, sizeof(stPracticas), 1, archi_Practicas)) > 0)
+    {
+        mostrarUnaPracticaBaja(practicasAux);
+    }
+    fclose(archi_Practicas);
+}
+void mostrarUnaPracticaAlta(stPracticas practicasAux)
+{
+    if(practicasAux.baja==0)
+    {
+    printf("idPractica: %i\n", practicasAux.idPractica);
+    printf("Nombre: %s\n", practicasAux.nombre);
+    printf("Costo: %i\n", practicasAux.costo);
+    printf("Baja (0 activo, 1 baja): %i\n", practicasAux.baja);
+    }
+}
+void mostrarUnaPracticaBaja(stPracticas practicasAux)
+{
+    if(practicasAux.baja==1)
+    {
+    printf("idPractica: %i\n", practicasAux.idPractica);
+    printf("Nombre: %s\n", practicasAux.nombre);
+    printf("Costo: %i\n", practicasAux.costo);
+    printf("Baja (0 activo, 1 baja): %i\n", practicasAux.baja);
+    }
+}
 void modificarPracticas(char ArchivoPracticas[30])
 {
       FILE *archivoPracticas=fopen(ARCHIVO_PRACTICAS,"r+b");
@@ -107,6 +192,35 @@ void modificarPracticas(char ArchivoPracticas[30])
           fwrite(&unaPractica,sizeof(stPracticas),1,archivoPracticas);
       }
       fclose(archivoPracticas);
+}
+stPracticas menuModificarPractica(stPracticas unaPractica)
+{
+    int opcion=0;
+    do
+    {
+    printf("Elija un dato para modificar:\n1-Nombre\n2-Costo\n0-Salir");
+    scanf("%i",&opcion);
+    switch(opcion)
+    {
+        case 1:
+            printf("Ingrese un nuevo nombre: ");
+            getchar();
+            fgets(unaPractica.nombre,30,stdin);
+            unaPractica.nombre [strcspn(unaPractica.nombre,"\n")] = '\0';
+            break;
+        case 2:
+            printf("Ingrese un nuevo costo: ");
+            scanf("%i", &unaPractica.costo);
+            break;
+        case 0:
+            printf("Vuelva pronto.\n");
+            break;
+        default:
+            printf("Ingrese una opcion correcta(0 a 2)");
+            break;
+    }
+    }while(opcion!=0);
+    return unaPractica;
 }
 void darDeBajaPracticas(char ArchivoPracticas[30])
 {
@@ -170,96 +284,7 @@ stPracticas darDeAltaUnaPractica(stPracticas unaPractica)
     unaPractica.baja=0;
     return unaPractica;
 }
-void mostrarPracticasAlta(char archivoPracticas[30])
-{
-    FILE *archi_Practicas=fopen(archivoPracticas, "rb");
-    stPracticas practicasAux;
-    while((fread(&practicasAux, sizeof(stPracticas), 1, archi_Practicas)) > 0)
-    {
-        mostrarUnaPracticaAlta(practicasAux);
-    }
-    fclose(archi_Practicas);
-}
-void mostrarPracticasBaja(char archivoPracticas[30])
-{
-    FILE *archi_Practicas=fopen(archivoPracticas, "rb");
-    stPracticas practicasAux;
-    while((fread(&practicasAux, sizeof(stPracticas), 1, archi_Practicas)) > 0)
-    {
-        mostrarUnaPracticaBaja(practicasAux);
-    }
-    fclose(archi_Practicas);
-}
-stPracticas menuModificarPractica(stPracticas unaPractica)
-{
-    int opcion=0;
-    do
-    {
-    printf("Elija un dato para modificar (1-Nombre\n2-Costo\n3-Baja\n0-Salir)");
-    scanf("%i",&opcion);
-    switch(opcion)
-    {
-        case 1:
-            printf("Ingrese un nuevo nombre: ");
-            fgets(unaPractica.nombre,30,stdin);
-            break;
-        case 2:
-            printf("Ingrese un nuevo costo: ");
-            scanf("%i", &unaPractica.costo);
-            break;
-        case 3:
-            printf("Ingrese nueva baja(0 activo, 1 baja): ");
-            scanf("%i", &unaPractica.baja);
-            break;
-        case 0:
-            printf("Vuelva pronto.\n");
-            break;
-        default:
-            printf("Ingrese una opcion correcta(0 a 3)");
-            break;
-    }
-    }while(opcion!=0);
-    return unaPractica;
-}
-void mostrarPracticas(char ArchivoPracticas[30])
-{
-    FILE *archi_Practicas=fopen(ArchivoPracticas, "rb");
-    stPracticas practicasAux;
-    while((fread(&practicasAux, sizeof(stPracticas), 1, archi_Practicas)) > 0)
-    {
-        mostrarUnaPractica(practicasAux);
-    }
 
-    fclose(archi_Practicas);
-}
-void mostrarUnaPractica(stPracticas practicasAux)
-{
-    printf("idPractica: %i\n", practicasAux.idPractica);
-    printf("Nombre: %s\n", practicasAux.nombre);
-    printf("Costo: %i\n", practicasAux.costo);
-    printf("Baja (0 activo, 1 baja): %i\n", practicasAux.baja);
-}
-
-void mostrarUnaPracticaAlta(stPracticas practicasAux)
-{
-    if(practicasAux.baja==0)
-    {
-    printf("idPractica: %i\n", practicasAux.idPractica);
-    printf("Nombre: %s\n", practicasAux.nombre);
-    printf("Costo: %i\n", practicasAux.costo);
-    printf("Baja (0 activo, 1 baja): %i\n", practicasAux.baja);
-    }
-}
-void mostrarUnaPracticaBaja(stPracticas practicasAux)
-{
-    if(practicasAux.baja==1)
-    {
-    printf("idPractica: %i\n", practicasAux.idPractica);
-    printf("Nombre: %s\n", practicasAux.nombre);
-    printf("Costo: %i\n", practicasAux.costo);
-    printf("Baja (0 activo, 1 baja): %i\n", practicasAux.baja);
-    }
-}
 
 /// -------------------------------------- T E S T /// R A  F A /// ------------------------------------------ ///
 
