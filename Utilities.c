@@ -102,3 +102,37 @@ int getIDVLaboratorio()
 }
 
 /// ----------------------------- PRE CARGA PARA TEST DE ARCHIVOS
+
+
+/// -------------- FUNCIONES ANTI ADRIAN ---- solo numeros ///
+
+int ingresarSoloLetrasSinEspacios (char palabra[]) /// Ingreso solo letras SIN espacios
+{
+    int i = 0;
+
+    while (palabra [i] != '\0' && palabra[i] != ' \n')  /// '\0' Cuando llega al final del arreglo
+    {
+        if(!isalpha(palabra[i]) ) /// Isalpha es verdadero cuando el caracter no es una letra - por eso ! --- palabra[i] != ' ' para que no se ingresen espacios. Valido para DNI, nombre, celular
+        {
+            return 0; /// Si retorna 0 es falso
+        }
+        i++;
+    }
+    return 1; /// Si no hizo return en el 0, es verdadero.
+}
+
+int ingresarSoloNumerosEnArreglo (char numeros[])
+{
+    int i = 0;
+
+    while (numeros[i] != '\0' && numeros[i] != '\n') /// Mientras no haya \n o \0
+    {
+        if (!isdigit(numeros[i]))
+        {
+            return 0;
+        }
+        i++;
+    }
+    return 1;
+}
+

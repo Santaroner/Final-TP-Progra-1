@@ -10,4 +10,8 @@ int getIDVPacientes();
 int getIDVPracticas();
 int getIDVLaboratorio();
 
+/// Validaciones
+int ingresarSoloLetrasSinEspacios (char palabra[]);
+int ingresarSoloNumerosEnArreglo (char numeros[]);
+
 #endif // UTILITIES_H_INCLUDED

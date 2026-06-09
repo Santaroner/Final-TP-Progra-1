@@ -87,9 +87,12 @@ void cargarNombrePaciente(char nombre[30])
         if (strchr(aux,'\n') != NULL) /// Si se ingresan mas de 30 letras fgets no tiene espacio para \n por lo que la condicion no se cumple
         {
             aux [strcspn(aux,"\n" )] = '\0';
-            printf("Nombre guardado.\n"); /// test ------------------------------------------------------------------- borrar deps
-            strcpy(nombre,aux);
-            flag = 1; /// Si se cambia la flag es porque es ingreso el nombre correctamente > fin de bucle
+            if (ingresarSoloLetrasSinEspacios(aux) == 1)
+            {
+                printf("Gracias por ingresar solo letras..\n");
+                strcpy(nombre,aux);
+                flag = 1;
+            } else printf("Error.\n");
         }
         else
         {
@@ -133,17 +136,22 @@ void cargarDNIPaciente(char DNI[])
         fgets(aux,10,stdin);
         aux [strcspn(aux,"\n" )] = '\0';
         validar = validarDNI(aux); /// Si devuelve 1 el DNI no está duplicado
-//        if (strchr(aux,'\n') != NULL && strlen(aux) > 1 ) /// Si se ingresan mas de 10 letras fgets no tiene espacio para \n por lo que la condicion no se cumple
         if (strlen(aux) > 0 && strlen(aux) < 10) /// Si se ingresan mas de 10 letras fgets no tiene espacio para \n por lo que la condicion no se cumple
         {
             if (validar == 1)
             {
                 aux [strcspn(aux,"\n" )] = '\0';
-                printf("DNI guardado.\n"); /// test ------------------------------------------------------------------- borrar deps
-                strcpy(DNI,aux);
-                flag = 1; /// Si se cambia la flag es porque es ingreso el DNI correctamente > fin de bucle
+                {
+                    if (ingresarSoloNumerosEnArreglo(aux) == 1)
+                    {
+                        printf("Gracias por ingresar solamente numeros...\n");
+                        printf("DNI guardado.\n"); /// test ------------------------------------------------------------------- borrar deps
+                        strcpy(DNI,aux);
+                        flag = 1; /// Si se cambia la flag es porque es ingreso el DNI correctamente > fin de bucle
+                    }
+                    else printf("Intente de nuevo, solamente se pueden ingresar numeros en el dni :) \n");
+                }
             }
-//            } else {validar = validarDNI(aux);}
         }
         else
         {
@@ -163,9 +171,14 @@ void cargarMovilPaciente(char movil[])
         if (strchr(aux,'\n') != NULL) /// Si se ingresan mas de 12 letras fgets no tiene espacio para \n por lo que la condicion no se cumple
         {
             aux [strcspn(aux,"\n" )] = '\0';
-            printf("Celular guardado.\n"); /// test ------------------------------------------------------------------- borrar deps
-            strcpy(movil,aux);
-            flag = 1; /// Si se cambia la flag es porque es ingreso el nombre correctamente > fin de bucle
+            if (ingresarSoloNumerosEnArreglo(aux) == 1)
+            {
+                printf("Gracias por ingresar solo numeros...\n"); /// TEST BORRAR DESPUES
+                printf("Celular guardado.\n"); /// test ------------------------------------------------------------------- borrar deps
+                strcpy(movil,aux);
+                flag = 1; /// Si se cambia la flag es porque es ingreso el nombre correctamente > fin de bucle
+            }
+            else printf("Intente de nuevo, ingresando solamente numeros en el celular :) \n");
         }
         else
         {
@@ -433,8 +446,12 @@ void cambiarNombrePaciente(int pos)
         if (strchr(aux,'\n') != NULL) ///
         {
             aux [strcspn(aux, "\n")] = '\0';
-            printf("Nombre dentro de los parametros acordados\n");
-            flag = 1;
+            if (ingresarSoloLetrasSinEspacios(aux) == 1)
+            {
+                printf("Nombre dentro de los parametros acordados\n");
+                flag = 1;
+            } else printf("Ingrese solamente letras por favor :) \n");
+
         }
         else
         {
@@ -466,8 +483,11 @@ void cambiarApellidoPaciente(int pos)
         if (strchr(nuevoApellido,'\n') != NULL)
         {
             nuevoApellido [strcspn(nuevoApellido, "\n")] = '\0';
-            printf("Apellido dentro de los parametros acordados\n");
-            flag = 1;
+            if (ingresarSoloLetrasSinEspacios(nuevoApellido) == 1)
+            {
+                printf("Nombre dentro de los parametros acordados\n");
+                flag = 1;
+            } else printf("Ingrese solamente letras por favor :) \n");
         }
         else
         {
@@ -505,8 +525,12 @@ void cambiarMovilPaciente(int pos)
         if (strchr(nuevoMovil,'\n') != NULL)
         {
             nuevoMovil [strcspn(nuevoMovil, "\n")] = '\0';
-            printf("Nombre dentro de los parametros acordados\n");
-            flag = 1;
+            {
+                if (ingresarSoloNumerosEnArreglo(nuevoMovil) == 1)
+                {
+                    flag = 1;
+                } else printf("Ingrese solo numeros por favor... :) \n");
+            }
         }
         else
         {
@@ -537,7 +561,10 @@ void cambiarDNIPaciente(int pos)
         if (strchr(nuevoDNI,'\n') != NULL )
         {
             nuevoDNI[strcspn(nuevoDNI, "\n")] = '\0';
-            flag = 1;
+            if (ingresarSoloNumerosEnArreglo(nuevoDNI) == 1)
+            {
+                flag = 1;
+            } else printf("Ingrese solo numeros por favor... :) \n");
         }
         else
         {
@@ -986,16 +1013,6 @@ void mostrarUnLaboratorio (char nombre[], char practica[], int precio)
     printf("Precio de la practica:%i",precio);
     printf("\n------------------------------------------------\n");
 }
-
-//stPaciente * topSpenders (stPaciente aux, int *precio , int *cantidad)
-//{
-//
-//}
-//
-////void creandoMatrix (int precio, int cantidad)
-////{
-////
-////}
 
 /// --------------------------------------- T E S T    A R C H I V O S ------------------------------------------------------------------------------ ///
 
