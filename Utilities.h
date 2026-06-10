@@ -3,6 +3,8 @@
 #include "Pacientes.h"
 #include "Practicas.h"
 #include "Laboratorios.h"
+#include <ctype.h>
+#include <string.h>
 int GetIDPacientes (); /// Autoincremental ID pacientes
 int compararIDLP (int num);
 int getIDValids(FILE *archi);
@@ -13,5 +15,6 @@ int getIDVLaboratorio();
 /// Validaciones
 int ingresarSoloLetrasSinEspacios (char palabra[]);
 int ingresarSoloNumerosEnArreglo (char numeros[]);
+int ingresarSoloNumeros (int numeros); ///
 
 #endif // UTILITIES_H_INCLUDED

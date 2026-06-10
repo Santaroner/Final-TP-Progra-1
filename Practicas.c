@@ -47,7 +47,6 @@ int ingreseBaja(int baja)
 stPracticas cargarUnaPractica()
 {
         stPracticas unaPractica;
-        int flag=0;
         unaPractica.idPractica=generaId();
         ingreseNombre(unaPractica.nombre);
         unaPractica.costo=ingreseCosto(unaPractica.costo);

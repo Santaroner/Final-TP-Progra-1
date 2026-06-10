@@ -20,6 +20,7 @@ void mainMenu()
     int optionswitch = 0;
     do
 {
+    system("cls");
     printf("\n------------------------------------------------------------------------------------------------------------------------------------------------------");
     printf("\n1-Pacientes");
     printf("\n2-Laboratorios");
@@ -52,6 +53,7 @@ void pacientesMenu() /// USAR ESTE MENU PARA PROBAR EJERCICIOS DE PACIENTE
     int optionswitch = 0;
     do
     {
+//        system("cls");
         printf("\n------------------------------------------------------------------------------------------------------------------------------------------------------");
         printf("\n1-Cargar paciente");
         printf("\n2-Mostrar Pacientes.");
@@ -62,6 +64,7 @@ void pacientesMenu() /// USAR ESTE MENU PARA PROBAR EJERCICIOS DE PACIENTE
         printf("\n7-Menu mostrar laboratorios por paciente.\n");
         printf("Buscar pacientes con mayor gasto economico:\n");
         printf("\n\n9-Arreglo dinamico --- Ordenamiento de apellidos");
+        printf("\n0-Volver al menu anterior.");
         printf("\n------------------------------------------------------------------------------------------------------------------------------------------------------\n");
         scanf("%i",&optionswitch);
         switch(optionswitch)
@@ -121,6 +124,7 @@ void laboratoriosMenu() /// USAR ESTE MENU PARA PROBAR EJERCICIOS DE LABORATORIO
     int optionswitch = 0;
     do
     {
+        system("cls");
         printf("1-Cargar laboratorio  1\n2-Ejercicio 2\n3-Ejercicio 3\n88-Archivo precargado Practicas\n99-Archivo precargado pacientes\n0-Salir");
         scanf("%i",&optionswitch);
         switch(optionswitch)
@@ -155,6 +159,7 @@ void practicasMenu() /// USAR ESTE MENU PARA PROBAR EJERCICIOS DE PRACTICA
     int optionswitch = 0;
     do
     {
+        system("cls");
         printf("1-Cargar practica\n2-Modificar practica\n3-Dar de baja una practica\n4-Dar de alta una practica\n5-Mostrar listado de practicas \n0-Salir\n");
         scanf("%i",&optionswitch);
         switch(optionswitch)

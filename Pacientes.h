@@ -61,9 +61,8 @@ void menuMostrarLaboratoriosPorPaciente ();
 void laboratoriosPorPacienteID ();
 //void mostrarLaboratoriosPorPacientes (int ID);
 void mostrarLaboratoriosUnPaciente (char DNI[]);
-void buscarPracticasRealizadas(int practicaID, char practicaRealizada[],int *precio); /// Devuelve el nombre de la practica a mostrarLaboratoriosPorPaciente
+void mostrarUnLaboratorio (char nombre[], char practica[], int precio, int anio , int mes, int dia); /// Devuelve el nombre de la practica a mostrarLaboratoriosPorPaciente
 void mostrarTodosLaboratoriosPorPaciente ();
-void mostrarUnLaboratorio (char nombre[], char practica[], int precio);
 
 
 /// ----- Carga de archivos para test

@@ -54,7 +54,7 @@ int compararIDLP (int num)
             fclose(archi);
             return 0;
         }
-        else printf("Buscando id en el bucle.\”");
+        else printf("Buscando id en el bucle.\n");
     }
     fclose(archi);
     return 1;
@@ -135,4 +135,22 @@ int ingresarSoloNumerosEnArreglo (char numeros[])
     }
     return 1;
 }
+
+int ingresarSoloNumeros (int numeros)
+{
+    while (numeros != '\0' && numeros != '\n') /// Mientras no haya \n o \0
+    {
+        if (!isdigit(numeros))
+        {
+            return 0;
+        }
+    }
+    return 1;
+}
+
+/// VALIDACIONES
+
+
+/// --------------------------------------- T E S T    A R C H I V O S ------------------------------------------------------------------------------ ///
+
 
