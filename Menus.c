@@ -11,12 +11,16 @@ void practicasMenu();
 /// Variables
 int validosPacientes = 0;
 stLaboratorios *arregloDinamico = NULL;
+int validosADP;
+stPaciente *ADP = NULL; /// arreglo dinamico pacientes para funcion mostrar
+stPaciente *TSP = NULL; /// Arreglo dinamico top spenders
 stPracticas practicas[20];
 void mainMenu()
 {
     int optionswitch = 0;
     do
 {
+    system("cls");
     printf("\n------------------------------------------------------------------------------------------------------------------------------------------------------");
     printf("\n1-Pacientes");
     printf("\n2-Laboratorios");
@@ -49,6 +53,7 @@ void pacientesMenu() /// USAR ESTE MENU PARA PROBAR EJERCICIOS DE PACIENTE
     int optionswitch = 0;
     do
     {
+//        system("cls");
         printf("\n------------------------------------------------------------------------------------------------------------------------------------------------------");
         printf("\n1-Cargar paciente");
         printf("\n2-Mostrar Pacientes.");
@@ -56,6 +61,10 @@ void pacientesMenu() /// USAR ESTE MENU PARA PROBAR EJERCICIOS DE PACIENTE
         printf("\n4-Dar de baja un paciente");
         printf("\n5-Buscar paciente.");
         printf("\n6-Mostrar pacientes de baja. -- Dar de alta paciente eliminado");
+        printf("\n7-Menu mostrar laboratorios por paciente.\n");
+        printf("Buscar pacientes con mayor gasto economico:\n");
+        printf("\n\n9-Arreglo dinamico --- Ordenamiento de apellidos");
+        printf("\n0-Volver al menu anterior.");
         printf("\n------------------------------------------------------------------------------------------------------------------------------------------------------\n");
         scanf("%i",&optionswitch);
         switch(optionswitch)
@@ -81,8 +90,20 @@ void pacientesMenu() /// USAR ESTE MENU PARA PROBAR EJERCICIOS DE PACIENTE
         case 6:
             mostrarEliminados();
             break;
+        case 7:
+            menuMostrarLaboratoriosPorPaciente();
+            break;
+        case 8:
+            printf("Buscar pacientes con mayor gasto economico:\n");
+            break;
         case 9:
-///            deletearchi();
+            ADP = activosADinamicos(&validosADP);
+            ordenamientoSeleccionChar(ADP,validosADP);
+            break;
+        case 99:
+            cargarPacientesAB();
+            cargarPracticaTest();
+            cargarLaboTest();
             break;
         case 0:
             printf("Vuelva pronto.\n");
@@ -103,6 +124,7 @@ void laboratoriosMenu() /// USAR ESTE MENU PARA PROBAR EJERCICIOS DE LABORATORIO
     int optionswitch = 0;
     do
     {
+        system("cls");
         printf("1-Cargar laboratorio  1\n2-Ejercicio 2\n3-Ejercicio 3\n88-Archivo precargado Practicas\n99-Archivo precargado pacientes\n0-Salir");
         scanf("%i",&optionswitch);
         switch(optionswitch)
@@ -137,6 +159,7 @@ void practicasMenu() /// USAR ESTE MENU PARA PROBAR EJERCICIOS DE PRACTICA
     int optionswitch = 0;
     do
     {
+        system("cls");
         printf("1-Cargar practica\n2-Modificar practica\n3-Dar de baja una practica\n4-Dar de alta una practica\n5-Mostrar listado de practicas \n0-Salir\n");
         scanf("%i",&optionswitch);
         switch(optionswitch)
