@@ -21,10 +21,12 @@ typedef struct
 
  void cargarLaboratorio(stLaboratorios *lab);
  stLaboratorios * cargarLaboratorios();
- int validarFecha(int anio, int mes, int dia);
- void mostrarLaboratorios(stLaboratorios *laboratorios,int validosL);
+ //int validarFecha(int anio, int mes, int dia);
+ void mostrarLaboratorios(stLaboratorios *laboratorios,int validosL); // muestra
+ void mostrarLaboratoriosArchivo(); // muestra
+ void bajaLaboratorio(); // baja logica
 
- ///
+ /// Validar fecha
  int validarAnio();
  int validarMes();
  int validarDia(int mes);
