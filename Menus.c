@@ -9,7 +9,9 @@ void laboratoriosMenu();
 void practicasMenu();
 
 /// Variables
+int validosArregloPracticas=0;
 int validosPacientes = 0;
+stPracticas *arregloDinamicoPracticas=NULL;
 stLaboratorios *arregloDinamico = NULL;
 int validosADP;
 stPaciente *ADP = NULL; /// arreglo dinamico pacientes para funcion mostrar
@@ -165,14 +167,16 @@ void practicasMenu() /// USAR ESTE MENU PARA PROBAR EJERCICIOS DE PRACTICA
         switch(optionswitch)
         {
         case 1:
-            cargarPracticas(ARCHIVO_PRACTICAS);
+            arregloDinamicoPracticas=cargarArregloDinamicoPracticas(ARCHIVO_PRACTICAS,arregloDinamicoPracticas,&validosArregloPracticas);
+            cargarPracticas(ARCHIVO_PRACTICAS,arregloDinamicoPracticas,&validosArregloPracticas);
 ///            validos=cargarPracticas("PracticasSanti.bin");
             break;
         case 2:
             modificarPracticas(ARCHIVO_PRACTICAS);
             break;
         case 3:
-            darDeBajaPracticas(ARCHIVO_PRACTICAS);
+//            darDeBajaPracticas(ARCHIVO_PRACTICAS);
+              muestraArreglo(arregloDinamicoPracticas,&validosArregloPracticas);
             break;
         case 4:
             darDeAltaPracticas(ARCHIVO_PRACTICAS);

@@ -26,11 +26,13 @@ void ingreseNombre(char nombre[30]);
 int ingreseCosto(int costo);
 int ingreseBaja(int baja);
 stPracticas cargarUnaPractica();
-void cargarPracticas(char ArchivoPracticas[30]);
+void cargarPracticas(char ArchivoPracticas[30], stPracticas *arregloDinamicoPracticas, int *validosArregloPracticas);
+void cargarPracticaEnArchivo(char ArchivoPracticas[30], stPracticas unaPractica, int *validosArregloPracticas);
 
 /// ------ C R E A C I O N  Y  C A R G A  D E  A R R E G L O  D I N A M I C O ------- ///
-stPracticas *crearArregloDinamicoPracticas(char ArchivoPracticas[30]);
-void traspasoDatos(stPracticas *arregloDinamicoPracticas, int cantPracticas);
+stPracticas *cargarArregloDinamicoPracticas(char ArchivoPracticas[30], stPracticas *arregloDinamicoPracticas, int *validosArregloPracticas);
+void traspasoDatos(stPracticas *arregloDinamicoPracticas, char ArchivoPracticas[30], int *validosArregloPracticas);
+void muestraArreglo(stPracticas *arregloDinamicoPracticas, int *validosArregloPracticas);
 
 /// --------------------------- V A L I D A C I O N E S -------------------------- ///
 int buscarNombreIgualPractica(char nombrePractica[30], char ArchivoPracticas[30]);

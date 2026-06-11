@@ -9,6 +9,11 @@
 
 int main()
 {
+//    int validosArregloPracticas=0;
+//    stPracticas *arregloDinamicoPracticas=crearArregloDinamicoPracticas(ARCHIVO_PRACTICAS,&validosArregloPracticas);
+//    printf("%s",arregloDinamicoPracticas[7].nombre);
+//    printf("Validos vale %i", validosArregloPracticas);
+//    system("pause");
     mainMenu();
 
     return 0;

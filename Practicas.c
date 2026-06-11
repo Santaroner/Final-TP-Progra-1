@@ -54,32 +54,69 @@ stPracticas cargarUnaPractica()
         return unaPractica;
 }
 
-void cargarPracticas(char ArchivoPracticas[30])
+
+void cargarPracticas(char ArchivoPracticas[30], stPracticas *arregloDinamicoPracticas, int *validosArregloPracticas)
 {
     char seguir='s';
     stPracticas nuevaPractica;
-
+    int i=*validosArregloPracticas;
     while(seguir=='s')
     {
         ///FILE *archi_Practicas=fopen(ArchivoPracticas, "ab"); /// si se declara el archivo arriba y se cierra despues del while no se llega a actualizar el buffer del ID al poner nueva practica
-        FILE *archi_Practicas=fopen(ArchivoPracticas, "ab");
+        ///FILE *archi_Practicas=fopen(ArchivoPracticas, "ab");
         nuevaPractica = cargarUnaPractica();
-        fwrite(&nuevaPractica, sizeof(stPracticas), 1, archi_Practicas);
+        arregloDinamicoPracticas=(stPracticas *)realloc(arregloDinamicoPracticas, (i+1)*sizeof(stPracticas));
+        arregloDinamicoPracticas[i]=nuevaPractica;
+        cargarPracticaEnArchivo(ARCHIVO_PRACTICAS,arregloDinamicoPracticas[i],validosArregloPracticas);
+        i++;
+        ///fwrite(&nuevaPractica, sizeof(stPracticas), 1, archi_Practicas);
         printf("Desea seguir ingresando practicas? (s para seguir)");
         scanf(" %c", &seguir);
-        validos++;
-        fclose(archi_Practicas);
+        ///fclose(archi_Practicas);
     }
 }
-stPracticas *crearArregloDinamicoPracticas(char ArchivoPracticas[30])
+void cargarPracticaEnArchivo(char ArchivoPracticas[30], stPracticas unaPractica, int *validosArregloPracticas)
+{
+    FILE *archi_Practicas=fopen(ArchivoPracticas, "ab");
+    fwrite(&unaPractica,sizeof(stPracticas),1,archi_Practicas);
+    (*validosArregloPracticas)++;
+    fclose(archi_Practicas);
+}
+stPracticas *cargarArregloDinamicoPracticas(char ArchivoPracticas[30], stPracticas *arregloDinamicoPracticas, int *validosArregloPracticas)
 {
     int cantPracticas=contarPracticas(ARCHIVO_PRACTICAS);
-    stPracticas *arregloDinamicoPracticas=(stPracticas *)malloc(cantPracticas*sizeof(stPracticas));
+    arregloDinamicoPracticas=(stPracticas *)realloc(arregloDinamicoPracticas, cantPracticas*sizeof(stPracticas));
+    traspasoDatos(arregloDinamicoPracticas,ARCHIVO_PRACTICAS,validosArregloPracticas);
     return arregloDinamicoPracticas;
 }
-void traspasoDatos(stPracticas *arregloDinamicoPracticas, int cantPracticas)
+void traspasoDatos(stPracticas *arregloDinamicoPracticas, char ArchivoPracticas[30], int *validosArregloPracticas)
 {
-
+    FILE *archivoPracticas=fopen(ArchivoPracticas,"rb");
+    stPracticas unaPractica;
+    if(archivoPracticas==NULL)
+    {
+        *validosArregloPracticas=0;
+    }
+    int i=0;
+    while(fread(&unaPractica,sizeof(stPracticas),1,archivoPracticas)>0)
+    {
+        arregloDinamicoPracticas[i]=unaPractica;
+        i++;
+        (*validosArregloPracticas)++;
+    }
+    fclose(archivoPracticas);
+}
+void muestraArreglo(stPracticas *arregloDinamicoPracticas, int *validosArregloPracticas)
+{
+    int a=*validosArregloPracticas;
+    for(int i=0;i<a;i++)
+    {
+        printf("idPractica: %i\n", arregloDinamicoPracticas[i].idPractica);
+        printf("idPractica: %s\n", arregloDinamicoPracticas[i].nombre);
+        printf("idPractica: %i\n", arregloDinamicoPracticas[i].costo);
+        printf("idPractica: %i\n", arregloDinamicoPracticas[i].baja);
+        system("pause");
+    }
 }
 int buscarNombreIgualPractica(char nombrePractica[30], char ArchivoPracticas[30])
 {
