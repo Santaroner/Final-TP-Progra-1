@@ -41,7 +41,7 @@ int buscarNombreIgualPractica(char nombrePractica[30], char ArchivoPracticas[30]
 int contarPracticas(char ArchivoPracticas[30]);
 
 /// --------------------- M U E S T R A  D E  P R A C T I C A S -------------------- ///
-void mostrarPracticas(char ArchivoPracticas[30]);
+void mostrarPracticas(stPracticas *arregloDinamicoPracticas, int *validosArregloPracticas);
 void mostrarUnaPractica(stPracticas practicasAux);
 void mostrarPracticasAlta(char archivoPracticas[30]);
 void mostrarPracticasBaja(char archivoPracticas[30]);

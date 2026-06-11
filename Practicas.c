@@ -146,16 +146,22 @@ int contarPracticas(char ArchivoPracticas[30])
     fclose(archivoPracticas);
     return cantidadDePracticas;
 }
-void mostrarPracticas(char ArchivoPracticas[30])
+void mostrarPracticas(stPracticas *arregloDinamicoPracticas, int *validosArregloPracticas)
 {
-    FILE *archi_Practicas=fopen(ArchivoPracticas, "rb");
-    stPracticas practicasAux;
-    while((fread(&practicasAux, sizeof(stPracticas), 1, archi_Practicas)) > 0)
-    {
-        mostrarUnaPractica(practicasAux);
-    }
-
-    fclose(archi_Practicas);
+      int limite=*validosArregloPracticas;
+      for(int i=0;i<limite;i++)
+      {
+          stPracticas unaPractica=arregloDinamicoPracticas[i];
+          mostrarUnaPractica(unaPractica);
+      }
+//    FILE *archi_Practicas=fopen(ArchivoPracticas, "rb");
+//    stPracticas practicasAux;
+//    while((fread(&practicasAux, sizeof(stPracticas), 1, archi_Practicas)) > 0)
+//    {
+//        mostrarUnaPractica(practicasAux);
+//    }
+//
+//    fclose(archi_Practicas);
 }
 void mostrarUnaPractica(stPracticas practicasAux)
 {
@@ -207,7 +213,7 @@ void mostrarUnaPracticaBaja(stPracticas practicasAux)
 void modificarPracticas(char ArchivoPracticas[30])
 {
       FILE *archivoPracticas=fopen(ARCHIVO_PRACTICAS,"r+b");
-      mostrarPracticas(ARCHIVO_PRACTICAS);
+      ///mostrarPracticas(ARCHIVO_PRACTICAS);
       int cantidadDePracticas=contarPracticas(ARCHIVO_PRACTICAS);
       if(cantidadDePracticas==0)
       {

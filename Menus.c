@@ -167,22 +167,61 @@ void practicasMenu() /// USAR ESTE MENU PARA PROBAR EJERCICIOS DE PRACTICA
         switch(optionswitch)
         {
         case 1:
-            arregloDinamicoPracticas=cargarArregloDinamicoPracticas(ARCHIVO_PRACTICAS,arregloDinamicoPracticas,&validosArregloPracticas);
-            cargarPracticas(ARCHIVO_PRACTICAS,arregloDinamicoPracticas,&validosArregloPracticas);
+            if(arregloDinamicoPracticas==NULL)
+            {
+                arregloDinamicoPracticas=cargarArregloDinamicoPracticas(ARCHIVO_PRACTICAS,arregloDinamicoPracticas,&validosArregloPracticas);
+                cargarPracticas(ARCHIVO_PRACTICAS,arregloDinamicoPracticas,&validosArregloPracticas);
+            }
+            else
+            {
+                cargarPracticas(ARCHIVO_PRACTICAS,arregloDinamicoPracticas,&validosArregloPracticas);
+            }
 ///            validos=cargarPracticas("PracticasSanti.bin");
             break;
         case 2:
-            modificarPracticas(ARCHIVO_PRACTICAS);
+            if(arregloDinamicoPracticas==NULL)
+            {
+                arregloDinamicoPracticas=cargarArregloDinamicoPracticas(ARCHIVO_PRACTICAS,arregloDinamicoPracticas,&validosArregloPracticas);
+                modificarPracticas(ARCHIVO_PRACTICAS);
+            }
+            else
+            {
+                modificarPracticas(ARCHIVO_PRACTICAS);
+            }
             break;
         case 3:
-//            darDeBajaPracticas(ARCHIVO_PRACTICAS);
-              muestraArreglo(arregloDinamicoPracticas,&validosArregloPracticas);
+            if(arregloDinamicoPracticas==NULL)
+            {
+                arregloDinamicoPracticas=cargarArregloDinamicoPracticas(ARCHIVO_PRACTICAS,arregloDinamicoPracticas,&validosArregloPracticas);
+                darDeBajaPracticas(ARCHIVO_PRACTICAS);
+            }
+            else
+            {
+                darDeBajaPracticas(ARCHIVO_PRACTICAS);
+            }
             break;
         case 4:
-            darDeAltaPracticas(ARCHIVO_PRACTICAS);
+            if(arregloDinamicoPracticas==NULL)
+            {
+                arregloDinamicoPracticas=cargarArregloDinamicoPracticas(ARCHIVO_PRACTICAS,arregloDinamicoPracticas,&validosArregloPracticas);
+                darDeAltaPracticas(ARCHIVO_PRACTICAS);
+            }
+            else
+            {
+                darDeAltaPracticas(ARCHIVO_PRACTICAS);
+            }
             break;
         case 5:
-            mostrarPracticas(ARCHIVO_PRACTICAS);
+            if(arregloDinamicoPracticas==NULL)
+            {
+                arregloDinamicoPracticas=cargarArregloDinamicoPracticas(ARCHIVO_PRACTICAS,arregloDinamicoPracticas,&validosArregloPracticas);
+                mostrarPracticas(arregloDinamicoPracticas,&validosArregloPracticas);
+                system("pause");
+            }
+            else
+            {
+                mostrarPracticas(arregloDinamicoPracticas,&validosArregloPracticas);
+            }
             break;
         case 0:
             printf("Vuelva pronto.\n");
