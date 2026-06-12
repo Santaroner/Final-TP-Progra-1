@@ -7,6 +7,7 @@
 #include <string.h>
 int GetIDPacientes (); /// Autoincremental ID pacientes
 int compararIDLP (int num);
+int compararIDLPrac (int num);
 int getIDValids(FILE *archi);
 int getIDVPacientes();
 int getIDVPracticas();

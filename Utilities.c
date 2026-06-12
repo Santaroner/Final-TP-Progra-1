@@ -39,26 +39,38 @@ int compararIDLP (int num)
 {
     printf("entra");
     stPaciente aux;
-    FILE *archi = fopen ("PacientesSanti.bin","rb"); /// CAMBIAR MAS ADELANTE POR EL ORIGINALm Pacientes santi para practicar ahora
+    FILE *archi = fopen ("Heroes.bin","rb"); /// CAMBIAR MAS ADELANTE POR EL ORIGINALm Pacientes santi para practicar ahora
     while (fread(&aux,sizeof(stPaciente),1,archi))
     {
-        if (num == aux.idPaciente)
+        if (num == aux.idPaciente && aux.eliminado == 0)
         {
             printf("ID Encontrado. ID:%i\n",aux.idPaciente);
-            printf("ID :%i\nNombre:%s\nApellido:%s\nDNI:%s\nMovil:%s\n\n",
-                   aux.idPaciente,
-                   aux.nombre,
-                   aux.apellido,
-                   aux.dni,
-                   aux.movil);
             fclose(archi);
             return 0;
         }
-        else printf("Buscando id en el bucle.\n");
     }
     fclose(archi);
     return 1;
 }
+
+int compararIDLPrac (int num)
+{
+    printf("entra");
+    stPracticas aux;
+    FILE *archi = fopen ("TestPracticas.bin","rb");
+    while (fread(&aux, sizeof(stPracticas), 1, archi))
+    {
+        if (num == aux.idPractica && aux.baja == 0)
+        {
+            printf("ID Encontrado. ID:%i\n",aux.idPractica);
+            fclose(archi);
+            return 0;
+        }
+    }
+    fclose(archi);
+    return 1;
+}
+
 
 int pacientesEliminados()
 {
@@ -92,12 +104,15 @@ int getIDVLaboratorio()
     stLaboratorios aux;
     int IDAux = 0;
     FILE * archi = fopen(ARCHIVO_LABORATORIOS, "rb");
-    while (fread(&aux, sizeof(stLaboratorios),1,archi) > 0)
+    if (archi != NULL)
     {
-        IDAux++;
+        while (fread(&aux, sizeof(stLaboratorios),1,archi) > 0)
+        {
+            IDAux++;
+        }
+        fclose(archi);
     }
     IDAux++;
-    fclose(archi);
     return IDAux;
 }
 
