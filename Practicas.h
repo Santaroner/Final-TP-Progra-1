@@ -49,13 +49,16 @@ void mostrarUnaPracticaAlta(stPracticas practicasAux);
 void mostrarUnaPracticaBaja(stPracticas practicasAux);
 
 /// --------------------- M O D I F I C A R  P R A C T I C A S -------------------- ///
-void modificarPracticas(char ArchivoPractica[30]);
+void modificarPracticas(char ArchivoPracticas[30], stPracticas *arregloDinamicoPracticas, int *validosArregloPracticas);
 stPracticas menuModificarPractica(stPracticas unaPractica);
+void modificarPracticaEnArchivo(char ArchivoPracticas[30], stPracticas unaPractica, int posicion);
 
 /// ----------- A L T A  Y  B A J A  L O G I C A  D E  P R A C T I C A S ---------- ///
-void darDeBajaPracticas(char ArchivoPracticas[30]);
+void darDeBajaPracticas(char ArchivoPracticas[30], stPracticas *arregloDinamicoPracticas);
 void darDeAltaPracticas(char ArchivoPracticas[30]);
 stPracticas darDeAltaUnaPractica(stPracticas unaPractica);
 stPracticas darDeBajaUnaPractica(stPracticas unaPractica);
+int verificarAltas(char ArchivoPracticas[30]);
+int verificarBajas(char ArchivoPracticas[30]);
 
 #endif // PRACTICAS_H_INCLUDED

@@ -182,22 +182,22 @@ void practicasMenu() /// USAR ESTE MENU PARA PROBAR EJERCICIOS DE PRACTICA
             if(arregloDinamicoPracticas==NULL)
             {
                 arregloDinamicoPracticas=cargarArregloDinamicoPracticas(ARCHIVO_PRACTICAS,arregloDinamicoPracticas,&validosArregloPracticas);
-                modificarPracticas(ARCHIVO_PRACTICAS);
+                modificarPracticas(ARCHIVO_PRACTICAS,arregloDinamicoPracticas,&validosArregloPracticas);
             }
             else
             {
-                modificarPracticas(ARCHIVO_PRACTICAS);
+                modificarPracticas(ARCHIVO_PRACTICAS,arregloDinamicoPracticas,&validosArregloPracticas);
             }
             break;
         case 3:
             if(arregloDinamicoPracticas==NULL)
             {
                 arregloDinamicoPracticas=cargarArregloDinamicoPracticas(ARCHIVO_PRACTICAS,arregloDinamicoPracticas,&validosArregloPracticas);
-                darDeBajaPracticas(ARCHIVO_PRACTICAS);
+                darDeBajaPracticas(ARCHIVO_PRACTICAS,arregloDinamicoPracticas);
             }
             else
             {
-                darDeBajaPracticas(ARCHIVO_PRACTICAS);
+                darDeBajaPracticas(ARCHIVO_PRACTICAS,arregloDinamicoPracticas);
             }
             break;
         case 4:
