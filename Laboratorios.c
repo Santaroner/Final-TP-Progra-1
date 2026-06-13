@@ -18,7 +18,7 @@ void cargarLaboratorio(stLaboratorios *lab) /// Duda si agregar pac y prac.
     FILE *Laboratorios;
     Laboratorios = fopen("laboratorios.dat", "ab");
 
-    char seguir = 's';
+    char seguir = 'n';
     lab->idLab = getIDVLaboratorio();
     printf("ID asignado: %d\n", lab->idLab);
 
@@ -28,24 +28,18 @@ void cargarLaboratorio(stLaboratorios *lab) /// Duda si agregar pac y prac.
         lab ->mes = validarMes();
         lab ->dia = validarDia(lab ->mes);
 
-        printf("Confirmar datos? (s/n):");
-        scanf(" %c",&seguir);
-    }
-    while (tolower(seguir) != 's');
-
-    do
-    {
         printf("Ingrese ID del paciente: ");
-        scanf("%d", &lab->idPaciente);
-    } while (compararIDLP(lab->idPaciente) != 0);
+        scanf("%d",&lab->idPaciente);
 
-    do
-   {
         printf("Ingrese ID de practica: ");
         scanf("%d", &lab->practicaRealizada);
-    } while (compararIDLPrac(lab->practicaRealizada));
 
-    lab->baja = 0;
+        lab->baja = 0;
+
+        printf("Confirmar datos? (s/n) ");
+        scanf(" %c", &seguir);
+    } while (tolower(seguir) != 's');
+
 
     fwrite(lab, sizeof(stLaboratorios), 1, Laboratorios);
     printf("Laboratorio: ID: %d | Anio: %d | Mes: %d | Dia: %d\n",
@@ -82,18 +76,7 @@ stLaboratorios * cargarLaboratorios()
 
     return aux;
 }
-/*
-int validarFecha(int anio, int mes, int dia)
-{
-    int diasPorMes[] = {0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31}; // el 0 para que el primer mes sea 1ero
 
-    if (anio < 2000 || anio > 2026) return 0; /// sale si invalido
-    if (mes < 1 || mes > 12) return 0;  /// sale si invalido
-    if (dia < 1 || dia > diasPorMes[mes]) return 0;  /// sale si invalido
-
-    return 1;
-}
-*/
 int validarAnio()
 {
     int aux = 0;

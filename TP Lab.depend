@@ -293,7 +293,7 @@
 	"Practicas.h"
 	<stdio.h>
 
-1780759036 source:c:\users\fheex\onedrive\documentos\github\final-tp-progra-1\main.c
+1781221577 source:c:\users\fheex\onedrive\documentos\github\final-tp-progra-1\main.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
@@ -302,7 +302,7 @@
 	"Practicas.h"
 	"Menus.h"
 
-1781221577 c:\users\fheex\onedrive\documentos\github\final-tp-progra-1\practicas.h
+1781371467 c:\users\fheex\onedrive\documentos\github\final-tp-progra-1\practicas.h
 	"Utilities.h"
 	"Pacientes.h"
 	<stdio.h>
@@ -428,12 +428,12 @@
 	"Utilities.h"
 	"Practicas.h"
 
-1781124037 source:c:\users\fheex\onedrive\documentos\github\final-tp-progra-1\menus.c
+1781371467 source:c:\users\fheex\onedrive\documentos\github\final-tp-progra-1\menus.c
 	"Pacientes.h"
 	"Practicas.h"
 	<stdio.h>
 
-1781124037 source:c:\users\fheex\onedrive\documentos\github\final-tp-progra-1\practicas.c
+1781371467 source:c:\users\fheex\onedrive\documentos\github\final-tp-progra-1\practicas.c
 	"Practicas.h"
 
 1781132966 source:c:\users\fheex\onedrive\documentos\github\final-tp-progra-1\utilities.c
@@ -443,7 +443,7 @@
 	"Laboratorios.h"
 	"Menus.h"
 
-1781127960 source:c:\users\fheex\onedrive\documentos\github\final-tp-progra-1\pacientes.c
+1781221714 source:c:\users\fheex\onedrive\documentos\github\final-tp-progra-1\pacientes.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
