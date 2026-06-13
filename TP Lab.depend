@@ -320,7 +320,7 @@
 	"Practicas.h"
 	"Utilities.h"
 
-1781131507 c:\users\fheex\onedrive\documentos\github\final-tp-progra-1\laboratorios.h
+1781373961 c:\users\fheex\onedrive\documentos\github\final-tp-progra-1\laboratorios.h
 	<stdio.h>
 	<string.h>
 	<ctype.h>
@@ -419,7 +419,7 @@
 1780868270 source:c:\users\rafa\documents\tp final ras\tp lab\final-tp-progra-1\practicas.c
 	"Practicas.h"
 
-1781133223 source:c:\users\fheex\onedrive\documentos\github\final-tp-progra-1\laboratorios.c
+1781373944 source:c:\users\fheex\onedrive\documentos\github\final-tp-progra-1\laboratorios.c
 	<stdio.h>
 	<string.h>
 	<stdlib.h>
@@ -436,7 +436,7 @@
 1781371467 source:c:\users\fheex\onedrive\documentos\github\final-tp-progra-1\practicas.c
 	"Practicas.h"
 
-1781132966 source:c:\users\fheex\onedrive\documentos\github\final-tp-progra-1\utilities.c
+1781372729 source:c:\users\fheex\onedrive\documentos\github\final-tp-progra-1\utilities.c
 	<stdio.h>
 	"Pacientes.h"
 	"Practicas.h"

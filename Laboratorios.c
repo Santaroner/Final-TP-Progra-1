@@ -5,6 +5,7 @@
 #include "Pacientes.h"
 #include "Utilities.h"
 #include "Practicas.h"
+
 stLaboratorios *laboratorios = NULL;
 int validosL = 0;
 
@@ -212,7 +213,64 @@ void mostrarLaboratoriosArchivo()
 //}
 //
 
+void modificarLaboratorio()
+{
+    int idBuscar;
+    int pos = 0;
+    int posEncontrado = 1;
+    stLaboratorios lab;
 
+    printf("Ingrese ID de Lab a modificar: ");
+    scanf("%d", &idBuscar);
+
+    FILE *archi = fopen(ARCHIVO_LABORATORIOS, "r+b");
+    if (archi == NULL)
+    {
+        printf("Error al abrir archivo. \n");
+        return;
+    }
+
+    while(fread(&lab, sizeof(stLaboratorios), 1, archi)> 0)
+    {
+        if (lab.idLab == idBuscar && lab.baja == 0)
+        {
+            posEncontrado = pos;
+            break;
+        }
+        pos++;
+    }
+
+    if (posEncontrado == -1)
+    {
+        printf("Laboratorio no encontrado o de baja. \n");
+        fclose(archi);
+        return;
+    }
+
+    int opcion;
+    printf("Que desea modificar?\n");
+    printf("1- Fecha\n");
+    printf("2- Practica\n");
+    scanf("%d", &opcion);
+
+    if (opcion == 1)
+    {
+        lab.anio = validarAnio();
+        lab.mes = validarMes();
+        lab.dia = validarDia(lab.mes);
+    }
+    else if (opcion == 2)
+    {
+        printf("Ingrese nuevo ID de practica: ");
+        scanf("%d", &lab.practicaRealizada);
+    } while (compararIDLPrac(lab.practicaRealizada));
+
+    fseek(archi, posEncontrado * sizeof(stLaboratorios), SEEK_SET);
+    fwrite(&lab, sizeof(stLaboratorios), 1, archi);
+    printf("Laboratorio modificado correctamente.\n");
+
+    fclose(archi);
+}
 
 
 int buscandoIDPacientes() /// rafa probando busca id - - - - - - - funcion en utilities
