@@ -161,8 +161,8 @@ void practicasMenu() /// USAR ESTE MENU PARA PROBAR EJERCICIOS DE PRACTICA
     int optionswitch = 0;
     do
     {
-        system("cls");
-        printf("1-Cargar practica\n2-Modificar practica\n3-Dar de baja una practica\n4-Dar de alta una practica\n5-Mostrar listado de practicas \n0-Salir\n");
+        ///system("cls");
+        printf("1-Cargar practica\n2-Modificar practica\n3-Dar de baja una practica\n4-Dar de alta una practica\n5-Mostrar listado de practicas \n6-Buscar practica por nombre\n0-Salir\n");
         scanf("%i",&optionswitch);
         switch(optionswitch)
         {
@@ -182,33 +182,33 @@ void practicasMenu() /// USAR ESTE MENU PARA PROBAR EJERCICIOS DE PRACTICA
             if(arregloDinamicoPracticas==NULL)
             {
                 arregloDinamicoPracticas=cargarArregloDinamicoPracticas(ARCHIVO_PRACTICAS,arregloDinamicoPracticas,&validosArregloPracticas);
-                modificarPracticas(ARCHIVO_PRACTICAS);
+                modificarPracticas(ARCHIVO_PRACTICAS,arregloDinamicoPracticas,&validosArregloPracticas);
             }
             else
             {
-                modificarPracticas(ARCHIVO_PRACTICAS);
+                modificarPracticas(ARCHIVO_PRACTICAS,arregloDinamicoPracticas,&validosArregloPracticas);
             }
             break;
         case 3:
             if(arregloDinamicoPracticas==NULL)
             {
                 arregloDinamicoPracticas=cargarArregloDinamicoPracticas(ARCHIVO_PRACTICAS,arregloDinamicoPracticas,&validosArregloPracticas);
-                darDeBajaPracticas(ARCHIVO_PRACTICAS);
+                darDeBajaPracticas(ARCHIVO_PRACTICAS,arregloDinamicoPracticas);
             }
             else
             {
-                darDeBajaPracticas(ARCHIVO_PRACTICAS);
+                darDeBajaPracticas(ARCHIVO_PRACTICAS,arregloDinamicoPracticas);
             }
             break;
         case 4:
             if(arregloDinamicoPracticas==NULL)
             {
                 arregloDinamicoPracticas=cargarArregloDinamicoPracticas(ARCHIVO_PRACTICAS,arregloDinamicoPracticas,&validosArregloPracticas);
-                darDeAltaPracticas(ARCHIVO_PRACTICAS);
+                darDeAltaPracticas(ARCHIVO_PRACTICAS, arregloDinamicoPracticas);
             }
             else
             {
-                darDeAltaPracticas(ARCHIVO_PRACTICAS);
+                darDeAltaPracticas(ARCHIVO_PRACTICAS, arregloDinamicoPracticas);
             }
             break;
         case 5:
@@ -223,6 +223,16 @@ void practicasMenu() /// USAR ESTE MENU PARA PROBAR EJERCICIOS DE PRACTICA
                 mostrarPracticas(arregloDinamicoPracticas,&validosArregloPracticas);
             }
             break;
+        case 6:
+            if(arregloDinamicoPracticas==NULL)
+            {
+                arregloDinamicoPracticas=cargarArregloDinamicoPracticas(ARCHIVO_PRACTICAS,arregloDinamicoPracticas,&validosArregloPracticas);
+                buscarPracticasPorNombre(arregloDinamicoPracticas, validosArregloPracticas);
+            }
+            else
+            {
+                buscarPracticasPorNombre(arregloDinamicoPracticas, validosArregloPracticas);
+            }
         case 0:
             printf("Vuelva pronto.\n");
             break;
