@@ -27,6 +27,7 @@ typedef struct
  void bajaLaboratorio(); // baja logica
 
  void modificarLaboratorio();
+ void consultarLaboratorio();
 
  /// Validar fecha
  int validarAnio();

@@ -39,7 +39,8 @@ void cargarLaboratorio(stLaboratorios *lab) /// Duda si agregar pac y prac.
 
         printf("Confirmar datos? (s/n) ");
         scanf(" %c", &seguir);
-    } while (tolower(seguir) != 's');
+    }
+    while (tolower(seguir) != 's');
 
 
     fwrite(lab, sizeof(stLaboratorios), 1, Laboratorios);
@@ -209,7 +210,7 @@ void modificarLaboratorio()  /// hacer switch
 {
     int idBuscar;
     int pos = 0;
-    int posEncontrado = 1;
+    int posEncontrado = -1;
     stLaboratorios lab;
 
     printf("Ingrese ID de Lab a modificar:\n ");
@@ -245,21 +246,68 @@ void modificarLaboratorio()  /// hacer switch
     printf("2- Practica\n");
     scanf("%d", &opcion);
 
-    if (opcion == 1)
+    switch (opcion)
     {
+    case 1:
         lab.anio = validarAnio();
-        lab.mes = validarMes();
-        lab.dia = validarDia(lab.mes);
+        lab.mes  = validarMes();
+        lab.dia  = validarDia(lab.mes);
+        break;
+    case 2:
+        do
+        {
+            printf("Ingrese nuevo ID de practica: ");
+            scanf("%d", &lab.practicaRealizada);
+        }
+        while (compararIDLPrac(lab.practicaRealizada));
+        break;
+    default:
+        printf("Opcion invalida.\n");
+        fclose(archi);
+        return;
     }
-    else if (opcion == 2)
-    {
-        printf("Ingrese nuevo ID de practica: ");
-        scanf("%d", &lab.practicaRealizada);
-    } while (compararIDLPrac(lab.practicaRealizada));
 
     fseek(archi, posEncontrado * sizeof(stLaboratorios), SEEK_SET);
     fwrite(&lab, sizeof(stLaboratorios), 1, archi);
     printf("Laboratorio modificado correctamente.\n");
+
+    fclose(archi);
+}
+
+void consultarLaboratorio()
+{
+    int idBuscar;
+    int encontrado = 0;
+    stLaboratorios lab;
+
+    printf("Ingresar ID del laboratorio a consultar: ");
+    scanf("%d", &idBuscar);
+
+    FILE *archi = fopen(ARCHIVO_LABORATORIOS, "rb");
+    if (archi == NULL)
+    {
+        printf("Error al abrir");
+        return;
+    }
+
+    while (fread(&lab, sizeof(stLaboratorios), 1, archi)> 0)
+    {
+        if (lab.idLab == idBuscar && lab.baja == 0)
+        {
+            printf("ID: %d | Paciente: %d | Practica: %d | Anio: %d | Mes: %d | Dia: %d\n",
+                   lab.idLab,
+                   lab.idPaciente,
+                   lab.practicaRealizada,
+                   lab.anio,
+                   lab.mes,
+                   lab.dia);
+            encontrado = 1;
+            break;
+        }
+    }
+
+    if (encontrado == 0)
+        printf("Laboratorio no encontrado o de baja");
 
     fclose(archi);
 }
