@@ -26,11 +26,14 @@ void cargarPacientes()
         }
         else printf("No se pudo asignar memoria.\n");  /// TEST -------------------------------
         cargaPaciente();
-        printf("Desea cargar otro paciente?\n");
+        system("cls");
+        printf("Desea cargar otro paciente?S/N\n ");
         scanf(" %c",&seguir);
         if (tolower(seguir) != 's')
         {
-            printf("Operacion terminada\n");
+            printf("Volviendo al menu anterior\n");
+            system("pause");
+            system("cls");
         }
         else
         {
@@ -43,8 +46,8 @@ void cargaPaciente()
 {
     int ID ;
     int activo;
-    FILE *Pacientes;
-    Pacientes = fopen("TestPacientes.bin", "ab");
+    FILE *archi;
+    archi = abrirArchivo(ARCHIVO_PACIENTES,"ab");
     ID = cargarIDPaciente();
     pacientes[validos].idPaciente = ID;
     cargarNombrePaciente(pacientes[validos].nombre);
@@ -54,7 +57,7 @@ void cargaPaciente()
     activo = cargarEstadoPaciente();
     pacientes[validos].eliminado = activo ; /// asigna estado 0 o 1
     printf("Carga paciente eliminado valor : %i ", pacientes[validos].eliminado);
-    fwrite(&pacientes[validos],sizeof(stPaciente),1,Pacientes);
+    fwrite(&pacientes[validos],sizeof(stPaciente),1,archi);
 
     printf("Paciente: %s, %s, %s, %s, Estado:%i\n",
            pacientes[validos].nombre,
@@ -62,7 +65,7 @@ void cargaPaciente()
            pacientes[validos].dni,
            pacientes[validos].movil,
            pacientes[validos].eliminado);
-    fclose(Pacientes);
+    fclose(archi);
 }
 
 int cargarIDPaciente() /// Diferentes funciones para hacer las validaciones correspondientes
@@ -77,6 +80,7 @@ int cargarIDPaciente() /// Diferentes funciones para hacer las validaciones corr
 }
 void cargarNombrePaciente(char nombre[30])
 {
+    system("cls");
     char aux[30];
     int flag = 0;
     do
@@ -86,11 +90,12 @@ void cargarNombrePaciente(char nombre[30])
         fgets(aux,30,stdin);
         if (strchr(aux,'\n') != NULL) /// Si se ingresan mas de 30 letras fgets no tiene espacio para \n por lo que la condicion no se cumple
         {
-            aux [strcspn(aux,"\n" )] = '\0';
+            borrarSaltoDeLinea(aux);
             if (ingresarSoloLetrasSinEspacios(aux) == 1)
             {
-                printf("Gracias por ingresar solo letras..\n");
+                printf("Nombre ingresado correctamente.\n");
                 strcpy(nombre,aux);
+                system("pause");
                 flag = 1;
             } else printf("Error.\n");
         }
@@ -108,15 +113,17 @@ void cargarApellidoPaciente(char apellido[])
     int flag = 0;
     do
     {
+        system("cls");
         printf("Ingrese el apellido del paciente:\n");
         fgets(aux,30,stdin);
         if (strchr(aux,'\n') != NULL) /// Si se ingresan mas de 30 letras fgets no tiene espacio para \n por lo que la condicion no se cumple
         {
-            aux [strcspn(aux,"\n" )] = '\0';
+            borrarSaltoDeLinea(aux);
             if (ingresarSoloLetrasSinEspacios(aux) == 1)
             {
                     printf("Apellido guardado.\n"); /// test ------------------------------------------------------------------- borrar deps
                     strcpy(apellido,aux);
+                    system("pause");
                     flag = 1; /// Si se cambia la flag es porque es ingreso el nombre correctamente > fin de bucle
             }
             else printf("Ingrese solo letras por favor... :)  \n");
@@ -134,6 +141,7 @@ void cargarDNIPaciente(char DNI[])
     char aux[10];
     int flag = 0;
     int validar;
+    system("cls");
     do
     {
         printf("Ingrese el DNI del paciente:\n");
@@ -144,12 +152,12 @@ void cargarDNIPaciente(char DNI[])
         {
             if (validar == 1)
             {
-                aux [strcspn(aux,"\n" )] = '\0';
+                borrarSaltoDeLinea(aux);
                 {
                     if (ingresarSoloNumerosEnArreglo(aux) == 1)
                     {
-                        printf("Gracias por ingresar solamente numeros...\n");
-                        printf("DNI guardado.\n"); /// test ------------------------------------------------------------------- borrar deps
+                        printf("DNI guardado correctamente.\n"); /// test ------------------------------------------------------------------- borrar deps
+                        system("pause");
                         strcpy(DNI,aux);
                         flag = 1; /// Si se cambia la flag es porque es ingreso el DNI correctamente > fin de bucle
                     }
@@ -168,18 +176,19 @@ void cargarMovilPaciente(char movil[])
 {
     char aux[12];
     int flag = 0;
+    system("cls");
     do
     {
         printf("Ingrese el celular del paciente:\n");
         fgets(aux,12,stdin);
         if (strchr(aux,'\n') != NULL) /// Si se ingresan mas de 12 letras fgets no tiene espacio para \n por lo que la condicion no se cumple
         {
-            aux [strcspn(aux,"\n" )] = '\0';
+            borrarSaltoDeLinea(aux);
             if (ingresarSoloNumerosEnArreglo(aux) == 1)
             {
-                printf("Gracias por ingresar solo numeros...\n"); /// TEST BORRAR DESPUES
                 printf("Celular guardado.\n"); /// test ------------------------------------------------------------------- borrar deps
                 strcpy(movil,aux);
+                system("pause");
                 flag = 1; /// Si se cambia la flag es porque es ingreso el nombre correctamente > fin de bucle
             }
             else printf("Intente de nuevo, ingresando solamente numeros en el celular :) \n");
@@ -221,7 +230,7 @@ int cargarEstadoPaciente()
 
 int validarDNI (char DNI[])
 {
-    FILE *archi = fopen("TestPacientes.bin","rb");
+    FILE *archi = abrirArchivo(ARCHIVO_PACIENTES,"rb");
     stPaciente aux;
     int flag = 0;
 
@@ -249,38 +258,30 @@ int validarDNI (char DNI[])
 /// ------------------------------------------------------ C A R G A  P A C I E N T E S ---------------------------------------------------------------- ///
 
 /// ------------------------------------------------------- M U E S T R A ///  V A L I D O S ----------------------------------------------------------///
-
-void mostrarPacientes(stPaciente *pacientes,int validos)
-{
-    for(int i = 0; i < validos+1; i++)
-    {
-//        mostrarUnPaciente(pacientes);
-    }
-}
-
 void mostrarUnPaciente (stPaciente paciente)
 {
         printf("Nombre:%s\n",paciente.nombre);
         printf("Apellido:%s\n",paciente.apellido);
         printf("Celular:%s\n",paciente.movil);
+        printf("DNI :%s\n",paciente.dni);
         printf("ID:%i\n",paciente.idPaciente);
         printf("---------------------------------------------------------\n");
 }
 
 int mostrarArchivo ()
 {
+    system("cls");
     int validos = 0;
-
     int optionswitch;
     printf("1-TestPacientes\n2-Heroes ------- PROBANDO ACA\n3-PrePacientes\4-\n");
     scanf("%i",&optionswitch);
-    FILE *PrePacientes;
+    FILE *archi;
     stPaciente aux;
     switch(optionswitch)
     {
     case 1:
-        PrePacientes = fopen("TestPacientes.bin","rb");
-        while (fread(&aux,sizeof(stPaciente),1,PrePacientes) > 0 )
+        archi = abrirArchivo(ARCHIVO_PACIENTES,"rb");
+        while (fread(&aux,sizeof(stPaciente),1,archi) > 0 )
         {
             if (aux.eliminado == 0)
             {
@@ -288,35 +289,35 @@ int mostrarArchivo ()
             validos++;
             }
         }
-        fclose(PrePacientes);
+        fclose(archi);
         system("pause");
         system("cls");
         return validos;
         break;
     case 2:
-        PrePacientes = fopen("Heroes.bin","rb");
-        while (fread(&aux,sizeof(stPaciente),1,PrePacientes) > 0 )
+        archi = abrirArchivo("Heroes.bin","rb");
+        while (fread(&aux,sizeof(stPaciente),1,archi) > 0 )
         {
             mostrarUnPaciente(aux);
             validos++;
         }
-        fclose(PrePacientes);
+        fclose(archi);
         system("pause");
         return validos;
         break;
     case 3:
-        PrePacientes = fopen("PrePacientes.bin","rb");
-        while (fread(&aux,sizeof(stPaciente),1,PrePacientes) > 0 )
+        archi = abrirArchivo("PrePacientes.bin","rb");
+        while (fread(&aux,sizeof(stPaciente),1,archi) > 0 )
         {
             mostrarUnPaciente(aux);
             validos++;
         }
-        fclose(PrePacientes);
+        fclose(archi);
         return validos;
         break;
     case 4 :
-        PrePacientes = fopen("PacientesSanti.bin","rb");
-        while (fread(&aux,sizeof(stPaciente),1,PrePacientes) > 0 )
+        archi = abrirArchivo("PacientesSanti.bin","rb");
+        while (fread(&aux,sizeof(stPaciente),1,archi) > 0 )
                {
                    if (aux.eliminado == 0)
                    {
@@ -330,7 +331,7 @@ int mostrarArchivo ()
                 validos++;
                    }
         }
-        fclose(PrePacientes);
+        fclose(archi);
         return validos;
         break;
     }
@@ -340,7 +341,7 @@ int mostrarArchivo ()
 void mostrarEliminados ()
 {
     stPaciente aux;
-    FILE *archi = fopen ("Heroes.bin","rb");
+    FILE *archi = abrirArchivo("Heroes.bin","rb");
     while (fread(&aux,sizeof(stPaciente),1,archi) > 0)
     {
         if (aux.eliminado == 1)
@@ -370,23 +371,27 @@ void mostrarEliminados ()
 
 void buscarPaciente(stPaciente *pacientes, int validos)
 {
-    FILE *archi = fopen("TestPacientes.bin","rb");
+    system("cls");
+    FILE *archi = abrirArchivo(ARCHIVO_PACIENTES,"rb");
     int pos = 0; /// posicion a enviar
     char aux[30];
+    int flag = 0;
     stPaciente busqueda;
     printf("Ingrese el DNI del paciente a modificar\n");
     getchar();
     fgets(aux,10,stdin);
-    aux [strcspn(aux,"\n")] = '\0';
-    printf("Aux vale:%s",aux);
-    for (int i = 0 ; i < validos ; i ++)
+    borrarSaltoDeLinea(aux);
+    while (fread(&busqueda,sizeof(stPaciente),1,archi) > 0)
     {
-        printf("Entra al bucle\n");
         printf("pos:%i",pos); /// testeando posicion
         fread(&busqueda,sizeof(stPaciente),1,archi);
+        printf("aux :%s ---busqueda :%s\n",  aux, busqueda.dni);
         if (strcmpi(aux, busqueda.dni) == 0)
         {
+            printf("Encontrado\n");
             menuModificarPaciente(pos+1);
+            break;
+            flag = 1;
         }
         pos++;
     }
@@ -396,7 +401,8 @@ void buscarPaciente(stPaciente *pacientes, int validos)
 void menuModificarPaciente (int pos)
 {
     int optionswitch;
-    printf("El paciente ha sido encontrado.\Ingrese el dato a modificar:\n1-Nombre\n2-Apellido\n3-Movil\n");
+//    system("cls");
+    printf("El paciente ha sido encontrado.\Ingrese el dato a modificar:\n1-Nombre\n2-Apellido\n3-Movil\n0-Salir\n");
     scanf("%i",&optionswitch);
     switch(optionswitch)
     {
@@ -412,10 +418,26 @@ void menuModificarPaciente (int pos)
     case 4:
         cambiarDNIPaciente(pos);
         break;
+    case 0:
+        printf("Volviendo al menu anterior..\n");
+        return;
     default :
         printf("Opcion incorrecta.\n");
         break;
     }
+}
+
+void guardarPaciente (stPaciente paciente,int pos )
+{
+    FILE *archi = abrirArchivo(ARCHIVO_PACIENTES,"r+b");
+    if (archi == NULL)
+    {
+        printf("Error al abrir archivo.\n");
+        return;
+    }
+    fseek(archi, (pos-1) * sizeof(stPaciente), SEEK_SET); /// Busca posicion menos 1
+    fwrite(&paciente,sizeof(stPaciente),1,archi); /// la estructura entera en la posicion
+    fclose(archi); /// cerrar
 }
 
 void cambiarNombrePaciente(int pos)
@@ -431,7 +453,7 @@ void cambiarNombrePaciente(int pos)
         fgets(aux, 30,stdin);
         if (strchr(aux,'\n') != NULL) ///
         {
-            aux [strcspn(aux, "\n")] = '\0';
+            borrarSaltoDeLinea(aux);
             if (ingresarSoloLetrasSinEspacios(aux) == 1)
             {
                 printf("Nombre dentro de los parametros acordados\n");
@@ -445,15 +467,13 @@ void cambiarNombrePaciente(int pos)
             printf("No se pueden ingresar mas de 30 numeros\n");
         }
     }while (flag == 0);
-
-    FILE *archi = fopen("TestPacientes.bin","r+b");
-    fseek(archi, (pos-1) * sizeof(stPaciente), SEEK_SET); /// Busca posicion menos 1
-    fread(&auxiliar,sizeof(stPaciente),1,archi); /// Lee en auxiliar y avanza una posicion
-    strcpy(auxiliar.nombre,aux); /// Copia el nombre cargado por usuario (aux) en la estructura
-    fseek(archi, -sizeof(stPaciente), SEEK_CUR); /// Vuelve la posicion que sumo el fread arriba
-    fwrite(&auxiliar,sizeof(stPaciente),1,archi); /// la estructura entera en la posicion
-    printf("nombre strcpy: %s",auxiliar.nombre);
-    fclose(archi); /// cerrar
+    FILE *archi = abrirArchivo("TestPacientes.bin","r+b");
+    fseek(archi,(pos-1) * sizeof(stPaciente),SEEK_SET);
+    fread(&auxiliar,sizeof(stPaciente),1,archi);
+    strcpy(auxiliar.nombre,aux);
+    fseek(archi, -sizeof(stPaciente),SEEK_CUR);
+    fwrite(&auxiliar,sizeof(stPaciente),1,archi);
+    fclose(archi); /// Copia el nombre cargado por usuario (aux) en la estructura
 }
 
 void cambiarApellidoPaciente(int pos)
@@ -468,7 +488,7 @@ void cambiarApellidoPaciente(int pos)
         fgets(nuevoApellido, 12,stdin);
         if (strchr(nuevoApellido,'\n') != NULL)
         {
-            nuevoApellido [strcspn(nuevoApellido, "\n")] = '\0';
+            borrarSaltoDeLinea(nuevoApellido);
             if (ingresarSoloLetrasSinEspacios(nuevoApellido) == 1)
             {
                 printf("Nombre dentro de los parametros acordados\n");
@@ -483,7 +503,7 @@ void cambiarApellidoPaciente(int pos)
     }
     while (flag == 0);
 
-    FILE *archi = fopen("TestPacientes.bin","r+b");
+    FILE *archi = abrirArchivo("TestPacientes.bin","r+b");
     fseek(archi,(pos-1) * sizeof(stPaciente),SEEK_SET);
     fread(&aux,sizeof(stPaciente),1,archi);
     strcpy(aux.apellido,nuevoApellido);
@@ -500,7 +520,7 @@ void cambiarApellidoPaciente(int pos)
 
 void cambiarMovilPaciente(int pos)
 {
-    char nuevoMovil [30];
+    char nuevoMovil [12];
     stPaciente aux;
     int flag = 0;
     do
@@ -510,7 +530,7 @@ void cambiarMovilPaciente(int pos)
         fgets(nuevoMovil, 12,stdin);
         if (strchr(nuevoMovil,'\n') != NULL)
         {
-            nuevoMovil [strcspn(nuevoMovil, "\n")] = '\0';
+            borrarSaltoDeLinea(nuevoMovil);
             {
                 if (ingresarSoloNumerosEnArreglo(nuevoMovil) == 1)
                 {
@@ -526,10 +546,11 @@ void cambiarMovilPaciente(int pos)
     }
     while (flag == 0);
 
-    FILE *archi = fopen("TestPacientes.bin","r+b");
+    FILE *archi = abrirArchivo("TestPacientes.bin","r+b");
     fseek(archi,(pos-1)* sizeof(stPaciente), SEEK_SET);
     fread(&aux,sizeof(stPaciente),1,archi);
     fseek(archi,-sizeof(stPaciente),SEEK_CUR);
+    strcpy(aux.movil,nuevoMovil);
     fwrite(&aux,sizeof(stPaciente),1,archi);
     fclose(archi);
 }
@@ -546,7 +567,7 @@ void cambiarDNIPaciente(int pos)
         fgets(nuevoDNI,12,stdin);
         if (strchr(nuevoDNI,'\n') != NULL )
         {
-            nuevoDNI[strcspn(nuevoDNI, "\n")] = '\0';
+            borrarSaltoDeLinea(nuevoDNI);
             if (ingresarSoloNumerosEnArreglo(nuevoDNI) == 1)
             {
                 flag = 1;
@@ -560,7 +581,7 @@ void cambiarDNIPaciente(int pos)
 
     printf("El nuevo dni del paciente va a ser : %s",nuevoDNI);
 
-    FILE *archi = fopen("TestPacientes.bin","r+b");
+    FILE *archi = abrirArchivo("TestPacientes.bin","r+b");
     fseek(archi,(pos-1)*sizeof(stPaciente),SEEK_SET);
     fread (&aux,sizeof(stPaciente),1,archi);
     printf("ID :%i\nNombre:%s\nApellido:%s\nDNI:%s\nMovil:%s\n\n",
@@ -586,7 +607,7 @@ void bajaPaciente()
     getchar();
     fgets(aux,10,stdin);
     aux[strcspn(aux, "\n")] = '\0';
-    FILE *archi = fopen("TestPacientes.bin","r+b");
+    FILE *archi = abrirArchivo("TestPacientes.bin","r+b");
     while (fread(&paciente,sizeof(stPaciente),1,archi) > 0 )
     {
         printf("AUX: %s||DNI P: %s\n",aux,paciente.dni); /// borrar desp, viendo posiciones
@@ -628,14 +649,14 @@ void busquedaPaciente ()
         printf("Ingrese el DNI.\n");
         getchar();
         fgets(DNI,10,stdin);
-        DNI[strcspn(DNI,"\n")] = '\0';
+        borrarSaltoDeLinea(DNI);
         busquedaPorDNI(DNI);
         break;
     case 2:
         printf("Ingrese el apellido.\n");
         getchar();
         fgets(apellido,30,stdin);
-        apellido [strcspn(apellido,"\n")] = '\0';
+        borrarSaltoDeLinea(apellido);
         busquedaPorApellido(apellido);
         break;
     case 0:
@@ -650,7 +671,7 @@ void busquedaPaciente ()
 int busquedaPorDNI (char DNI[])
 {
     stPaciente aux;
-    FILE * archi = fopen("Heroes.bin","rb");
+    FILE * archi = abrirArchivo("Heroes.bin","rb");
     int flag = 1;
     if (archi == NULL)
     {
@@ -675,7 +696,7 @@ int busquedaPorApellido (char apellido[])
 {
     stPaciente aux;
     int flag = 1;
-    FILE * archi = fopen("TestPacientes.bin","rb");
+    FILE * archi = abrirArchivo("Heroes.bin","rb");
     if (archi == NULL)
     {
         printf("Error al abrir archivo.\n");
@@ -694,7 +715,13 @@ int busquedaPorApellido (char apellido[])
             flag++;
         }
     }
+    if (flag == 1)
+        {
+            printf("El paciente no esta en el sistema.\n");
+        }
     fclose(archi);
+    system("pause");
+    system("cls");
     return flag; /// si flag 0 paciente encontrado
 }
 /// ----------------------------------------------------- B U S C A R ---- P A C I E N T E  ------------------------------------------------------ ///
@@ -709,7 +736,7 @@ void altaViejoPaciente ()
     int auxPos = 0;
     stPaciente paciente;
     stPaciente copiar;
-    FILE *archi = fopen ("TestPacientes.bin","r + b");
+    FILE *archi = abrirArchivo("TestPacientes.bin","r + b");
     if (archi == NULL)
     {
         printf("Error al abrir archivo.\n");
@@ -745,7 +772,7 @@ stPaciente * activosADinamicos (int *validosADP)
     stPaciente aux;
     stPaciente * ADP;
     *validosADP = 0;
-    FILE *archi = fopen("Heroes.bin","rb");
+    FILE *archi = abrirArchivo("Heroes.bin","rb");
     if (archi == NULL)
     {
         printf("Error al abrir archivo.\n");
@@ -753,17 +780,13 @@ stPaciente * activosADinamicos (int *validosADP)
     }
     while (fread(&aux,sizeof(stPaciente),1,archi) > 0)
     {
-        printf("antes del if.\n");
         if (aux.eliminado == 0)
         {
-            printf("entra");
             (*validosADP)++;
-            printf("validos ADP :%i", *validosADP);
+//            printf("validos ADP :%i", *validosADP);
             ADP  = creandoAD(aux,validosADP,ADP);
         }
     }
-    printf("Aca si");
-    printf("num vale:%i antes de mandar mostrarADP\n",*validosADP);
     mostrarADP(ADP,validosADP);
     fclose(archi);
 
@@ -805,24 +828,20 @@ void mostrarADP (stPaciente *aux, int *validosADP)
 
 int findMinorChar(stPaciente * ADR, int validosADP, int posicion)
 {
-    printf("entra2\n");
     char aux;
     int posicionMenor = posicion;
     int subindice = posicion + 1;
     char menor[30];/// = ADR[posicion].apellido[0];
-    strcpy(menor,ADR[posicion].apellido);
+    borrarSaltoDeLinea(menor);
     char menorNombre[30]; /// Guarda nombre arrancando en 0 para comparar con 1
     strcpy(menorNombre,ADR[posicion].nombre);
-
     while(subindice < validosADP)
     {
-        printf("entra 3.\n");
         if (strcmpi(menor,ADR[subindice].apellido) > 0 ||
         (strcmpi(menor, ADR[subindice].apellido) == 0 && strcmpi(menorNombre, ADR[subindice].nombre) > 0))
         /// Compara apellidos, y si son iguales == 0 compara nombres, sin el if el ordenamiento solamente por apellidos pisa al segundo paciente con el mismo apellido
         {
             posicionMenor = subindice;
-//            menor = ADR[subindice].apellido;
             strcpy(menor,ADR[subindice].apellido);
             strcpy(menorNombre,ADR[subindice].nombre);
         }
@@ -887,7 +906,7 @@ void laboratoriosPorPacienteID () /// Ingresa DNI para buscar despues por ID
     printf("Ingrese el DNI de paciente a buscar.\n");
     getchar();
     fgets(DNI,10,stdin);
-    DNI [strcspn(DNI,"\n")] = '\0';
+    borrarSaltoDeLinea(DNI);
     int flag = busquedaPorDNI(DNI);
     if (flag == 0)
     {
@@ -899,8 +918,8 @@ void laboratoriosPorPacienteID () /// Ingresa DNI para buscar despues por ID
 
 void mostrarLaboratoriosUnPaciente (char DNI[]) ///
 {
-    FILE *archi = fopen ("TestLaboratorios.bin","rb");
-    FILE *bin = fopen("Heroes.bin","rb");
+    FILE *archi = abrirArchivo("TestLaboratorios.bin","rb");
+    FILE *bin = abrirArchivo("Heroes.bin","rb");
     char practicaRealizada[30]; /// Practica a traer de funcion para printear
     if (archi == NULL || bin == NULL)
     {
@@ -926,14 +945,10 @@ void mostrarLaboratoriosUnPaciente (char DNI[]) ///
         }
     }
     printf("Paciente :%s, %s\n", apellidoPaciente, nombrePaciente);
-//    printf("----------------------------------------------------------------------------------------------------\n");
     while (fread(&lab,sizeof(stLaboratorios),1,archi) > 0 ) /// Buscamos el ID del paciente en los registros de los laboratorios
     {
         if (lab.idPaciente == ID)
         {
-
-//            buscarPracticasRealizadas(lab.idLab,practicaRealizada,&precio); /// Buscamos el nombre de la practica a traves de su ID
-
 ///            buscarPracticasRealizadas(lab.idLab,practicaRealizada,&precio); /// Buscamos el nombre de la practica a traves de su ID
 
             mostrarUnLaboratorio(DNI,practicaRealizada,precio,lab.anio,lab.mes,lab.dia); /// Printeamos el nombre de la practica que el paciente se realizo
@@ -948,10 +963,9 @@ void mostrarLaboratoriosUnPaciente (char DNI[]) ///
     system("cls");
 }
 
-
 void buscarPracticasRealizadas(int practicaID, char practicaRealizada[],int *precio)
 {
-    FILE *archi = fopen("TestPracticas.bin","rb");
+    FILE *archi = abrirArchivo("TestPracticas.bin","rb");
     stPracticas aux;
     if (archi == NULL)
     {
@@ -964,7 +978,6 @@ void buscarPracticasRealizadas(int practicaID, char practicaRealizada[],int *pre
         {
             strcpy(practicaRealizada,aux.nombre);
             *precio = aux.costo;
-//            printf("Nombre Practica realizada: %s\nNombre aux:%s\n",practicaRealizada,aux);
         }
     }
     fclose(archi);
@@ -973,8 +986,8 @@ void buscarPracticasRealizadas(int practicaID, char practicaRealizada[],int *pre
 void mostrarTodosLaboratoriosPorPaciente ()
 {
     system("cls");
-    FILE *archi = fopen("Heroes.bin","rb");
-    FILE *bin = fopen("TestLaboratorios.bin","rb");
+    FILE *archi = abrirArchivo("Heroes.bin","rb");
+    FILE *bin = abrirArchivo("TestLaboratorios.bin","rb");
     stPaciente auxPaciente;
     stLaboratorios auxLab;
     int precio = 0;
@@ -1009,12 +1022,9 @@ void mostrarTodosLaboratoriosPorPaciente ()
 void mostrarUnLaboratorio (char nombre[], char practica[], int precio, int anio , int mes, int dia)
 {
     printf("------------------------------------------------\n");
-//    printf("Nombre del paciente:%s\n",nombre);
     printf("Fecha : %i - %i - %i\n", dia,mes,anio);
     printf("Nombre de la practica:%s\n",practica);
     printf("Precio de la practica:%i\n",precio);
-
-//    printf("\n------------------------------------------------\n");
 }
 
 
@@ -1023,7 +1033,7 @@ void mostrarUnLaboratorio (char nombre[], char practica[], int precio, int anio 
 
 void cargarPacientesAB()
 {
-    FILE *archi = fopen("Heroes.bin", "wb");
+    FILE *archi = abrirArchivo("Heroes.bin", "wb");
     if (archi == NULL)
     {
         printf("Error al abrir archivo.\n");
@@ -1074,7 +1084,7 @@ void cargarPacientesAB()
 
 void cargarPracticaTest()
 {
-    FILE *archi = fopen("TestPracticas.bin", "wb");
+    FILE *archi = abrirArchivo("TestPracticas.bin", "wb");
     if (archi == NULL)
     {
         printf("Error al abrir archivo.\n");
@@ -1106,7 +1116,7 @@ void cargarPracticaTest()
 
     printf("15 practicas cargadas correctamente.\n");
     fclose(archi);
-    archi = fopen ("TestPracticas.bin","rb");
+    archi = abrirArchivo("TestPracticas.bin","rb");
     stPracticas aux;
     while (fread(&aux,sizeof(stPracticas),1,archi) > 0 )
     {
