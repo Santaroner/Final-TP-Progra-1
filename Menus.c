@@ -53,6 +53,7 @@ void mainMenu()
 void pacientesMenu() /// USAR ESTE MENU PARA PROBAR EJERCICIOS DE PACIENTE
 {
     int optionswitch = 0;
+    system("cls");
     do
     {
 //        system("cls");
@@ -233,6 +234,7 @@ void practicasMenu() /// USAR ESTE MENU PARA PROBAR EJERCICIOS DE PRACTICA
             {
                 buscarPracticasPorNombre(arregloDinamicoPracticas, validosArregloPracticas);
             }
+            break;
         case 0:
             printf("Vuelva pronto.\n");
             break;

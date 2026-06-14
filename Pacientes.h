@@ -41,6 +41,7 @@ void cambiarApellidoPaciente(int pos);
 void cambiarMovilPaciente(int pos);
 void cambiarDNIPaciente(int pos);
 void bajaPaciente();
+void guardarPaciente (stPaciente paciente ,int pos );
 
 /// ----------------------------------------------------- B U S Q U E D A      P A C I E N T E S  ----------------------------------------------------- ///
 void busquedaPaciente ();

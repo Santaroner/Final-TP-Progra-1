@@ -205,22 +205,14 @@ void mostrarLaboratoriosArchivo()
     }
 }
 
-//int GetIdLaboratorios()
-//{
-//    static int aux = 0;
-//    aux++;
-//    return aux;
-//}
-//
-
-void modificarLaboratorio()
+void modificarLaboratorio()  /// hacer switch
 {
     int idBuscar;
     int pos = 0;
     int posEncontrado = 1;
     stLaboratorios lab;
 
-    printf("Ingrese ID de Lab a modificar: ");
+    printf("Ingrese ID de Lab a modificar:\n ");
     scanf("%d", &idBuscar);
 
     FILE *archi = fopen(ARCHIVO_LABORATORIOS, "r+b");

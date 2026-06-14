@@ -19,7 +19,6 @@ int GetIDPacientes ()
     oldID ++;
     return oldID;
 }
-
 int getIDVPacientes() /// Recorre archivo Pacientes para saber cuantos ID tiene
 {
     stPaciente aux;
@@ -34,7 +33,6 @@ int getIDVPacientes() /// Recorre archivo Pacientes para saber cuantos ID tiene
     fclose(archi);
     return IDAux;
 }
-
 int compararIDLP (int num)
 {
     printf("entra");
@@ -52,7 +50,6 @@ int compararIDLP (int num)
     fclose(archi);
     return 1;
 }
-
 int compararIDLPrac (int num)
 {
     printf("entra");
@@ -70,8 +67,6 @@ int compararIDLPrac (int num)
     fclose(archi);
     return 1;
 }
-
-
 int pacientesEliminados()
 {
     int aux = 0;
@@ -119,8 +114,25 @@ int getIDVLaboratorio()
 /// ----------------------------- PRE CARGA PARA TEST DE ARCHIVOS
 
 
+
 /// -------------- FUNCIONES ANTI ADRIAN ---- solo numeros ///
 
+void borrarSaltoDeLinea(char cadena[])
+{
+    cadena[strcspn(cadena,"\n")] = '\0';
+}
+
+FILE * abrirArchivo (char nombreArchivo[],char modo[])
+{
+    FILE *archi = fopen(nombreArchivo,modo);
+    if (archi == NULL)
+    {
+        printf("Error al abrir archivo\n");
+    }
+    else printf("Trabajando sobre el archivo.\n"); /// borrar despues
+
+    return archi;
+}
 int ingresarSoloLetrasSinEspacios (char palabra[]) /// Ingreso solo letras SIN espacios
 {
     int i = 0;
@@ -165,6 +177,14 @@ int ingresarSoloNumeros (int numeros)
 
 /// VALIDACIONES
 
+char * primerLetraMayuscula (char cadena[])
+{
+    if (cadena != '\0')
+    {
+        cadena[0] = toupper(cadena[0]);
+        return cadena;
+    }
+}
 
 /// --------------------------------------- T E S T    A R C H I V O S ------------------------------------------------------------------------------ ///
 
