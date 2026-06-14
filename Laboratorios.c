@@ -206,7 +206,7 @@ void mostrarLaboratoriosArchivo()
     }
 }
 
-void modificarLaboratorio()  /// hacer switch
+void modificarLaboratorio()
 {
     int idBuscar;
     int pos = 0;
