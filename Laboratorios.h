@@ -26,6 +26,9 @@ typedef struct
  void mostrarLaboratoriosArchivo(); // muestra
  void bajaLaboratorio(); // baja logica
 
+ void modificarLaboratorio();
+ void consultarLaboratorio();
+
  /// Validar fecha
  int validarAnio();
  int validarMes();

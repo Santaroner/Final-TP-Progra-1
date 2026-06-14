@@ -5,6 +5,7 @@
 #include "Pacientes.h"
 #include "Utilities.h"
 #include "Practicas.h"
+
 stLaboratorios *laboratorios = NULL;
 int validosL = 0;
 
@@ -18,7 +19,7 @@ void cargarLaboratorio(stLaboratorios *lab) /// Duda si agregar pac y prac.
     FILE *Laboratorios;
     Laboratorios = fopen("laboratorios.dat", "ab");
 
-    char seguir = 's';
+    char seguir = 'n';
     lab->idLab = getIDVLaboratorio();
     printf("ID asignado: %d\n", lab->idLab);
 
@@ -28,24 +29,19 @@ void cargarLaboratorio(stLaboratorios *lab) /// Duda si agregar pac y prac.
         lab ->mes = validarMes();
         lab ->dia = validarDia(lab ->mes);
 
-        printf("Confirmar datos? (s/n):");
-        scanf(" %c",&seguir);
+        printf("Ingrese ID del paciente: ");
+        scanf("%d",&lab->idPaciente);
+
+        printf("Ingrese ID de practica: ");
+        scanf("%d", &lab->practicaRealizada);
+
+        lab->baja = 0;
+
+        printf("Confirmar datos? (s/n) ");
+        scanf(" %c", &seguir);
     }
     while (tolower(seguir) != 's');
 
-    do
-    {
-        printf("Ingrese ID del paciente: ");
-        scanf("%d", &lab->idPaciente);
-    } while (compararIDLP(lab->idPaciente) != 0);
-
-    do
-   {
-        printf("Ingrese ID de practica: ");
-        scanf("%d", &lab->practicaRealizada);
-    } while (compararIDLPrac(lab->practicaRealizada));
-
-    lab->baja = 0;
 
     fwrite(lab, sizeof(stLaboratorios), 1, Laboratorios);
     printf("Laboratorio: ID: %d | Anio: %d | Mes: %d | Dia: %d\n",
@@ -82,18 +78,7 @@ stLaboratorios * cargarLaboratorios()
 
     return aux;
 }
-/*
-int validarFecha(int anio, int mes, int dia)
-{
-    int diasPorMes[] = {0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31}; // el 0 para que el primer mes sea 1ero
 
-    if (anio < 2000 || anio > 2026) return 0; /// sale si invalido
-    if (mes < 1 || mes > 12) return 0;  /// sale si invalido
-    if (dia < 1 || dia > diasPorMes[mes]) return 0;  /// sale si invalido
-
-    return 1;
-}
-*/
 int validarAnio()
 {
     int aux = 0;
@@ -221,15 +206,111 @@ void mostrarLaboratoriosArchivo()
     }
 }
 
-//int GetIdLaboratorios()
-//{
-//    static int aux = 0;
-//    aux++;
-//    return aux;
-//}
-//
+void modificarLaboratorio()
+{
+    int idBuscar;
+    int pos = 0;
+    int posEncontrado = -1;
+    stLaboratorios lab;
 
+    printf("Ingrese ID de Lab a modificar:\n ");
+    scanf("%d", &idBuscar);
 
+    FILE *archi = fopen(ARCHIVO_LABORATORIOS, "r+b");
+    if (archi == NULL)
+    {
+        printf("Error al abrir archivo. \n");
+        return;
+    }
+
+    while(fread(&lab, sizeof(stLaboratorios), 1, archi)> 0)
+    {
+        if (lab.idLab == idBuscar && lab.baja == 0)
+        {
+            posEncontrado = pos;
+            break;
+        }
+        pos++;
+    }
+
+    if (posEncontrado == -1)
+    {
+        printf("Laboratorio no encontrado o de baja. \n");
+        fclose(archi);
+        return;
+    }
+
+    int opcion;
+    printf("Que desea modificar?\n");
+    printf("1- Fecha\n");
+    printf("2- Practica\n");
+    scanf("%d", &opcion);
+
+    switch (opcion)
+    {
+    case 1:
+        lab.anio = validarAnio();
+        lab.mes  = validarMes();
+        lab.dia  = validarDia(lab.mes);
+        break;
+    case 2:
+        do
+        {
+            printf("Ingrese nuevo ID de practica: ");
+            scanf("%d", &lab.practicaRealizada);
+        }
+        while (compararIDLPrac(lab.practicaRealizada));
+        break;
+    default:
+        printf("Opcion invalida.\n");
+        fclose(archi);
+        return;
+    }
+
+    fseek(archi, posEncontrado * sizeof(stLaboratorios), SEEK_SET);
+    fwrite(&lab, sizeof(stLaboratorios), 1, archi);
+    printf("Laboratorio modificado correctamente.\n");
+
+    fclose(archi);
+}
+
+void consultarLaboratorio()
+{
+    int idBuscar;
+    int encontrado = 0;
+    stLaboratorios lab;
+
+    printf("Ingresar ID del laboratorio a consultar: ");
+    scanf("%d", &idBuscar);
+
+    FILE *archi = fopen(ARCHIVO_LABORATORIOS, "rb");
+    if (archi == NULL)
+    {
+        printf("Error al abrir");
+        return;
+    }
+
+    while (fread(&lab, sizeof(stLaboratorios), 1, archi)> 0)
+    {
+        if (lab.idLab == idBuscar && lab.baja == 0)
+        {
+            printf("ID: %d | Paciente: %d | Practica: %d | Anio: %d | Mes: %d | Dia: %d\n",
+                   lab.idLab,
+                   lab.idPaciente,
+                   lab.practicaRealizada,
+                   lab.anio,
+                   lab.mes,
+                   lab.dia);
+            encontrado = 1;
+            break;
+        }
+    }
+
+    if (encontrado == 0)
+        printf("Laboratorio no encontrado o de baja");
+
+    fclose(archi);
+}
 
 
 int buscandoIDPacientes() /// rafa probando busca id - - - - - - - funcion en utilities
