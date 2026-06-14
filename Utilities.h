@@ -12,6 +12,9 @@ int getIDValids(FILE *archi);
 int getIDVPacientes();
 int getIDVPracticas();
 int getIDVLaboratorio();
+void borrarSaltoDeLinea(char cadena[]);
+char * primerLetraMayuscula (char cadena[]);
+FILE * abrirArchivo (char nombreArchivo[],char modo[]);
 
 /// Validaciones
 int ingresarSoloLetrasSinEspacios (char palabra[]);
