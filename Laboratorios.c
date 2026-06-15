@@ -17,7 +17,7 @@ void cargarLaboratorio(stLaboratorios *lab) /// Duda si agregar pac y prac.
 {
 
     FILE *Laboratorios;
-    Laboratorios = fopen("laboratorios.dat", "ab");
+    Laboratorios = fopen(ARCHIVO_LABORATORIOS, "ab");
 
     char seguir = 'n';
     lab->idLab = getIDVLaboratorio();
@@ -139,7 +139,7 @@ void bajaLaboratorio()
     printf("Ingrese ID a dar de baja: ");
     scanf("%d", &idBuscar);
 
-    FILE *archi = fopen("laboratorios.dat", "r+b");
+    FILE *archi = fopen(ARCHIVO_LABORATORIOS, "r+b");
     if (archi == NULL)
     {
         printf("Error al abrir");
@@ -182,7 +182,7 @@ void mostrarLaboratorios(stLaboratorios *laboratorios,int validosL)
 
 void mostrarLaboratoriosArchivo()
 {
-    FILE *archi = fopen("laboratorios.dat", "rb");
+    FILE *archi = fopen(ARCHIVO_LABORATORIOS, "rb");
     stLaboratorios aux;
 
     if (archi == NULL)
