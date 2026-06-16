@@ -6,7 +6,6 @@
 #include "Utilities.h"
 /// FALTAN VALIDACIONES ARCHIVOS SI NO SE ABREN MENSAJE DE ERROR AL ABRIR
 /// Funcion volver a dar de alta de lista de eliminados
-/// Implementar ToUpper en primera letra de strings en nombres, apellidos.
 /// ordenar y comentar codigo
 stPaciente *pacientes = NULL;
 int validos = 0; /// validos para el arreglo dinamico
@@ -95,6 +94,8 @@ void cargarNombrePaciente(char nombre[30])
             {
                 printf("Nombre ingresado correctamente.\n");
                 strcpy(nombre,aux);
+                primerLetraMayuscula(nombre);
+                printf("Nombre.%s\n",nombre);
                 system("pause");
                 flag = 1;
             } else printf("Error.\n");
@@ -123,6 +124,8 @@ void cargarApellidoPaciente(char apellido[])
             {
                     printf("Apellido guardado.\n"); /// test ------------------------------------------------------------------- borrar deps
                     strcpy(apellido,aux);
+                    primerLetraMayuscula(apellido);
+                    printf("Apellido:%s",apellido);
                     system("pause");
                     flag = 1; /// Si se cambia la flag es porque es ingreso el nombre correctamente > fin de bucle
             }
@@ -209,21 +212,24 @@ int cargarEstadoPaciente()
     do
     {
         printf("El paciente esta activo?\n0:Activo ||| 1:Baja\n");
-        scanf("%i",&aux);
+        aux = ingresarEnteroMinMax(0,1);
+        printf("aux vale:%i",aux);
+        flag = 1;
+//        scanf("%i",&aux);
         fflush(stdin);
-        if (!isdigit(aux))
-        {
-            if (aux == 0 || aux == 1)
-            {
-                printf("Estado del paciente cargado correctamente.\n");
-                printf("activo vale : %i",aux);
-                flag = 1;
-                system("pause");
-                return aux;
-            }
-                printf("Ingrese la opcion correcta por favor.\nEstado activo:0\nPaciente de baja:1.\n");
-            }
-        else printf("Ingresar solo 0 o 1\n");
+
+//        {
+//            if (aux == 0 || aux == 1)
+//            {
+//                printf("Estado del paciente cargado correctamente.\n");
+//                printf("activo vale : %i",aux);
+//                flag = 1;
+//                system("pause");
+//                return aux;
+//            }
+//                printf("Ingrese la opcion correcta por favor.\nEstado activo:0\nPaciente de baja:1.\n");
+//            }
+//        else printf("Ingresar solo 0 o 1\n");
 
     } while ( flag != 1);
 }
@@ -468,6 +474,7 @@ void cambiarNombrePaciente(int pos)
     FILE *archi = abrirArchivo("TestPacientes.bin","r+b");
     fseek(archi,(pos-1) * sizeof(stPaciente),SEEK_SET);
     fread(&auxiliar,sizeof(stPaciente),1,archi);
+    primerLetraMayuscula(aux);
     strcpy(auxiliar.nombre,aux);
     fseek(archi, -sizeof(stPaciente),SEEK_CUR);
     fwrite(&auxiliar,sizeof(stPaciente),1,archi);
@@ -490,6 +497,7 @@ void cambiarApellidoPaciente(int pos)
             if (ingresarSoloLetrasSinEspacios(nuevoApellido) == 1)
             {
                 printf("Nombre dentro de los parametros acordados\n");
+                primerLetraMayuscula(nuevoApellido);
                 flag = 1;
             } else printf("Ingrese solamente letras por favor :) \n");
         }
@@ -504,6 +512,7 @@ void cambiarApellidoPaciente(int pos)
     FILE *archi = abrirArchivo("TestPacientes.bin","r+b");
     fseek(archi,(pos-1) * sizeof(stPaciente),SEEK_SET);
     fread(&aux,sizeof(stPaciente),1,archi);
+    primerLetraMayuscula(nuevoApellido);
     strcpy(aux.apellido,nuevoApellido);
     printf("ID :%i\nNombre:%s\nApellido:%s\nDNI:%s\nMovil:%s\n\n",
                    aux.idPaciente,

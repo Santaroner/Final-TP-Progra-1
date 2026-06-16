@@ -20,5 +20,5 @@ FILE * abrirArchivo (char nombreArchivo[],char modo[]);
 int ingresarSoloLetrasSinEspacios (char palabra[]);
 int ingresarSoloNumerosEnArreglo (char numeros[]);
 int ingresarSoloNumeros (int numeros); ///
-
+int ingresarEnteroMinMax(int min, int max); /// Si ingresa un dato que no sea numero no retorna 1, solo para numeros ingresados con scanf, no con strings en fgets
 #endif // UTILITIES_H_INCLUDED
