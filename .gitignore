@@ -52,3 +52,5 @@ Mkfile.old
 dkms.conf
 TP Lab.depend
 TP Lab.layout
+TP Lab.layout
+*.layout

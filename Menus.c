@@ -13,6 +13,8 @@ int validosArregloPracticas=0;
 int validosPacientes = 0;
 stPracticas *arregloDinamicoPracticas=NULL;
 stLaboratorios *arregloDinamico = NULL;
+stLaboratorios *arregloOrdenamiento = NULL;
+int validosOrdenamiento = 0;
 int validosADP;
 stPaciente *ADP = NULL; /// arreglo dinamico pacientes para funcion mostrar
 stPaciente *TSP = NULL; /// Arreglo dinamico top spenders
@@ -103,6 +105,12 @@ void pacientesMenu() /// USAR ESTE MENU PARA PROBAR EJERCICIOS DE PACIENTE
             ADP = activosADinamicos(&validosADP);
             ordenamientoSeleccionChar(ADP,validosADP);
             break;
+        case 10:
+            arregloOrdenamiento = arregloDinamicoLaboratoriosPorFecha (&validosOrdenamiento);
+            printf("Validos vale:%i\n",validosOrdenamiento);
+            ordenamientoSeleccionFecha(arregloOrdenamiento,validosOrdenamiento);
+            mostrarLaboratoriosOrdenadosPorfecha(arregloOrdenamiento,validosOrdenamiento);
+            break;
         case 99:
             cargarPacientesAB();
             cargarPracticaTest();
@@ -128,7 +136,7 @@ void laboratoriosMenu() /// USAR ESTE MENU PARA PROBAR EJERCICIOS DE LABORATORIO
     do
     {
         system("cls");
-        printf("1-Cargar laboratorio  1\n2-Ejercicio 2\n3-Ejercicio 3\n88-Archivo precargado Practicas\n99-Archivo precargado pacientes\n0-Salir");
+        printf("1-Cargar laboratorio \n2-Baja Laboratorio\n3-Modificar Laboratorio\n4-Consultar Laboratorio\n5-Listar Laboratorios\n88-Archivo precargado Practicas\n99-Archivo precargado pacientes\n0-Salir");
         scanf("%i",&optionswitch);
         switch(optionswitch)
         {
@@ -136,12 +144,15 @@ void laboratoriosMenu() /// USAR ESTE MENU PARA PROBAR EJERCICIOS DE LABORATORIO
             cargarLaboratorios();
             break;
         case 2:
-//            mostrarLaboratorios(arregloDinamico);
+            bajaLaboratorio();
             break;
         case 3:
-            printf("Ejercicio 3\n");
+            modificarLaboratorio();
             break;
-        case 88:
+        case 4:
+            consultarLaboratorio();
+            break;
+        case 5:
             mostrarPracticasSanti();
             break;
         case 99: /// ABRE ARCHIVO PACIENTES-SANTI.

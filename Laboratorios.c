@@ -17,7 +17,7 @@ void cargarLaboratorio(stLaboratorios *lab) /// Duda si agregar pac y prac.
 {
 
     FILE *Laboratorios;
-    Laboratorios = fopen("laboratorios.dat", "ab");
+    Laboratorios = fopen(ARCHIVO_LABORATORIOS, "ab");
 
     char seguir = 'n';
     lab->idLab = getIDVLaboratorio();
@@ -89,7 +89,7 @@ int validarAnio()
         if (aux < 1990 || aux > 2026)
             printf("Año equivocado, recuerde (entre 1990 y 2026) \n");
         else
-            printf("Anio %d", aux);
+            printf("Anio %d\n", aux);
     }
     while (aux < 1990 || aux > 2026);
     return aux;
@@ -105,7 +105,7 @@ int validarMes()
         if (aux < 1 || aux > 12)
             printf("Error, recuerde entre 1 y 12 \n");
         else
-            printf("Mes %d", aux);
+            printf("Mes %d\n", aux);
     }
     while (aux < 1 || aux > 12);
     return aux;
@@ -139,7 +139,7 @@ void bajaLaboratorio()
     printf("Ingrese ID a dar de baja: ");
     scanf("%d", &idBuscar);
 
-    FILE *archi = fopen("laboratorios.dat", "r+b");
+    FILE *archi = fopen(ARCHIVO_LABORATORIOS, "r+b");
     if (archi == NULL)
     {
         printf("Error al abrir");
@@ -152,6 +152,7 @@ void bajaLaboratorio()
         {
             posEncontrado = pos;
             lab.baja = 1;
+            break;
         }
         pos++;
     }
@@ -182,7 +183,7 @@ void mostrarLaboratorios(stLaboratorios *laboratorios,int validosL)
 
 void mostrarLaboratoriosArchivo()
 {
-    FILE *archi = fopen("laboratorios.dat", "rb");
+    FILE *archi = fopen(ARCHIVO_LABORATORIOS, "rb");
     stLaboratorios aux;
 
     if (archi == NULL)

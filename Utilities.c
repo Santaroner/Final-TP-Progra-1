@@ -129,7 +129,7 @@ FILE * abrirArchivo (char nombreArchivo[],char modo[])
     {
         printf("Error al abrir archivo\n");
     }
-    else printf("Trabajando sobre el archivo.\n"); /// borrar despues
+//    else printf("Trabajando sobre el archivo.\n"); /// borrar despues
 
     return archi;
 }

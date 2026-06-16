@@ -4,6 +4,7 @@
 #include <string.h>
 #include <ctype.h>
 #include "Utilities.h"
+#include "Laboratorios.h"
 
 //extern APacientes[];
 typedef struct
@@ -28,6 +29,7 @@ void cargaPaciente();  /// Llama a las diferentes funciones con validaciones y i
 /// ------------------------------------------------------- M U E S T R A  //// V A L I D O S  -------------------------------------------------------- ///
  void mostrarPacientes(stPaciente *pacientes,int validos);
  int validarDNI (char DNI[]);
+ int busquedaPorDNIDOS (char DNI[]); /// BORRAR
  int mostrarArchivo();
  void mostrarEliminados ();
  extern stPaciente *pacientes;
@@ -62,7 +64,7 @@ void menuMostrarLaboratoriosPorPaciente ();
 void laboratoriosPorPacienteID ();
 //void mostrarLaboratoriosPorPacientes (int ID);
 void mostrarLaboratoriosUnPaciente (char DNI[]);
-void mostrarUnLaboratorio (char nombre[], char practica[], int precio, int anio , int mes, int dia); /// Devuelve el nombre de la practica a mostrarLaboratoriosPorPaciente
+void mostrarUnLaboratorio (char nombre[], char practica[], int precio, int anio , int mes, int dia,int id); /// Devuelve el nombre de la practica a mostrarLaboratoriosPorPaciente
 void mostrarTodosLaboratoriosPorPaciente ();
 
 
@@ -72,6 +74,13 @@ void cargarPracticaTest(); /// Carga 15 practicas
 void cargarLaboTest(); /// Carga 40 laboratorios
 
 
+/// ORDENAMIENTO LABS POR FECHA
+stLaboratorios * arregloDinamicoLaboratoriosPorFecha (int *validosOrdenamiento);
+stLaboratorios * asignarMemoriaLaboratoriosPorFecha (stLaboratorios * arregloOrdenamiento, stLaboratorios lab, int pos);
+int fechaAEntero (stLaboratorios lab);
+void ordenamientoSeleccionFecha(stLaboratorios arreglo[], int validos);
+int findMinorFecha(stLaboratorios arreglo[], int validos, int posicion);
+void ordenamientoSeleccionFecha(stLaboratorios arreglo[], int validos);
 
 
 #endif // PACIENTES_H_INCLUDED
