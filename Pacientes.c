@@ -215,22 +215,7 @@ int cargarEstadoPaciente()
         aux = ingresarEnteroMinMax(0,1);
         printf("aux vale:%i",aux);
         flag = 1;
-//        scanf("%i",&aux);
         fflush(stdin);
-
-//        {
-//            if (aux == 0 || aux == 1)
-//            {
-//                printf("Estado del paciente cargado correctamente.\n");
-//                printf("activo vale : %i",aux);
-//                flag = 1;
-//                system("pause");
-//                return aux;
-//            }
-//                printf("Ingrese la opcion correcta por favor.\nEstado activo:0\nPaciente de baja:1.\n");
-//            }
-//        else printf("Ingresar solo 0 o 1\n");
-
     } while ( flag != 1);
 }
 
@@ -278,14 +263,8 @@ int mostrarArchivo ()
 {
     system("cls");
     int validos = 0;
-    int optionswitch;
-    printf("1-TestPacientes\n2-Heroes ------- PROBANDO ACA\n3-PrePacientes\4-\n");
-    scanf("%i",&optionswitch);
     FILE *archi;
     stPaciente aux;
-    switch(optionswitch)
-    {
-    case 1:
         archi = abrirArchivo(ARCHIVO_PACIENTES,"rb");
         while (fread(&aux,sizeof(stPaciente),1,archi) > 0 )
         {
@@ -299,49 +278,6 @@ int mostrarArchivo ()
         system("pause");
         system("cls");
         return validos;
-        break;
-    case 2:
-        archi = abrirArchivo("Heroes.bin","rb");
-        while (fread(&aux,sizeof(stPaciente),1,archi) > 0 )
-        {
-            mostrarUnPaciente(aux);
-            validos++;
-        }
-        fclose(archi);
-        system("pause");
-        system("cls");
-        return validos;
-        break;
-    case 3:
-        archi = abrirArchivo("PrePacientes.bin","rb");
-        while (fread(&aux,sizeof(stPaciente),1,archi) > 0 )
-        {
-            mostrarUnPaciente(aux);
-            validos++;
-        }
-        fclose(archi);
-        return validos;
-        break;
-    case 4 :
-        archi = abrirArchivo("PacientesSanti.bin","rb");
-        while (fread(&aux,sizeof(stPaciente),1,archi) > 0 )
-               {
-                   if (aux.eliminado == 0)
-                   {
-                    printf("ID :%i\nNombre:%s\nApellido:%s\nDNI:%s\nMovil:%s\n\n",
-                   aux.idPaciente,
-                   aux.nombre,
-                   aux.apellido,
-                   aux.dni,
-                   aux.movil,
-                   aux.eliminado);
-                validos++;
-                   }
-        }
-        fclose(archi);
-        return validos;
-        break;
-    }
     return 0;
     }
 
@@ -390,7 +326,6 @@ void buscarPaciente(stPaciente *pacientes, int validos)
     borrarSaltoDeLinea(aux);
     while (fread(&busqueda,sizeof(stPaciente),1,archi) > 0)
     {
-        printf("asd");
         if (strcmpi(aux, busqueda.dni) == 0)
         {
             printf("Encontrado\n");
@@ -405,7 +340,6 @@ void buscarPaciente(stPaciente *pacientes, int validos)
 void menuModificarPaciente (int pos)
 {
     int optionswitch;
-//    system("cls");
     printf("El paciente ha sido encontrado.\Ingrese el dato a modificar:\n1-Nombre\n2-Apellido\n3-Movil\n0-Salir\n");
     scanf("%i",&optionswitch);
     switch(optionswitch)
@@ -451,7 +385,6 @@ void cambiarNombrePaciente(int pos)
     int flag = 0;
     do
     {
-        printf("pos : %i",pos);
         printf("Ingrese el nombre actualizado del paciente:\n");
         getchar();
         fgets(aux, 30,stdin);
@@ -463,7 +396,6 @@ void cambiarNombrePaciente(int pos)
                 printf("Nombre dentro de los parametros acordados\n");
                 flag = 1;
             } else printf("Ingrese solamente letras por favor :) \n");
-
         }
         else
         {
@@ -471,7 +403,7 @@ void cambiarNombrePaciente(int pos)
             printf("No se pueden ingresar mas de 30 numeros\n");
         }
     }while (flag == 0);
-    FILE *archi = abrirArchivo("TestPacientes.bin","r+b");
+    FILE *archi = abrirArchivo(ARCHIVO_PACIENTES,"r+b");
     fseek(archi,(pos-1) * sizeof(stPaciente),SEEK_SET);
     fread(&auxiliar,sizeof(stPaciente),1,archi);
     primerLetraMayuscula(aux);
@@ -490,7 +422,7 @@ void cambiarApellidoPaciente(int pos)
     {
         printf("Ingrese el Apellido actualizado del paciente:\n");
         getchar();
-        fgets(nuevoApellido, 12,stdin);
+        fgets(nuevoApellido,30,stdin);
         if (strchr(nuevoApellido,'\n') != NULL)
         {
             borrarSaltoDeLinea(nuevoApellido);
@@ -509,7 +441,7 @@ void cambiarApellidoPaciente(int pos)
     }
     while (flag == 0);
 
-    FILE *archi = abrirArchivo("TestPacientes.bin","r+b");
+    FILE *archi = abrirArchivo(ARCHIVO_PACIENTES,"r+b");
     fseek(archi,(pos-1) * sizeof(stPaciente),SEEK_SET);
     fread(&aux,sizeof(stPaciente),1,archi);
     primerLetraMayuscula(nuevoApellido);
@@ -553,7 +485,7 @@ void cambiarMovilPaciente(int pos)
     }
     while (flag == 0);
 
-    FILE *archi = abrirArchivo("TestPacientes.bin","r+b");
+    FILE *archi = abrirArchivo(ARCHIVO_PACIENTES,"r+b");
     fseek(archi,(pos-1)* sizeof(stPaciente), SEEK_SET);
     fread(&aux,sizeof(stPaciente),1,archi);
     fseek(archi,-sizeof(stPaciente),SEEK_CUR);
@@ -616,10 +548,9 @@ void bajaPaciente()
     getchar();
     fgets(aux,10,stdin);
     aux[strcspn(aux, "\n")] = '\0';
-    FILE *archi = abrirArchivo("TestPacientes.bin","r+b");
+    FILE *archi = abrirArchivo(ARCHIVO_PACIENTES,"r+b");
     while (fread(&paciente,sizeof(stPaciente),1,archi) > 0 )
     {
-//        printf("AUX: %s||DNI P: %s\n",aux,paciente.dni); /// borrar desp, viendo posiciones
         if (strcmpi(aux,paciente.dni) == 0 && paciente.eliminado == 0)
         {
             contadorPos = i ;
@@ -635,7 +566,6 @@ void bajaPaciente()
         }
         i++;
     }
-//        printf("Posicion:%i",contadorPos); /// borrar desp, probando posiciones
         fseek(archi, (contadorPos ) * sizeof(stPaciente),SEEK_SET); /// se mueve desde el principio las posiciones ya contadas en el while
         paciente = eliminado; /// cambio
         fwrite (&paciente,sizeof(stPaciente),1,archi);
@@ -751,9 +681,11 @@ void altaViejoPaciente ()
     int flag = 0;
     int pos = 0;
     int auxPos = 0;
+    int eliminado = 0;
+    int confirmar;
     stPaciente paciente;
     stPaciente copiar;
-    FILE *archi = abrirArchivo("TestPacientes.bin","r + b");
+    FILE *archi = abrirArchivo(ARCHIVO_PACIENTES,"r+b");
     if (archi == NULL)
     {
         printf("Error al abrir archivo.\n");
@@ -764,22 +696,62 @@ void altaViejoPaciente ()
 
     while (fread(&paciente,sizeof(stPaciente),1,archi) > 0)
     {
-        if (aux == paciente.idPaciente)
+        if (aux == paciente.idPaciente && paciente.eliminado == 1 )
         {
             auxPos = pos;
             paciente.eliminado = 0;
-            printf("Paciente dado de alta correctamente.\n");
             copiar = paciente;
+            flag = 1;
         }
-        else if (flag == 0)
+        else if (aux == paciente.idPaciente && paciente.eliminado == 0)
         {
-            printf("El paciente no fue encontrado en los registros.\n");
+            printf("El paciente ya esta actualmente dado de alta.\n");
+            flag = 2;
         }
          pos++;
     }
-    fseek(archi,auxPos * sizeof(stPaciente),SEEK_SET);
-    fwrite(&copiar,sizeof(stPaciente),1,archi);
+
+      if (flag == 1)
+    {
+        fseek(archi, auxPos * sizeof(stPaciente), SEEK_SET);
+        fwrite(&copiar, sizeof(stPaciente), 1, archi);
+        printf("Paciente dado de alta correctamente.\n");
+    }
+    else if (flag == 0)
+    {
+        printf("El paciente no fue encontrado en los registros.\n");
+    }
     fclose(archi);
+    system("pause");
+    system("cls");
+}
+
+int confirmarBajaPaciente (char nombre[], char apellido[])
+{
+    char confirmar;
+    int letra;
+    do
+    {
+        printf("Esta seguro que desea dar de baja al paciente %s, %s?S/N",nombre,apellido);
+        letra = scanf(" %c",&confirmar);
+        if (letra == 1 && tolower(confirmar) == 's')
+        {
+            return 0;
+        }
+        else if(letra == 1 && tolower(confirmar) == 'n' )
+        {
+            return 1;
+        }
+        else if(letra == 1 && tolower(confirmar) != 'n' || tolower(confirmar) != 's');
+        {
+            printf("Opcion incorrecta. S para confimar la baja - N para cancelar la baja del paciente\n");
+        }
+        if (letra == 0)
+        {
+            printf("No puede ingresar letras ni simbolos\nS para confirmar - N para cancelar la baja del paciente.\n");
+        }
+
+    } while (tolower(confirmar) == 's' || tolower(confirmar) == 'n');
 }
 
 /// ----------------------------------------------------- O R D E N A R ------------ P A C I E N T E &&& A R R E G L O --- D I N A M I C O   ------------------------------------------------------ ///
@@ -800,7 +772,6 @@ stPaciente * activosADinamicos (int *validosADP)
         if (aux.eliminado == 0)
         {
             (*validosADP)++;
-//            printf("validos ADP :%i", *validosADP);
             ADP  = creandoAD(aux,validosADP,ADP);
         }
     }
@@ -818,12 +789,7 @@ stPaciente * creandoAD (stPaciente paciente, int *validosADP,stPaciente *ADP)
         printf("Error al asignar memoria.\n");
         return NULL;
     }
-//    else printf("Memoria asignada correctamente\n");
     ADP[(*validosADP)-1] = paciente; /// num arranca valiendo 1
-
-//    printf("antes del return\n");
-//    printf("num vale:%i en creando AD\n",*validosADP);
-
     return ADP;
 }
 
@@ -846,13 +812,14 @@ void mostrarADP (stPaciente *aux, int *validosADP)
 
 int findMinorChar(stPaciente * ADR, int validosADP, int posicion)
 {
-    char aux;
     int posicionMenor = posicion;
     int subindice = posicion + 1;
     char menor[30];/// = ADR[posicion].apellido[0];
-    borrarSaltoDeLinea(menor);
     char menorNombre[30]; /// Guarda nombre arrancando en 0 para comparar con 1
+    strcpy(menor, ADR[posicion].apellido);
     strcpy(menorNombre,ADR[posicion].nombre);
+    borrarSaltoDeLinea(menor);
+    borrarSaltoDeLinea(menorNombre);
     while(subindice < validosADP)
     {
         if (strcmpi(menor,ADR[subindice].apellido) > 0 ||
@@ -892,7 +859,7 @@ void ordenamientoSeleccionChar(stPaciente *ADR,int validosADR)
 int busquedaPorDNIDOS (char DNI[])
 {
     stPaciente aux;
-    FILE * archi = abrirArchivo("Heroes.bin","rb");
+    FILE * archi = abrirArchivo(ARCHIVO_PACIENTES,"rb");
     int flag = 1;
     if (archi == NULL)
     {
@@ -965,8 +932,8 @@ void laboratoriosPorPacienteID () /// Ingresa DNI para buscar despues por ID
 
 void mostrarLaboratoriosUnPaciente (char DNI[]) ///
 {
-    FILE *archi = abrirArchivo("TestLaboratorios.bin","rb");
-    FILE *bin = abrirArchivo("Heroes.bin","rb");
+    FILE *archi = abrirArchivo(ARCHIVO_LABORATORIOS,"rb");
+    FILE *bin = abrirArchivo(ARCHIVO_PACIENTES,"rb");
     char practicaRealizada[30]; /// Practica a traer de funcion para printear
     if (archi == NULL || bin == NULL)
     {
@@ -1012,7 +979,7 @@ void mostrarLaboratoriosUnPaciente (char DNI[]) ///
 
 void buscarPracticasRealizadas(int practicaID, char practicaRealizada[],int *precio)
 {
-    FILE *archi = abrirArchivo("TestPracticas.bin","rb");
+    FILE *archi = abrirArchivo(ARCHIVO_PRACTICAS,"rb");
     stPracticas aux;
     if (archi == NULL)
     {
@@ -1033,8 +1000,8 @@ void buscarPracticasRealizadas(int practicaID, char practicaRealizada[],int *pre
 void mostrarTodosLaboratoriosPorPaciente ()
 {
     system("cls");
-    FILE *archi = abrirArchivo("Heroes.bin","rb");
-    FILE *bin = abrirArchivo("TestLaboratorios.bin","rb");
+    FILE *archi = abrirArchivo(ARCHIVO_PACIENTES,"rb");
+    FILE *bin = abrirArchivo(ARCHIVO_LABORATORIOS,"rb");
     stPaciente auxPaciente;
     stLaboratorios auxLab;
     int encontrado = 0;
@@ -1088,7 +1055,7 @@ void mostrarUnLaboratorio (char nombre[], char practica[], int precio, int anio 
 
 stLaboratorios * arregloDinamicoLaboratoriosPorFecha (int *validosOrdenamiento)
 {
-    FILE *archi = abrirArchivo("TestLaboratorios.bin","rb");
+    FILE *archi = abrirArchivo(ARCHIVO_LABORATORIOS,"rb");
     rewind(archi);
     stLaboratorios *arregloDinamico = NULL;
     stLaboratorios lab;
@@ -1105,7 +1072,6 @@ stLaboratorios * arregloDinamicoLaboratoriosPorFecha (int *validosOrdenamiento)
 
 stLaboratorios * asignarMemoriaLaboratoriosPorFecha (stLaboratorios * arregloOrdenamiento, stLaboratorios lab, int pos)
 {
-//    printf("Entra");
     arregloOrdenamiento  = realloc (arregloOrdenamiento, (pos + 1) * sizeof(stLaboratorios));
     if (arregloOrdenamiento == NULL)
     {
@@ -1128,7 +1094,6 @@ int fechaAEntero (stLaboratorios lab) /// Vuelve toda la fecha en un numero ente
 
 int findMinorFecha(stLaboratorios arreglo[], int validos, int posicion)
 {
-    int aux;
     int posicionMenor = posicion;
     stLaboratorios menor;
     int subindice = posicion + 1;
@@ -1162,7 +1127,7 @@ void ordenamientoSeleccionFecha(stLaboratorios arreglo[], int validos)
 
 void mostrarLaboratoriosOrdenadosPorfecha (stLaboratorios arreglo[],int validos)
 {
-    FILE *archi = abrirArchivo("Heroes.bin","rb");
+    FILE *archi = abrirArchivo(ARCHIVO_PACIENTES,"rb");
     stPaciente aux;
     int precio = 0;
     char nombrePractica[30];
@@ -1186,236 +1151,8 @@ void mostrarLaboratoriosOrdenadosPorfecha (stLaboratorios arreglo[],int validos)
             }
         }
     }
-
-
     fclose(archi);
     system("pause");
     system("cls");
 }
 
-
-
-
-/// --------------------------------------- ORDENAR LABORATORIOS POR FECHA ------------------------------------------------------------------------------ ///
-
-
-
-/// --------------------------------------- T E S T    A R C H I V O S ------------------------------------------------------------------------------ ///
-
-
-void cargarPacientesAB()
-{
-    FILE *archi = abrirArchivo("Heroes.bin", "wb");
-    if (archi == NULL)
-    {
-        printf("Error al abrir archivo.\n");
-        return;
-    }
-
-    stPaciente pacientes[30] = {
-        {51, "Tanjiro",   "Kamado",       "30100051", "2215560051", 0},
-        {52, "Nezuko",    "Kamado",       "30100052", "2215560052", 1},
-        {53, "Zenitsu",   "Agatsuma",     "30100053", "2215560053", 0},
-        {54, "Inosuke",   "Hashibira",    "30100054", "2215560054", 0},
-        {55, "Giyu",      "Tomioka",      "30100055", "2215560055", 1},
-        {56, "Izuku",     "Midoriya",     "30100056", "2215560056", 0},
-        {57, "Katsuki",   "Bakugo",       "30100057", "2215560057", 0},
-        {58, "Shoto",     "Todoroki",     "30100058", "2215560058", 1},
-        {59, "Ochaco",    "Uraraka",      "30100059", "2215560059", 0},
-        {60, "Tenya",     "Iida",         "30100060", "2215560060", 0},
-        {61, "Yusuke",    "Urameshi",     "30100061", "2215560061", 0},
-        {62, "Kurama",    "Youko",        "30100062", "2215560062", 1},
-        {63, "Hiei",      "Jaganshi",     "30100063", "2215560063", 0},
-        {64, "Kazuma",    "Kuwabara",     "30100064", "2215560064", 0},
-        {65, "Rurouni",   "Kenshin",      "30100065", "2215560065", 1},
-        {66, "Sanosuke",  "Sagara",       "30100066", "2215560066", 0},
-        {67, "Aang",      "Airbender",    "30100067", "2215560067", 0},
-        {68, "Katara",    "Waterbender",  "30100068", "2215560068", 0},
-        {69, "Zuko",      "Firelord",     "30100069", "2215560069", 1},
-        {70, "Toph",      "Beifong",      "30100070", "2215560070", 0},
-        {71, "Peter",     "Parker",       "30100071", "2215560071", 0},
-        {72, "Miles",     "Morales",      "30100072", "2215560072", 1},
-        {73, "Bruce",     "Wayne",        "30100073", "2215560073", 0},
-        {74, "Clark",     "Kent",         "30100074", "2215560074", 0},
-        {75, "Diana",     "Prince",       "30100075", "2215560075", 0},
-        {76, "Barry",     "Allen",        "30100076", "2215560076", 1},
-        {77, "Arthur",    "Curry",        "30100077", "2215560077", 0},
-        {78, "Wanda",     "Maximoff",     "30100078", "2215560078", 0},
-        {79, "Stephen",   "Strange",      "30100079", "2215560079", 1},
-        {80, "T'Challa",  "Wakanda",      "30100080", "2215560080", 0},
-    };
-
-    for (int i = 0; i < 30; i++)
-    {
-        fwrite(&pacientes[i], sizeof(stPaciente), 1, archi);
-    }
-
-    printf("30 pacientes agregados correctamente.\n");
-    fclose(archi);
-}
-
-void cargarPracticaTest()
-{
-    FILE *archi = abrirArchivo("TestPracticas.bin", "wb");
-    if (archi == NULL)
-    {
-        printf("Error al abrir archivo.\n");
-        return;
-    }
-
-    stPracticas practicas[15] = {
-        {1,  "Hemograma completo",   2500, 0},
-        {2,  "Glucemia",             1500, 0},
-        {3,  "Colesterol total",     2000, 0},
-        {4,  "Orina completa",       1800, 0},
-        {5,  "Radiografia torax",    4500, 0},
-        {6,  "Electrocardiograma",   5000, 0},
-        {7,  "Ecografia abdominal",  8000, 0},
-        {8,  "Coagulograma",         3000, 0},
-        {9,  "Hepatograma",          3500, 0},
-        {10, "Creatinina",           2200, 0},
-        {11, "Urea",                 1800, 0},
-        {12, "Trigliceridos",        2000, 0},
-        {13, "TSH tiroides",         4000, 0},
-        {14, "Vitamina D",           5500, 1},
-        {15, "Proteina C reactiva",  3200, 0},
-    };
-
-    for (int i = 0; i < 15; i++)
-    {
-        fwrite(&practicas[i], sizeof(stPracticas), 1, archi);
-    }
-
-    printf("15 practicas cargadas correctamente.\n");
-    fclose(archi);
-    archi = abrirArchivo("TestPracticas.bin","rb");
-    stPracticas aux;
-    while (fread(&aux,sizeof(stPracticas),1,archi) > 0 )
-    {
-        printf("Nombre de la practica:%s\nID:%i\nCosto:%i\nEstado:%i\n",
-               aux.nombre,
-               aux.idPractica,
-               aux.costo,
-               aux.baja);
-        printf("---------------------------------------------------------------------\n");
-    }
-    fclose(archi);
-}
-
-void cargarLaboTest()
-{
-    FILE *archi = fopen("TestLaboratorios.bin", "wb");
-    if (archi == NULL)
-    {
-        printf("Error al abrir archivo.\n");
-        return;
-    }
-
-    stLaboratorios labs[40] = {
-        /// Tanjiro Kamado - ID 51 (activo)
-        {1,  51, 2024, 1, 10, 1,  0},
-        {2,  51, 2024, 3, 22, 5,  0},
-        {3,  51, 2024, 6, 15, 9,  0},
-
-        /// Zenitsu Agatsuma - ID 53 (activo)
-        {4,  53, 2023, 11, 5,  2,  0},
-        {5,  53, 2024, 2, 18, 6,  0},
-
-        /// Inosuke Hashibira - ID 54 (activo)
-        {6,  54, 2024, 4, 30, 3,  0},
-        {7,  54, 2024, 7, 12, 10, 0},
-
-        /// Izuku Midoriya - ID 56 (activo)
-        {8,  56, 2023, 9, 20, 4,  0},
-        {9,  56, 2024, 1, 8,  7,  0},
-        {10, 56, 2024, 5, 25, 13, 0},
-
-        /// Katsuki Bakugo - ID 57 (activo)
-        {11, 57, 2024, 3, 14, 8,  0},
-        {12, 57, 2024, 8, 1,  15, 0},
-
-        /// Ochaco Uraraka - ID 59 (activo)
-        {13, 59, 2023, 12, 3,  1,  0},
-        {14, 59, 2024, 4, 17, 11, 0},
-
-        /// Tenya Iida - ID 60 (activo)
-        {15, 60, 2024, 2, 28, 2,  0},
-        {16, 60, 2024, 6, 9,  12, 0},
-
-        /// Yusuke Urameshi - ID 61 (activo)
-        {17, 61, 2023, 10, 15, 3,  0},
-        {18, 61, 2024, 1, 22, 6,  1},  /// baja logica
-
-        /// Hiei Jaganshi - ID 63 (activo)
-        {19, 63, 2024, 5, 11, 4,  0},
-        {20, 63, 2024, 9, 3,  9,  0},
-
-        /// Kazuma Kuwabara - ID 64 (activo)
-        {21, 64, 2023, 8, 27, 5,  0},
-        {22, 64, 2024, 3, 19, 14, 0},
-
-        /// Sanosuke Sagara - ID 66 (activo)
-        {23, 66, 2024, 7, 4,  7,  0},
-        {24, 66, 2024, 10, 21,10, 0},
-
-        /// Aang Airbender - ID 67 (activo)
-        {25, 67, 2023, 6, 30, 8,  0},
-        {26, 67, 2024, 2, 14, 15, 0},
-
-        /// Katara Waterbender - ID 68 (activo)
-        {27, 68, 2024, 1, 5,  1,  0},
-        {28, 68, 2024, 4, 28, 11, 0},
-
-        /// Toph Beifong - ID 70 (activo)
-        {29, 70, 2023, 11, 18, 2,  0},
-        {30, 70, 2024, 6, 7,  13, 0},
-
-        /// Peter Parker - ID 71 (activo)
-        {31, 71, 2024, 3, 25, 3,  0},
-        {32, 71, 2024, 8, 16, 6,  1},  /// baja logica
-
-        /// Bruce Wayne - ID 73 (activo)
-        {33, 73, 2023, 7, 12, 4,  0},
-        {34, 73, 2024, 5, 30, 9,  0},
-
-        /// Clark Kent - ID 74 (activo)
-        {35, 74, 2024, 2, 22, 5,  0},
-        {36, 74, 2024, 9, 10, 12, 0},
-
-        /// Diana Prince - ID 75 (activo)
-        {37, 75, 2023, 9, 8,  7,  0},
-        {38, 75, 2024, 4, 3,  15, 0},
-
-        /// Arthur Curry - ID 77 (activo)
-        {39, 77, 2024, 6, 19, 8,  0},
-
-        /// T'Challa Wakanda - ID 80 (activo)
-        {40, 80, 2024, 7, 28, 10, 0},
-    };
-
-    for (int i = 0; i < 40; i++)
-    {
-        fwrite(&labs[i], sizeof(stLaboratorios), 1, archi);
-    }
-
-    printf("40 laboratorios cargados correctamente.\n");
-    fclose(archi);
-    stLaboratorios aux;
-    archi = fopen("TestLaboratorios.bin","rb");
-    int i =0;
-    while (fread(&aux,sizeof(stLaboratorios),1,archi) > 0 )
-    {
-
-        printf("ID Paciente:%i\nPractica realizada:%i\nID Lab:%i\nFecha: %i - %i - %i\n pos %i",
-               aux.idPaciente,
-               aux.practicaRealizada,
-               aux.idLab,
-               aux.dia,
-               aux.mes,
-               aux.anio,
-               i
-               );
-        printf("\n-----------------------------------------------------------------\n");
-        i++;
-    }
-}

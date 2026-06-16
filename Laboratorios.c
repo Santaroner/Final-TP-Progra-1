@@ -17,7 +17,7 @@ void cargarLaboratorio(stLaboratorios *lab) /// Duda si agregar pac y prac.
 {
 
     FILE *Laboratorios;
-    Laboratorios = fopen(ARCHIVO_LABORATORIOS, "ab");
+    Laboratorios = abrirArchivo(ARCHIVO_LABORATORIOS, "ab");
 
     char seguir = 'n';
     lab->idLab = getIDVLaboratorio();
@@ -30,10 +30,14 @@ void cargarLaboratorio(stLaboratorios *lab) /// Duda si agregar pac y prac.
         lab ->dia = validarDia(lab ->mes);
 
         printf("Ingrese ID del paciente: ");
-        scanf("%d",&lab->idPaciente);
+        lab->idPaciente = buscandoIDPacientes();
+
+
+//        scanf("%d",&lab->idPaciente);
 
         printf("Ingrese ID de practica: ");
-        scanf("%d", &lab->practicaRealizada);
+        lab->practicaRealizada = buscandoIDPractica();
+//        scanf("%d", &lab->practicaRealizada);
 
         lab->baja = 0;
 
@@ -139,7 +143,7 @@ void bajaLaboratorio()
     printf("Ingrese ID a dar de baja: ");
     scanf("%d", &idBuscar);
 
-    FILE *archi = fopen(ARCHIVO_LABORATORIOS, "r+b");
+    FILE *archi = abrirArchivo(ARCHIVO_LABORATORIOS, "r+b");
     if (archi == NULL)
     {
         printf("Error al abrir");
@@ -165,7 +169,8 @@ void bajaLaboratorio()
     }
     else
         printf("Laboratorio no encontrado o ya de baja");
-
+    system("pause");
+    system("cls");
     fclose(archi);
 }
 
@@ -179,11 +184,12 @@ void mostrarLaboratorios(stLaboratorios *laboratorios,int validosL)
                laboratorios[i].mes,
                laboratorios[i].dia);
     }
+     system("pause");
+    system("cls");
 }
-
 void mostrarLaboratoriosArchivo()
 {
-    FILE *archi = fopen(ARCHIVO_LABORATORIOS, "rb");
+    FILE *archi = abrirArchivo(ARCHIVO_LABORATORIOS, "rb");
     stLaboratorios aux;
 
     if (archi == NULL)
@@ -205,6 +211,8 @@ void mostrarLaboratoriosArchivo()
                    aux.dia);
         }
     }
+    system("pause");
+    system("cls");
 }
 
 void modificarLaboratorio()
@@ -217,7 +225,7 @@ void modificarLaboratorio()
     printf("Ingrese ID de Lab a modificar:\n ");
     scanf("%d", &idBuscar);
 
-    FILE *archi = fopen(ARCHIVO_LABORATORIOS, "r+b");
+    FILE *archi = abrirArchivo(ARCHIVO_LABORATORIOS, "r+b");
     if (archi == NULL)
     {
         printf("Error al abrir archivo. \n");
@@ -284,7 +292,7 @@ void consultarLaboratorio()
     printf("Ingresar ID del laboratorio a consultar: ");
     scanf("%d", &idBuscar);
 
-    FILE *archi = fopen(ARCHIVO_LABORATORIOS, "rb");
+    FILE *archi = abrirArchivo(ARCHIVO_LABORATORIOS, "rb");
     if (archi == NULL)
     {
         printf("Error al abrir");
@@ -314,13 +322,41 @@ void consultarLaboratorio()
 }
 
 
-int buscandoIDPacientes() /// rafa probando busca id - - - - - - - funcion en utilities
+int buscandoIDPacientes() /// rafa probando busca id - - - - - - - funcion en utilities /// Integrar solo int
+{
+    int newID = 0;
+    int aux;
+    char confirmar;
+    do
+    {
+        printf("Ingrese el ID a buscar:\n");
+    scanf("%i",&newID);
+    aux = compararIDLP(newID);
+    if ( aux == 0)
+    {
+        printf("El id ha sido encontrado.\n");
+        return newID;
+    }
+    else if (aux == 1)
+    {
+//        printf("Desea ingresar otro ID?S/N\n");
+//        scanf(" %c", &confirmar);
+//        if (tolower(confirmar) == 's')
+//        {
+//
+//        }
+        printf("El ID no existe. Ingrese un ID valido por favor.\n");
+    }
+    } while (aux != 0);
+}
+
+int buscandoIDPractica() /// rafa probando busca id - - - - - - - funcion en utilities /// Integrar solo int
 {
     int newID = 0;
     int aux;
     printf("Ingrese el ID a buscar:\”");
     scanf("%i",&newID);
-    aux = compararIDLP(newID);
+    aux = compararIDLPrac(newID);
     if ( aux == 0)
     {
         printf("El id ha sido encontrado.\n");
@@ -337,7 +373,7 @@ void muestraTSP () /// TEST SANTI PACIENTES
 {
     printf("entra");
     stPaciente aux;
-    FILE *archi = fopen ("PacientesSanti.bin","rb");
+    FILE *archi = abrirArchivo ("PacientesSanti.bin","rb");
     while (fread(&aux,sizeof(stPaciente),1,archi) > 0 )
     {
         printf("ID :%i\nNombre:%s\nApellido:%s\nDNI:%s\nMovil:%s\n\n",
@@ -352,7 +388,7 @@ void muestraTSP () /// TEST SANTI PACIENTES
 
 void mostrarPracticasSanti ()
 {
-    FILE * archi = fopen ("PracticasSanti.bin","rb");
+    FILE * archi = abrirArchivo ("PracticasSanti.bin","rb");
     if (archi == NULL) printf("El archivo no se pudo abrir\n");
     stPracticas aux;
     while (fread(&aux,sizeof(stPracticas),1,archi) > 0)

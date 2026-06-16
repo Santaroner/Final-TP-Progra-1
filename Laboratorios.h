@@ -22,9 +22,9 @@ typedef struct
  void cargarLaboratorio(stLaboratorios *lab);
  stLaboratorios * cargarLaboratorios();
  //int validarFecha(int anio, int mes, int dia);
- void mostrarLaboratorios(stLaboratorios *laboratorios,int validosL); // muestra
- void mostrarLaboratoriosArchivo(); // muestra
- void bajaLaboratorio(); // baja logica
+ void mostrarLaboratorios(stLaboratorios *laboratorios,int validosL); /// muestra
+ void mostrarLaboratoriosArchivo(); /// muestra
+ void bajaLaboratorio(); /// baja logica
 
  void modificarLaboratorio();
  void consultarLaboratorio();

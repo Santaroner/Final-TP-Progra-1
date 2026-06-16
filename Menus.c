@@ -17,7 +17,6 @@ stLaboratorios *arregloOrdenamiento = NULL;
 int validosOrdenamiento = 0;
 int validosADP;
 stPaciente *ADP = NULL; /// arreglo dinamico pacientes para funcion mostrar
-stPaciente *TSP = NULL; /// Arreglo dinamico top spenders
 stPracticas practicas[20];
 void mainMenu()
 {
@@ -41,6 +40,16 @@ void mainMenu()
         break;
     case 3:
         practicasMenu();
+        break;
+    case 7:
+        resetearArchivos();
+        system("pause");
+        break;
+    case 10:
+        cargarPacientesAB();
+        cargarPracticaTest();
+        cargarLaboTest();
+        system("pause");
         break;
     case 0:
         break;
@@ -136,7 +145,9 @@ void laboratoriosMenu() /// USAR ESTE MENU PARA PROBAR EJERCICIOS DE LABORATORIO
     do
     {
         system("cls");
-        printf("1-Cargar laboratorio \n2-Baja Laboratorio\n3-Modificar Laboratorio\n4-Consultar Laboratorio\n5-Listar Laboratorios\n88-Archivo precargado Practicas\n99-Archivo precargado pacientes\n0-Salir");
+        printf("\n------------------------------------------------------------------------------------------------------------------------------------------------------\n");
+        printf("1-Cargar laboratorio \n2-Baja Laboratorio\n3-Modificar Laboratorio\n4-Consultar Laboratorio\n5-Listar Laboratorios\n0-Salir");
+        printf("\n------------------------------------------------------------------------------------------------------------------------------------------------------\n");
         scanf("%i",&optionswitch);
         switch(optionswitch)
         {
@@ -153,7 +164,7 @@ void laboratoriosMenu() /// USAR ESTE MENU PARA PROBAR EJERCICIOS DE LABORATORIO
             consultarLaboratorio();
             break;
         case 5:
-            mostrarPracticasSanti();
+            mostrarLaboratoriosArchivo();
             break;
         case 99: /// ABRE ARCHIVO PACIENTES-SANTI.
             muestraTSP();

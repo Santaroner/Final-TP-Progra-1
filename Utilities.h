@@ -5,6 +5,11 @@
 #include "Laboratorios.h"
 #include <ctype.h>
 #include <string.h>
+#define ARCHIVO_PACIENTES "TestPacientes.bin"
+#define ARCHIVO_PRACTICAS "Practicas.bin"
+#define ARCHIVO_LABORATORIOS "Laboratorios.bin"
+
+
 int GetIDPacientes (); /// Autoincremental ID pacientes
 int compararIDLP (int num);
 int compararIDLPrac (int num);
@@ -21,4 +26,11 @@ int ingresarSoloLetrasSinEspacios (char palabra[]);
 int ingresarSoloNumerosEnArreglo (char numeros[]);
 int ingresarSoloNumeros (int numeros); ///
 int ingresarEnteroMinMax(int min, int max); /// Si ingresa un dato que no sea numero no retorna 1, solo para numeros ingresados con scanf, no con strings en fgets
+
+/// TESTEO DE ARCHIVOS
+void resetearArchivos();/// Vacia los 3 archivos
+void cargarPacientesAB(); /// Carga los pacientes
+void cargarPracticaTest(); /// Carga practicas
+void cargarLaboTest(); /// carga laboratorios
+
 #endif // UTILITIES_H_INCLUDED

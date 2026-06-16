@@ -50,6 +50,7 @@ void busquedaPaciente ();
 int busquedaPorDNI (char DNI[]);
 int busquedaPorApellido (char apellido[]);
 void altaViejoPaciente ();
+int confirmarBajaPaciente (char nombre[], char apellido[]);
 
 /// ----------------------------------------------------- O R D E N A M I E N T O /// A R R E G L O --- D I N A M I C O -------------------------------------------------- ///
 stPaciente * activosADinamicos (int *validosADP);
