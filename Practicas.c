@@ -27,22 +27,21 @@ void ingreseNombre(char nombre[30])
 }
 int ingreseCosto(int costo)
 {
-    do
-    {
+
         printf("Ingrese el costo de la practica (1000$ a 10000$): ");
-        scanf("%i", &costo);
-        if(costo<1000 || costo>10000)
-        {
-            printf("Error, el costo debe estar entre $1000 y $10000.\n");
-        }
-    }
-    while(costo<1000 || costo>10000);
+        costo = ingresarEnteroMinMax(1000,10000);
+//        scanf("%i", &costo);
+//        if(costo<1000 || costo>10000)
+//        {
+//            printf("Error, el costo debe estar entre $1000 y $10000.\n");
+//        }
+
     return costo;
 }
 int ingreseBaja(int baja)
 {
     printf("Esta de baja la practica(1) o esta activa(0)? ");
-    scanf("%i", &baja);
+    baja = ingresarEnteroMinMax(0,1);
     return baja;
 }
 stPracticas cargarUnaPractica()
