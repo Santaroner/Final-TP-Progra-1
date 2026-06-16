@@ -1,5 +1,6 @@
 #include "Practicas.h"
 
+/// ---------------------- C A R G A  D E  P R A C T I C A S ---------------------- ///
 int generaId() ///
 {
     int id = getIDVPracticas(); /// Funcion de utilities, recorre la cantidad de practicas que hay
@@ -53,26 +54,19 @@ stPracticas cargarUnaPractica()
         unaPractica.baja=ingreseBaja(unaPractica.baja);
         return unaPractica;
 }
-
-
-void cargarPracticas(char ArchivoPracticas[30], stPracticas *arregloDinamicoPracticas, int *validosArregloPracticas)
+void cargarPracticas(char ArchivoPracticas[30])
 {
     char seguir='s';
     stPracticas nuevaPractica;
-    int i=*validosArregloPracticas;
     while(seguir=='s')
     {
         ///FILE *archi_Practicas=fopen(ArchivoPracticas, "ab"); /// si se declara el archivo arriba y se cierra despues del while no se llega a actualizar el buffer del ID al poner nueva practica
-        ///FILE *archi_Practicas=fopen(ArchivoPracticas, "ab");
+        FILE *archi_Practicas=fopen(ArchivoPracticas, "ab");
         nuevaPractica = cargarUnaPractica();
-        arregloDinamicoPracticas=(stPracticas *)realloc(arregloDinamicoPracticas, (i+1)*sizeof(stPracticas));
-        arregloDinamicoPracticas[i]=nuevaPractica;
-        cargarPracticaEnArchivo(ARCHIVO_PRACTICAS,arregloDinamicoPracticas[i],validosArregloPracticas);
-        i++;
-        ///fwrite(&nuevaPractica, sizeof(stPracticas), 1, archi_Practicas);
+        fwrite(&nuevaPractica, sizeof(stPracticas), 1, archi_Practicas);
         printf("Desea seguir ingresando practicas? (s para seguir)");
         scanf(" %c", &seguir);
-        ///fclose(archi_Practicas);
+        fclose(archi_Practicas);
     }
 }
 void cargarPracticaEnArchivo(char ArchivoPracticas[30], stPracticas unaPractica, int *validosArregloPracticas)
@@ -82,6 +76,8 @@ void cargarPracticaEnArchivo(char ArchivoPracticas[30], stPracticas unaPractica,
     (*validosArregloPracticas)++;
     fclose(archi_Practicas);
 }
+
+/// ------ C R E A C I O N  Y  C A R G A  D E  A R R E G L O  D I N A M I C O ------- ///
 stPracticas *cargarArregloDinamicoPracticas(char ArchivoPracticas[30], stPracticas *arregloDinamicoPracticas, int *validosArregloPracticas)
 {
     int cantPracticas=contarPracticas(ARCHIVO_PRACTICAS);
@@ -118,6 +114,8 @@ void muestraArreglo(stPracticas *arregloDinamicoPracticas, int *validosArregloPr
         system("pause");
     }
 }
+
+/// --------------------------- V A L I D A C I O N E S -------------------------- ///
 int buscarNombreIgualPractica(char nombrePractica[30], char ArchivoPracticas[30])
 {
     FILE *archivoPracticas=fopen(ArchivoPracticas,"rb");
@@ -138,6 +136,8 @@ int buscarNombreIgualPractica(char nombrePractica[30], char ArchivoPracticas[30]
     fclose(archivoPracticas);
     return flag;
 }
+
+/// --------------------- C O N T E O  D E  P R A C T I C A S -------------------- ///
 int contarPracticas(char ArchivoPracticas[30])
 {
     FILE *archivoPracticas=fopen(ARCHIVO_PRACTICAS,"rb");
@@ -146,6 +146,8 @@ int contarPracticas(char ArchivoPracticas[30])
     fclose(archivoPracticas);
     return cantidadDePracticas;
 }
+
+/// --------------------- M U E S T R A  D E  P R A C T I C A S -------------------- ///
 void mostrarPracticas(stPracticas *arregloDinamicoPracticas, int *validosArregloPracticas)
 {
       int limite=*validosArregloPracticas;
@@ -210,22 +212,29 @@ void mostrarUnaPracticaBaja(stPracticas practicasAux)
     printf("Baja (0 activo, 1 baja): %i\n", practicasAux.baja);
     }
 }
-void modificarPracticas(char ArchivoPracticas[30], stPracticas *arregloDinamicoPracticas, int *validosArregloPracticas)
+
+/// --------------------- M O D I F I C A R  P R A C T I C A S -------------------- ///
+void modificarPracticas(char ArchivoPracticas[30])
 {
-        if(arregloDinamicoPracticas==NULL)
+        FILE *archivoPracticas=fopen(ArchivoPracticas,"r+b");
+        int cantPracticas=contarPracticas(ARCHIVO_PRACTICAS);
+        if(cantPracticas==0)
         {
             printf("No hay practicas cargadas para modificar.\n");
         }
         else
         {
-            mostrarPracticas(arregloDinamicoPracticas, validosArregloPracticas);
-            system("pause");
             int posicion=0;
-            printf("Elija una practica para modificar (idPractica) [1 a %i]: ", *validosArregloPracticas);
+            printf("Elija una practica para modificar (idPractica): ");
             scanf("%i", &posicion);
-            arregloDinamicoPracticas[posicion-1]=menuModificarPractica(arregloDinamicoPracticas[posicion-1]);
-            modificarPracticaEnArchivo(ARCHIVO_PRACTICAS,arregloDinamicoPracticas[posicion-1],posicion);
+            stPracticas unaPractica;
+            fseek(archivoPracticas,(posicion-1)*sizeof(stPracticas),0);
+            fread(&unaPractica,sizeof(stPracticas),1,archivoPracticas);
+            unaPractica=menuModificarPractica(unaPractica);
+            fseek(archivoPracticas,(posicion-1)*sizeof(stPracticas),0);
+            fwrite(&unaPractica,sizeof(stPracticas),1,archivoPracticas);
         }
+        fclose(archivoPracticas);
 }
 stPracticas menuModificarPractica(stPracticas unaPractica)
 {
@@ -263,8 +272,11 @@ void modificarPracticaEnArchivo(char ArchivoPracticas[30], stPracticas unaPracti
     fwrite(&unaPractica,sizeof(stPracticas),1,archivoPracticas);
     fclose(archivoPracticas);
 }
-void darDeBajaPracticas(char ArchivoPracticas[30], stPracticas *arregloDinamicoPracticas)
+
+/// ----------- A L T A  Y  B A J A  L O G I C A  D E  P R A C T I C A S ---------- ///
+void darDeBajaPracticas(char ArchivoPracticas[30])
 {
+      FILE *archivoPracticas=fopen(ArchivoPracticas,"r+b");
       int flag=0;
       flag=verificarAltas(ARCHIVO_PRACTICAS);
       if(flag==0)
@@ -277,17 +289,23 @@ void darDeBajaPracticas(char ArchivoPracticas[30], stPracticas *arregloDinamicoP
       int nroPractica=0;
       printf("Elija una practica para dar de baja (idPractica): ");
       scanf("%i", &nroPractica);
-      arregloDinamicoPracticas[nroPractica-1]=darDeBajaUnaPractica(arregloDinamicoPracticas[nroPractica-1]);
-      modificarPracticaEnArchivo(ARCHIVO_PRACTICAS,arregloDinamicoPracticas[nroPractica-1],nroPractica);
+      stPracticas unaPractica;
+      fseek(archivoPracticas,(nroPractica-1)*sizeof(stPracticas),0);
+      fread(&unaPractica,sizeof(stPracticas),1,archivoPracticas);
+      unaPractica=darDeBajaUnaPractica(unaPractica);
+      fseek(archivoPracticas,(nroPractica-1)*sizeof(stPracticas),0);
+      fwrite(&unaPractica,sizeof(stPracticas),1,archivoPracticas);
       }
+      fclose(archivoPracticas);
 }
 stPracticas darDeBajaUnaPractica(stPracticas unaPractica)
 {
     unaPractica.baja=1;
     return unaPractica;
 }
-void darDeAltaPracticas(char ArchivoPracticas[30], stPracticas *arregloDinamicoPracticas)
+void darDeAltaPracticas(char ArchivoPracticas[30])
 {
+      FILE *archivoPracticas=fopen(ArchivoPracticas,"r+b");
       int flag=0;
       flag=verificarBajas(ARCHIVO_PRACTICAS);
       if(flag==0)
@@ -300,9 +318,14 @@ void darDeAltaPracticas(char ArchivoPracticas[30], stPracticas *arregloDinamicoP
       int nroPractica=0;
       printf("Elija una practica para dar de alta (idPractica): ");
       scanf("%i", &nroPractica);
-      arregloDinamicoPracticas[nroPractica-1]=darDeAltaUnaPractica(arregloDinamicoPracticas[nroPractica-1]);
-      modificarPracticaEnArchivo(ARCHIVO_PRACTICAS,arregloDinamicoPracticas[nroPractica-1],nroPractica);
+      stPracticas unaPractica;
+      fseek(archivoPracticas,(nroPractica-1)*sizeof(stPracticas),0);
+      fread(&unaPractica,sizeof(stPracticas),1,archivoPracticas);
+      unaPractica=darDeAltaUnaPractica(unaPractica);
+      fseek(archivoPracticas,(nroPractica-1)*sizeof(stPracticas),0);
+      fwrite(&unaPractica,sizeof(stPracticas),1,archivoPracticas);
       }
+      fclose(archivoPracticas);
 }
 stPracticas darDeAltaUnaPractica(stPracticas unaPractica)
 {
@@ -339,22 +362,28 @@ int verificarBajas(char ArchivoPracticas[30])
     fclose(archivoPracticas);
     return flag;
 }
-void buscarPracticasPorNombre(stPracticas *arregloDinamicoPracticas,int validosArregloPracticas)
+
+/// ------------------- B U S Q U E D A  D E  P R A C T I C A S ------------------- ///
+void buscarPracticasPorNombre()
 {
     char nombre[30];
     printf("Ingrese el nombre de la practica a buscar: ");
     getchar();
     fgets(nombre,30,stdin);
     nombre [strcspn(nombre,"\n")] = '\0';
-    buscarPracticaPorNombre(nombre,arregloDinamicoPracticas,validosArregloPracticas);
+    buscarPracticaPorNombre(nombre,ARCHIVO_PRACTICAS);
 }
-void buscarPracticaPorNombre(char nombrePractica[30], stPracticas *arregloDinamicoPracticas, int validosArregloPracticas)
+void buscarPracticaPorNombre(char nombrePractica[30], char ArchivoPracticas[30])
 {
+    FILE *archivoPracticas=fopen(ArchivoPracticas,"rb");
     int res=1;
-    int i=0;
-    for(i=0;i<validosArregloPracticas && res!=0;i++)
+    int posicion=0;
+    stPracticas unaPractica;
+    while(res!=0)
     {
-        res=strcmpi(arregloDinamicoPracticas[i].nombre,nombrePractica);
+        fread(&unaPractica,sizeof(stPracticas),1,archivoPracticas);
+        res=strcmpi(unaPractica.nombre,nombrePractica);
+        posicion++;
     }
     if(res!=0)
     {
@@ -363,10 +392,10 @@ void buscarPracticaPorNombre(char nombrePractica[30], stPracticas *arregloDinami
     else
     {
         printf("La practica fue encontrada exitosamente: \n");
-        mostrarUnaPractica(arregloDinamicoPracticas[i-1]);
-        int posicion=i-1;
-        menuBusquedaPorNombre(arregloDinamicoPracticas[i-1],posicion);
+        mostrarUnaPractica(unaPractica);
+        menuBusquedaPorNombre(unaPractica,posicion);
     }
+    fclose(archivoPracticas);
 }
 void menuBusquedaPorNombre(stPracticas unaPractica, int posicion)
 {
@@ -378,8 +407,7 @@ void menuBusquedaPorNombre(stPracticas unaPractica, int posicion)
     switch(opcion)
     {
         case 1: unaPractica=menuModificarPractica(unaPractica);
-        int posicion_Nueva=posicion+1;
-        modificarPracticaEnArchivo(ARCHIVO_PRACTICAS,unaPractica, posicion_Nueva);
+        modificarPracticaEnArchivo(ARCHIVO_PRACTICAS,unaPractica, posicion);
         break;
         case 2: unaPractica=darDeAltaUnaPractica(unaPractica);
         modificarPracticaEnArchivo(ARCHIVO_PRACTICAS,unaPractica,posicion);
