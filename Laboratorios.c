@@ -13,6 +13,8 @@ int validosL = 0;
 
 // - - - - - - Carga Lab
 
+/// ---------------------------------------------- C A R G A  - L A B O R A T O R I O  ------------------------------------------------------------------
+
 void cargarLaboratorio(stLaboratorios *lab) /// Duda si agregar pac y prac.
 {
 
@@ -173,6 +175,13 @@ void bajaLaboratorio()
     system("cls");
     fclose(archi);
 }
+/// ---------------------------------------------- C A R G A  ----- L A B O R A T O R I O  ------------------------------------------------------------------
+
+
+
+/// ---------------------------------------------- M U E S T R A -- L A B O R A T O R I O   ------------------------------------------------------------------
+
+
 
 void mostrarLaboratorios(stLaboratorios *laboratorios,int validosL)
 {
@@ -214,6 +223,9 @@ void mostrarLaboratoriosArchivo()
     system("pause");
     system("cls");
 }
+
+/// ---------------------------------------------- M O D I F I C A R --- L A B O R A T O R I O  ------------------------------------------------------------------
+
 
 void modificarLaboratorio()
 {
@@ -261,6 +273,9 @@ void modificarLaboratorio()
         lab.anio = validarAnio();
         lab.mes  = validarMes();
         lab.dia  = validarDia(lab.mes);
+        printf("Fecha actualizada correctamente.\n");
+        system("pause");
+        system("cls");
         break;
     case 2:
         do
@@ -288,7 +303,10 @@ void consultarLaboratorio()
     int idBuscar;
     int encontrado = 0;
     stLaboratorios lab;
-
+    int precio; /// para pasar parametro, pero no necesitamos acá pasar el precio
+    char nombre[30]; /// nombre para printear del paciente
+    char apellido[30];/// apellido para printear del paciente
+    char nombrePractica[30];
     printf("Ingresar ID del laboratorio a consultar: ");
     scanf("%d", &idBuscar);
 
@@ -303,13 +321,18 @@ void consultarLaboratorio()
     {
         if (lab.idLab == idBuscar && lab.baja == 0)
         {
-            printf("ID: %d | Paciente: %d | Practica: %d | Anio: %d | Mes: %d | Dia: %d\n",
+            buscarPracticasRealizadas(lab.practicaRealizada,nombrePractica,&precio);
+            encontrarDatosPaciente(lab.idPaciente,nombre,apellido);
+                    printf("--------------------------------------------------\n");
+                   printf("ID laboratorio: %d\nPaciente: %s, %s\nPractica: %s\nFecha : %i-%i-%i\n",
                    lab.idLab,
-                   lab.idPaciente,
-                   lab.practicaRealizada,
-                   lab.anio,
+                   apellido,
+                   nombre,
+                   nombrePractica,
+                   lab.dia,
                    lab.mes,
-                   lab.dia);
+                   lab.anio);
+                   printf("--------------------------------------------------\n");
             encontrado = 1;
             break;
         }
@@ -319,9 +342,34 @@ void consultarLaboratorio()
         printf("Laboratorio no encontrado o de baja");
 
     fclose(archi);
+    system("pause");
+    system("cls");
 }
 
-
+void encontrarDatosPaciente (int id, char nombre[], char apellido[])
+{
+    stPaciente aux;
+    FILE * archi = abrirArchivo(ARCHIVO_PACIENTES,"rb");
+    int flag = 1;
+    if (archi == NULL)
+    {
+        printf("Error al abrir archivo.\n");
+        return 1;
+    }
+    while (fread(&aux,sizeof(stPaciente),1,archi) > 0)
+    {
+        if (id == aux.idPaciente)
+        {
+            mostrarUnPaciente(aux);
+            strcpy(nombre,aux.nombre);
+            strcpy(apellido,aux.apellido);
+            flag = 0;
+            system("pause");
+            system("cls");
+        }
+    }
+    fclose(archi);
+}
 int buscandoIDPacientes() /// rafa probando busca id - - - - - - - funcion en utilities /// Integrar solo int
 {
     int newID = 0;

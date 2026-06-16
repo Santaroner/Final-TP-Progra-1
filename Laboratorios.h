@@ -28,6 +28,7 @@ typedef struct
 
  void modificarLaboratorio();
  void consultarLaboratorio();
+ void encontrarDatosPaciente (int id, char nombre[], char apellido[]);
 
  /// Validar fecha
  int validarAnio();
