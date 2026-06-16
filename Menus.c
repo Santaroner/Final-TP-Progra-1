@@ -13,6 +13,8 @@ int validosArregloPracticas=0;
 int validosPacientes = 0;
 stPracticas *arregloDinamicoPracticas=NULL;
 stLaboratorios *arregloDinamico = NULL;
+stLaboratorios *arregloOrdenamiento = NULL;
+int validosOrdenamiento = 0;
 int validosADP;
 stPaciente *ADP = NULL; /// arreglo dinamico pacientes para funcion mostrar
 stPaciente *TSP = NULL; /// Arreglo dinamico top spenders
@@ -102,6 +104,12 @@ void pacientesMenu() /// USAR ESTE MENU PARA PROBAR EJERCICIOS DE PACIENTE
         case 9:
             ADP = activosADinamicos(&validosADP);
             ordenamientoSeleccionChar(ADP,validosADP);
+            break;
+        case 10:
+            arregloOrdenamiento = arregloDinamicoLaboratoriosPorFecha (&validosOrdenamiento);
+            printf("Validos vale:%i\n",validosOrdenamiento);
+            ordenamientoSeleccionFecha(arregloOrdenamiento,validosOrdenamiento);
+            mostrarLaboratoriosOrdenadosPorfecha(arregloOrdenamiento,validosOrdenamiento);
             break;
         case 99:
             cargarPacientesAB();

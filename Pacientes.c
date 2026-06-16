@@ -210,6 +210,7 @@ int cargarEstadoPaciente()
     {
         printf("El paciente esta activo?\n0:Activo ||| 1:Baja\n");
         scanf("%i",&aux);
+        fflush(stdin);
         if (!isdigit(aux))
         {
             if (aux == 0 || aux == 1)
@@ -260,11 +261,10 @@ int validarDNI (char DNI[])
 /// ------------------------------------------------------- M U E S T R A ///  V A L I D O S ----------------------------------------------------------///
 void mostrarUnPaciente (stPaciente paciente)
 {
-        printf("Nombre:%s\n",paciente.nombre);
-        printf("Apellido:%s\n",paciente.apellido);
-        printf("Celular:%s\n",paciente.movil);
-        printf("DNI :%s\n",paciente.dni);
-        printf("ID:%i\n",paciente.idPaciente);
+        printf("Paciente:%s, %s\n",paciente.nombre,paciente.apellido);
+        printf("Celular: %s\n",paciente.movil);
+        printf("DNI:     %s\n",paciente.dni);
+        printf("ID:      %i\n",paciente.idPaciente);
         printf("---------------------------------------------------------\n");
 }
 
@@ -303,6 +303,7 @@ int mostrarArchivo ()
         }
         fclose(archi);
         system("pause");
+        system("cls");
         return validos;
         break;
     case 3:
@@ -383,7 +384,7 @@ void buscarPaciente(stPaciente *pacientes, int validos)
     borrarSaltoDeLinea(aux);
     while (fread(&busqueda,sizeof(stPaciente),1,archi) > 0)
     {
-        fread(&busqueda,sizeof(stPaciente),1,archi);
+        printf("asd");
         if (strcmpi(aux, busqueda.dni) == 0)
         {
             printf("Encontrado\n");
@@ -616,7 +617,12 @@ void bajaPaciente()
             printf("Paciente encontrado.\n");
             paciente.eliminado = 1;
             eliminado = paciente; /// Copia el paciente para que no cambie en la nueva iteracion del bucle
-            flag = 1;
+            flag = 1; /// Cambia flag para que no printee que no se ha encontrado ningun paciente
+        }
+        else if (strcmpi(aux,paciente.dni) == 0 & paciente.eliminado == 1)
+        {
+            printf("El paciente:%s, %s esta actualmente dado de baja.\n",paciente.apellido,paciente.nombre);
+            flag = 1; /// Cambia flag para que no printee que no se ha encontrado ningun paciente
         }
         i++;
     }
@@ -696,7 +702,6 @@ int busquedaPorDNI (char DNI[])
     fclose(archi);
     return flag; /// si flag 0 paciente encontrado
 }
-
 int busquedaPorApellido (char apellido[])
 {
     stPaciente aux;
@@ -874,6 +879,35 @@ void ordenamientoSeleccionChar(stPaciente *ADR,int validosADR)
 
 /// ----------------------------------------------------- O R D E N A R ------------ P A C I E N T E   ------------------------------------------------------ ///
 
+///------------------------------------------------------- BORRAR DESPUES--------------------------------------------------
+int busquedaPorDNIDOS (char DNI[])
+{
+    stPaciente aux;
+    FILE * archi = abrirArchivo("Heroes.bin","rb");
+    int flag = 1;
+    if (archi == NULL)
+    {
+        printf("Error al abrir archivo.\n");
+        return 1;
+    }
+    while (fread(&aux,sizeof(stPaciente),1,archi) > 0)
+    {
+        if (strcmpi (DNI,aux.dni) == 0)
+        {
+            printf("Se encontro en funcion busqueda.\n");
+            mostrarUnPaciente(aux);
+            flag = 0;
+            system("pause");
+            system("cls");
+            return flag;
+        }
+    }
+    fclose(archi);
+    return flag; /// si flag 0 paciente encontrado
+}
+
+///------------------------------------------------------- BORRAR DESPUES--------------------------------------------------
+
 void menuMostrarLaboratoriosPorPaciente ()
 {
     system("cls");
@@ -893,7 +927,6 @@ void menuMostrarLaboratoriosPorPaciente ()
             mostrarTodosLaboratoriosPorPaciente();
             break;
         case 0:
-            printf("Vuelva pronto.\n");
             system("pause");
             system("cls");
             break;
@@ -912,7 +945,7 @@ void laboratoriosPorPacienteID () /// Ingresa DNI para buscar despues por ID
     getchar();
     fgets(DNI,10,stdin);
     borrarSaltoDeLinea(DNI);
-    int flag = busquedaPorDNI(DNI);
+    int flag = busquedaPorDNIDOS(DNI);
     if (flag == 0)
     {
         /// hasta aca bien
@@ -924,7 +957,7 @@ void laboratoriosPorPacienteID () /// Ingresa DNI para buscar despues por ID
 void mostrarLaboratoriosUnPaciente (char DNI[]) ///
 {
     FILE *archi = abrirArchivo("TestLaboratorios.bin","rb");
-    FILE *bin = abrirArchivo("Heroes","rb");
+    FILE *bin = abrirArchivo("Heroes.bin","rb");
     char practicaRealizada[30]; /// Practica a traer de funcion para printear
     if (archi == NULL || bin == NULL)
     {
@@ -954,9 +987,9 @@ void mostrarLaboratoriosUnPaciente (char DNI[]) ///
     {
         if (lab.idPaciente == ID)
         {
-///            buscarPracticasRealizadas(lab.idLab,practicaRealizada,&precio); /// Buscamos el nombre de la practica a traves de su ID
+            buscarPracticasRealizadas(lab.idLab,practicaRealizada,&precio); /// Buscamos el nombre de la practica a traves de su ID
 
-            mostrarUnLaboratorio(DNI,practicaRealizada,precio,lab.anio,lab.mes,lab.dia); /// Printeamos el nombre de la practica que el paciente se realizo
+            mostrarUnLaboratorio(DNI,practicaRealizada,precio,lab.anio,lab.mes,lab.dia,lab.idLab); /// Printeamos el nombre de la practica que el paciente se realizo
             total += precio;
         }
     }
@@ -995,7 +1028,9 @@ void mostrarTodosLaboratoriosPorPaciente ()
     FILE *bin = abrirArchivo("TestLaboratorios.bin","rb");
     stPaciente auxPaciente;
     stLaboratorios auxLab;
+    int encontrado = 0;
     int precio = 0;
+    int aux = 0;
     int cant = 0;
     char practicaRealizada[30]; /// String a traer y printear
     if (archi == NULL || bin == NULL)
@@ -1006,31 +1041,154 @@ void mostrarTodosLaboratoriosPorPaciente ()
     while (fread(&auxPaciente,sizeof(stPaciente),1,archi) > 0 )
     {
         fseek(bin,0,SEEK_SET);
-        printf("***********************************************************************************************************************************************\n");
-        printf("Nombre del paciente:%s, %s\n", auxPaciente.apellido,auxPaciente.nombre);
         if (auxPaciente.eliminado == 0)
         {
+            encontrado = 0;
            while (fread(&auxLab,sizeof(stLaboratorios),1,bin) > 0 )
         {
             if (auxPaciente.idPaciente == auxLab.idPaciente)
             {
+                if (encontrado == 0) /// Hace que se printee solamente una vez el nombre del paciente.
+                {
+                    printf("***********************************************************************************************************************************************\n");
+                    printf("Nombre del paciente:%s, %s\n", auxPaciente.apellido,auxPaciente.nombre);
+                    encontrado = 1;
+                }
                 buscarPracticasRealizadas(auxLab.practicaRealizada,practicaRealizada,&precio);
-                mostrarUnLaboratorio(auxPaciente.nombre,practicaRealizada,precio,auxLab.anio,auxLab.mes,auxLab.dia);
+                mostrarUnLaboratorio(auxPaciente.nombre,practicaRealizada,precio,auxLab.anio,auxLab.mes,auxLab.dia,auxLab.idLab);
             }
         }
         }
     }
     fclose(archi);
     fclose(bin);
+    system("pause");
+    system("cls");
 }
 
-void mostrarUnLaboratorio (char nombre[], char practica[], int precio, int anio , int mes, int dia)
+void mostrarUnLaboratorio (char nombre[], char practica[], int precio, int anio , int mes, int dia, int id)
 {
     printf("------------------------------------------------\n");
     printf("Fecha : %i - %i - %i\n", dia,mes,anio);
     printf("Nombre de la practica:%s\n",practica);
     printf("Precio de la practica:%i\n",precio);
+    printf("ID Practica:%i\n",id); /// capaz borrar desp
 }
+
+/// --------------------------------------- ORDENAR LABORATORIOS POR FECHA ------------------------------------------------------------------------------ ///
+
+stLaboratorios * arregloDinamicoLaboratoriosPorFecha (int *validosOrdenamiento)
+{
+    FILE *archi = abrirArchivo("TestLaboratorios.bin","rb");
+    rewind(archi);
+    stLaboratorios *arregloDinamico = NULL;
+    stLaboratorios lab;
+    int pos = 0;
+    while (fread(&lab,sizeof(stLaboratorios),1,archi) > 0)
+    {
+        arregloDinamico = asignarMemoriaLaboratoriosPorFecha(arregloDinamico, lab,pos);
+        pos++;
+        (*validosOrdenamiento)++;
+    }
+    fclose(archi);
+    return arregloDinamico;
+}
+
+stLaboratorios * asignarMemoriaLaboratoriosPorFecha (stLaboratorios * arregloOrdenamiento, stLaboratorios lab, int pos)
+{
+//    printf("Entra");
+    arregloOrdenamiento  = realloc (arregloOrdenamiento, (pos + 1) * sizeof(stLaboratorios));
+    if (arregloOrdenamiento == NULL)
+    {
+        printf("Error al asignar memoria\n");
+    }
+    arregloOrdenamiento[pos] = lab;
+    mostrarUnLaboratorio("nombre","practica",5,arregloOrdenamiento[pos].anio,arregloOrdenamiento[pos].mes,arregloOrdenamiento[pos].dia,arregloOrdenamiento[pos].idLab);
+    return arregloOrdenamiento;
+}
+
+int fechaAEntero (stLaboratorios lab) /// Vuelve toda la fecha en un numero entero ej(20260710) para hacer un ordenamiento solo y no tener que hacer un ordenamiento por tipo de variable
+{
+    int fecha = 0;
+    fecha += lab.anio * 10000;
+    fecha += lab.mes * 100;
+    fecha += lab.dia;
+
+    return fecha;
+}
+
+int findMinorFecha(stLaboratorios arreglo[], int validos, int posicion)
+{
+    int aux;
+    int posicionMenor = posicion;
+    stLaboratorios menor;
+    int subindice = posicion + 1;
+    while (subindice < validos)
+    {
+        if (fechaAEntero(arreglo[subindice]) > fechaAEntero(arreglo[posicionMenor]))
+        {
+            posicionMenor = subindice;
+            menor = arreglo[subindice];
+        }
+        subindice++;
+    }
+    return posicionMenor;
+}
+
+void ordenamientoSeleccionFecha(stLaboratorios arreglo[], int validos)
+{
+    stLaboratorios aux;
+    int posicionMenor = 0;
+    int i = 0;
+
+    while ( i < validos - 1)
+    {
+        posicionMenor = findMinorFecha(arreglo, validos, i);
+        aux = arreglo[i];
+        arreglo[i] = arreglo[posicionMenor];
+        arreglo[posicionMenor] = aux;
+        i++;
+    }
+}
+
+void mostrarLaboratoriosOrdenadosPorfecha (stLaboratorios arreglo[],int validos)
+{
+    FILE *archi = abrirArchivo("Heroes.bin","rb");
+    stPaciente aux;
+    int precio = 0;
+    char nombrePractica[30];
+    if (archi == NULL)
+    {
+        return;
+    }
+    for (int i = 0; i < validos; i++)
+    {
+        fseek(archi,0,SEEK_SET);
+        while (fread(&aux,sizeof(stPaciente),1,archi) > 0 )
+        {
+            if(arreglo[i].idPaciente == aux.idPaciente && aux.eliminado == 0)
+            {
+                buscarPracticasRealizadas(arreglo[i].practicaRealizada,nombrePractica, &precio);
+                printf("Fecha : %i-%i-%i\nPaciente:%s, %s, %s\nPractica realizada:%s\n",
+                       arreglo[i].dia,arreglo[i].mes,arreglo[i].anio,
+                       aux.apellido,aux.nombre,aux.dni,
+                       nombrePractica);;
+                printf("----------------------------------------\n");
+            }
+        }
+    }
+
+
+    fclose(archi);
+    system("pause");
+    system("cls");
+}
+
+
+
+
+/// --------------------------------------- ORDENAR LABORATORIOS POR FECHA ------------------------------------------------------------------------------ ///
+
 
 
 /// --------------------------------------- T E S T    A R C H I V O S ------------------------------------------------------------------------------ ///
@@ -1235,16 +1393,20 @@ void cargarLaboTest()
     fclose(archi);
     stLaboratorios aux;
     archi = fopen("TestLaboratorios.bin","rb");
+    int i =0;
     while (fread(&aux,sizeof(stLaboratorios),1,archi) > 0 )
     {
-        printf("ID Paciente:%i\nPractica realizada:%i\nID Lab:%i\nFecha: %i - %i - %i",
+
+        printf("ID Paciente:%i\nPractica realizada:%i\nID Lab:%i\nFecha: %i - %i - %i\n pos %i",
                aux.idPaciente,
                aux.practicaRealizada,
                aux.idLab,
                aux.dia,
                aux.mes,
-               aux.anio
+               aux.anio,
+               i
                );
         printf("\n-----------------------------------------------------------------\n");
+        i++;
     }
 }
