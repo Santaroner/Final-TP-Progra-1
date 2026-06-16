@@ -109,7 +109,7 @@ void pacientesMenu() /// USAR ESTE MENU PARA PROBAR EJERCICIOS DE PACIENTE
             arregloOrdenamiento = arregloDinamicoLaboratoriosPorFecha (&validosOrdenamiento);
             printf("Validos vale:%i\n",validosOrdenamiento);
             ordenamientoSeleccionFecha(arregloOrdenamiento,validosOrdenamiento);
-            mostrarLaboratoriosOrdenadosPorfecha(arregloOrdenamiento,validosOrdenamiento);
+///            mostrarLaboratoriosOrdenadosPorfecha(arregloOrdenamiento,validosOrdenamiento);
             break;
         case 99:
             cargarPacientesAB();
@@ -191,6 +191,7 @@ void practicasMenu() /// USAR ESTE MENU PARA PROBAR EJERCICIOS DE PRACTICA
                 darDeAltaPracticas(ARCHIVO_PRACTICAS);
             break;
         case 5:
+                validosArregloPracticas=0;
                 arregloDinamicoPracticas=cargarArregloDinamicoPracticas(ARCHIVO_PRACTICAS,arregloDinamicoPracticas,&validosArregloPracticas);
                 mostrarPracticas(arregloDinamicoPracticas,&validosArregloPracticas);
                 system("pause");
