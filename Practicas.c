@@ -169,6 +169,8 @@ void mostrarPracticasDesdeArchivo(char ArchivoPracticas[30])
     {
         mostrarUnaPractica(unaPractica);
     }
+    system("pause");
+    system("cls");
     fclose(archivoPracticas);
 }
 void mostrarUnaPractica(stPracticas practicasAux)
@@ -214,6 +216,7 @@ void mostrarUnaPracticaAlta(stPracticas practicasAux)
     printf("Nombre: %s\n", practicasAux.nombre);
     printf("Costo: %i\n", practicasAux.costo);
     printf("Baja (0 activo, 1 baja): %i\n", practicasAux.baja);
+    printf("--------------------------------------------\n");
     }
 }
 void mostrarUnaPracticaBaja(stPracticas practicasAux)
@@ -224,6 +227,7 @@ void mostrarUnaPracticaBaja(stPracticas practicasAux)
     printf("Nombre: %s\n", practicasAux.nombre);
     printf("Costo: %i\n", practicasAux.costo);
     printf("Baja (0 activo, 1 baja): %i\n", practicasAux.baja);
+    printf("--------------------------------------------\n");
     }
 }
 
@@ -261,8 +265,6 @@ void modificarPracticas(char ArchivoPracticas[30])
 stPracticas menuModificarPractica(stPracticas unaPractica)
 {
     int opcion=0;
-    do
-    {
     printf("Elija un dato para modificar:\n1-Nombre\n2-Costo\n0-Salir\n");
     opcion=ingresarEntero();
     switch(opcion)
@@ -286,7 +288,6 @@ stPracticas menuModificarPractica(stPracticas unaPractica)
             printf("Ingrese una opcion correcta(0 a 2)\n");
             break;
     }
-    }while(opcion !=0);
     return unaPractica;
 }
 void modificarPracticaEnArchivo(char ArchivoPracticas[30], stPracticas unaPractica, int posicion)
@@ -410,25 +411,37 @@ void buscarPracticasPorNombre()
     char nombre[30];
     limpiarBuffer();
     printf("Ingrese el nombre de la practica a buscar: ");
-    getchar();
+//    getchar();
     do
     {
     fgets(nombre,30,stdin);
-    flag=ingresarSoloLetras(nombre);
-    }while(flag==0);
     nombre [strcspn(nombre,"\n")] = '\0';
+    flag=ingresarSoloLetras(nombre);
+
+    if(flag==0)
+    {
+        printf("Error, ingrese solo letras.\n");
+    }
+    }while(flag!=1);
+    ///nombre [strcspn(nombre,"\n")] = '\0';
     buscarPracticaPorNombre(nombre,ARCHIVO_PRACTICAS);
 }
 void buscarPracticaPorNombre(char nombrePractica[30], char ArchivoPracticas[30])
 {
-    FILE *archivoPracticas=fopen(ArchivoPracticas,"rb");
+    FILE *archivoPracticas=abrirArchivo(ArchivoPracticas,"rb");
     int res=1;
     int posicion=0;
     stPracticas unaPractica;
-    while(res!=0)
+
+    while(fread(&unaPractica,sizeof(stPracticas),1,archivoPracticas)>0)
     {
-        fread(&unaPractica,sizeof(stPracticas),1,archivoPracticas);
-        res=strcmpi(unaPractica.nombre,nombrePractica);
+        if (strcmpi(unaPractica.nombre,nombrePractica) == 0)
+        {
+            printf("La practica fue encontrada exitosamente: \n");
+            mostrarUnaPractica(unaPractica);
+            menuBusquedaPorNombre(unaPractica,posicion);
+            res = 0;
+        }
         posicion++;
     }
     if(res!=0)
@@ -437,14 +450,16 @@ void buscarPracticaPorNombre(char nombrePractica[30], char ArchivoPracticas[30])
     }
     else
     {
-        printf("La practica fue encontrada exitosamente: \n");
-        mostrarUnaPractica(unaPractica);
-        menuBusquedaPorNombre(unaPractica,posicion);
+//        printf("La practica fue encontrada exitosamente: \n");
+//        mostrarUnaPractica(unaPractica);
+//        menuBusquedaPorNombre(unaPractica,posicion);
     }
     fclose(archivoPracticas);
 }
 void menuBusquedaPorNombre(stPracticas unaPractica, int posicion)
 {
+    system("pause");
+    system("cls");
     int opcion=0;
     do
     {
@@ -467,6 +482,8 @@ void menuBusquedaPorNombre(stPracticas unaPractica, int posicion)
         break;
     }
     }while(opcion!=0);
+    system("pause");
+    system("cls");
 }
 /// -------------------------------------- T E S T /// R A  F A /// ------------------------------------------ ///
 

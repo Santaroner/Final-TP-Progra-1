@@ -218,7 +218,6 @@ void practicasMenu() /// USAR ESTE MENU PARA PROBAR EJERCICIOS DE PRACTICA
                 validosArregloPracticas=0;
                 arregloDinamicoPracticas=cargarArregloDinamicoPracticas(ARCHIVO_PRACTICAS,arregloDinamicoPracticas,&validosArregloPracticas);
                 mostrarPracticas(arregloDinamicoPracticas,&validosArregloPracticas);
-                system("pause");
             break;
         case 6:
                 buscarPracticasPorNombre();
