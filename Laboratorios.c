@@ -339,6 +339,7 @@ void consultarLaboratorio()
     }
 
     if (encontrado == 0)
+
         printf("Laboratorio no encontrado o de baja");
 
     fclose(archi);
@@ -525,17 +526,16 @@ void mostrarLaboratoriosUnPaciente (char DNI[]) ///
             strcpy(nombrePaciente,paciente.nombre);
             strcpy(apellidoPaciente,paciente.apellido);
             mostrarUnPaciente(paciente);
-            printf("ID Encontrado.%i\n",paciente.idPaciente);
-            ID = paciente.idPaciente;
+            printf("ID del paciente:%i\n",paciente.idPaciente);
+            ID = paciente.idPaciente; /// ID a enviar a laboratorio
         }
     }
     printf("Paciente :%s, %s\n", apellidoPaciente, nombrePaciente);
     while (fread(&lab,sizeof(stLaboratorios),1,archi) > 0 ) /// Buscamos el ID del paciente en los registros de los laboratorios
     {
-        if (lab.idPaciente == ID)
+        if (lab.idPaciente == ID) /// Trae precio total, monto de practica y nombre de practica
         {
-            buscarPracticasRealizadas(lab.idLab,practicaRealizada,&precio); /// Buscamos el nombre de la practica a traves de su ID
-
+            buscarPracticasRealizadas(lab.practicaRealizada,practicaRealizada,&precio); /// Buscamos el nombre de la practica a traves de su ID
             mostrarUnLaboratorio(DNI,practicaRealizada,precio,lab.anio,lab.mes,lab.dia,lab.idLab); /// Printeamos el nombre de la practica que el paciente se realizo
             total += precio;
         }

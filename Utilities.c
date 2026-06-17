@@ -198,6 +198,40 @@ int ingresarEnteroMinMax(int min, int max)
 
     return numero;
 }
+int ingresarEntero()
+{
+    int numero;
+    int control;
+
+    do
+    {
+        control = scanf("%i",&numero); /// Si el scanf devuelve 1
+        if (control != 1)
+        {
+            printf("Error, ingrese un numero.\n");
+            while(getchar () != '\n'); /// limpia num
+        }
+    } while (control != 1); /// control devuelve 1 si el dato ingresado por el scanf es un numero
+
+    return numero;
+}
+char ingresoSoloLetraEnScan()
+{
+    char letra;
+
+    do
+    {
+        scanf(" %c", &letra);
+
+        if (!isalpha(letra))
+        {
+            printf("Error, ingrese solo letras.\n");
+        }
+
+    } while (!isalpha(letra));
+
+    return letra;
+}
 
 /// VALIDACIONES
 
