@@ -10,13 +10,15 @@ int generaId() ///
 }
 void ingreseNombre(char nombre[30])
 {
-    int flag=0, flag2=1;
+    int flag=0, flag2=1, flag3=0;
     do
     {
         printf("Ingrese el nombre de la practica: ");
         getchar();
         void limpiarBuffer();
         fgets(nombre,30,stdin);
+        if (strchr(nombre,'\n') != NULL)
+        {
         nombre=primerLetraMayuscula(nombre);
         borrarSaltoDeLinea(nombre);
         flag2=ingresarSoloLetras(nombre);
@@ -29,8 +31,14 @@ void ingreseNombre(char nombre[30])
         {
             printf("La practica que quiere cargar ya esta ingresada, ingrese otra.\n");
         }
-    }
-    while(flag==1 || flag2==0);
+        flag3=1;
+        }
+        else
+        {
+            while (getchar () != '\n'); ///
+            printf("No se pueden ingresar mas de 30 caracteres.\n");
+        }
+    }while(flag==1 || flag2==0 || flag3==0);
 }
 int ingreseCosto(int costo)
 {
@@ -271,15 +279,9 @@ stPracticas menuModificarPractica(stPracticas unaPractica)
     {
         case 1:
               ingreseNombre(unaPractica.nombre);
-//            printf("Ingrese un nuevo nombre: ");
-//            getchar();
-//            fgets(unaPractica.nombre,30,stdin);
-//            unaPractica.nombre [strcspn(unaPractica.nombre,"\n")] = '\0';
             break;
         case 2:
               unaPractica.costo=ingreseCosto(unaPractica.costo);
-//            printf("Ingrese un nuevo costo: ");
-//            scanf("%i", &unaPractica.costo);
             break;
         case 0:
             printf("Vuelva pronto.\n");
@@ -411,10 +413,13 @@ void buscarPracticasPorNombre()
     char nombre[30];
     limpiarBuffer();
     printf("Ingrese el nombre de la practica a buscar: ");
-//    getchar();
+    getchar();
+    int flag2=0;
     do
     {
     fgets(nombre,30,stdin);
+    if (strchr(nombre,'\n') != NULL)
+    {
     nombre [strcspn(nombre,"\n")] = '\0';
     flag=ingresarSoloLetras(nombre);
 
@@ -422,8 +427,15 @@ void buscarPracticasPorNombre()
     {
         printf("Error, ingrese solo letras.\n");
     }
-    }while(flag!=1);
-    ///nombre [strcspn(nombre,"\n")] = '\0';
+    flag2=1;
+    }
+    else
+    {
+        while (getchar () != '\n'); ///
+        printf("No se pueden ingresar mas de 30 caracteres.\n");
+    }
+    }while(flag!=1 || flag2==0);
+    nombre [strcspn(nombre,"\n")] = '\0';
     buscarPracticaPorNombre(nombre,ARCHIVO_PRACTICAS);
 }
 void buscarPracticaPorNombre(char nombrePractica[30], char ArchivoPracticas[30])
