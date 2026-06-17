@@ -44,7 +44,7 @@ void cargarLaboratorio(stLaboratorios *lab) /// Duda si agregar pac y prac.
         lab->baja = 0;
 
         printf("Confirmar datos? (s/n) ");
-        scanf(" %c", &seguir);
+        seguir=ingresoSoloLetraEnScan();
     }
     while (tolower(seguir) != 's');
 
@@ -78,7 +78,7 @@ stLaboratorios * cargarLaboratorios()
             printf("Error al asignar memoria.\n");
         }
         printf("Desea cargar otro laboratorio? (s/n): ");
-        scanf(" %c", &seguir);
+        seguir=ingresoSoloLetraEnScan();
     }
     printf("Carga finalizada.\n");
 
@@ -91,11 +91,9 @@ int validarAnio()
     do
     {
         printf("Ingrese el anio(1990-2026): ");
-        scanf("%d", &aux);
+        aux = ingresarEntero();
         if (aux < 1990 || aux > 2026)
             printf("Año equivocado, recuerde (entre 1990 y 2026) \n");
-        else
-            printf("Anio %d\n", aux);
     }
     while (aux < 1990 || aux > 2026);
     return aux;
@@ -107,11 +105,9 @@ int validarMes()
     do
     {
         printf("Ingrese el mes(1-12): ");
-        scanf("%d", &aux);
+        aux=ingresarEntero();
         if (aux < 1 || aux > 12)
             printf("Error, recuerde entre 1 y 12 \n");
-        else
-            printf("Mes %d\n", aux);
     }
     while (aux < 1 || aux > 12);
     return aux;
@@ -125,11 +121,9 @@ int validarDia(int mes)
     do
     {
         printf("Ingrese el dia: ");
-        scanf("%d", &dia);
+        dia=ingresarEntero();
         if (dia < 1 || dia > diasPorMes[mes])
             printf("Dia invalido para ese mes.\n");
-        else
-            printf("Dia: %d\n", dia);
     }
     while (dia < 1 || dia > diasPorMes[mes]);
     return dia;
@@ -143,7 +137,7 @@ void bajaLaboratorio()
     stLaboratorios lab;
 
     printf("Ingrese ID a dar de baja: ");
-    scanf("%d", &idBuscar);
+    idBuscar=ingresarEntero();
 
     FILE *archi = abrirArchivo(ARCHIVO_LABORATORIOS, "r+b");
     if (archi == NULL)
@@ -193,7 +187,7 @@ void mostrarLaboratorios(stLaboratorios *laboratorios,int validosL)
                laboratorios[i].mes,
                laboratorios[i].dia);
     }
-     system("pause");
+    system("pause");
     system("cls");
 }
 void mostrarLaboratoriosArchivo()
@@ -235,7 +229,7 @@ void modificarLaboratorio()
     stLaboratorios lab;
 
     printf("Ingrese ID de Lab a modificar:\n ");
-    scanf("%d", &idBuscar);
+    idBuscar=ingresarEntero();
 
     FILE *archi = abrirArchivo(ARCHIVO_LABORATORIOS, "r+b");
     if (archi == NULL)
@@ -265,7 +259,7 @@ void modificarLaboratorio()
     printf("Que desea modificar?\n");
     printf("1- Fecha\n");
     printf("2- Practica\n");
-    scanf("%d", &opcion);
+    opcion=ingresarEntero();
 
     switch (opcion)
     {
@@ -281,9 +275,13 @@ void modificarLaboratorio()
         do
         {
             printf("Ingrese nuevo ID de practica: ");
-            scanf("%d", &lab.practicaRealizada);
+//            scanf("%d", &lab.practicaRealizada);
+            lab.practicaRealizada=ingresarEntero();
         }
         while (compararIDLPrac(lab.practicaRealizada));
+        printf("Practica modificada correctamente.\n");
+        system("pause");
+        system("cls");
         break;
     default:
         printf("Opcion invalida.\n");
@@ -308,7 +306,7 @@ void consultarLaboratorio()
     char apellido[30];/// apellido para printear del paciente
     char nombrePractica[30];
     printf("Ingresar ID del laboratorio a consultar: ");
-    scanf("%d", &idBuscar);
+    idBuscar=ingresarEntero();
 
     FILE *archi = abrirArchivo(ARCHIVO_LABORATORIOS, "rb");
     if (archi == NULL)
@@ -323,8 +321,8 @@ void consultarLaboratorio()
         {
             buscarPracticasRealizadas(lab.practicaRealizada,nombrePractica,&precio);
             encontrarDatosPaciente(lab.idPaciente,nombre,apellido);
-                    printf("--------------------------------------------------\n");
-                   printf("ID laboratorio: %d\nPaciente: %s, %s\nPractica: %s\nFecha : %i-%i-%i\n",
+            printf("--------------------------------------------------\n");
+            printf("ID laboratorio: %d\nPaciente: %s, %s\nPractica: %s\nFecha : %i-%i-%i\n",
                    lab.idLab,
                    apellido,
                    nombre,
@@ -332,7 +330,7 @@ void consultarLaboratorio()
                    lab.dia,
                    lab.mes,
                    lab.anio);
-                   printf("--------------------------------------------------\n");
+            printf("--------------------------------------------------\n");
             encontrado = 1;
             break;
         }
@@ -379,24 +377,25 @@ int buscandoIDPacientes() /// rafa probando busca id - - - - - - - funcion en ut
     do
     {
         printf("Ingrese el ID a buscar:\n");
-    scanf("%i",&newID);
-    aux = compararIDLP(newID);
-    if ( aux == 0)
-    {
-        printf("El id ha sido encontrado.\n");
-        return newID;
-    }
-    else if (aux == 1)
-    {
+        newID=ingresarEntero();
+        aux = compararIDLP(newID);
+        if ( aux == 0)
+        {
+            printf("El id ha sido encontrado.\n");
+            return newID;
+        }
+        else if (aux == 1)
+        {
 //        printf("Desea ingresar otro ID?S/N\n");
 //        scanf(" %c", &confirmar);
 //        if (tolower(confirmar) == 's')
 //        {
 //
 //        }
-        printf("El ID no existe. Ingrese un ID valido por favor.\n");
+            printf("El ID no existe. Ingrese un ID valido por favor.\n");
+        }
     }
-    } while (aux != 0);
+    while (aux != 0);
 }
 
 int buscandoIDPractica() /// rafa probando busca id - - - - - - - funcion en utilities /// Integrar solo int
@@ -406,18 +405,19 @@ int buscandoIDPractica() /// rafa probando busca id - - - - - - - funcion en uti
     do
     {
         printf("Ingrese el ID a buscar:\”");
-    scanf("%i",&newID);
-    aux = compararIDLPrac(newID);
-    if ( aux == 0)
-    {
-        printf("El id ha sido encontrado.\n");
-        return newID;
+        newID=ingresarEntero();
+        aux = compararIDLPrac(newID);
+        if ( aux == 0)
+        {
+            printf("El id ha sido encontrado.\n");
+            return newID;
+        }
+        else if (aux == 1)
+        {
+            printf("El ID no existe. Si desea crear uno vaya al apartado pacientes.\n");
+        }
     }
-    else if (aux == 1)
-    {
-        printf("El ID no existe. Si desea crear uno vaya al apartado pacientes.\n");
-    }
-    } while (aux != 0);
+    while (aux != 0);
 
     return 1;
 }
@@ -465,7 +465,7 @@ void menuMostrarLaboratoriosPorPaciente ()
         printf("1-Mostrar laboratorios de paciente por ID\n");
         printf("2-Listado de todos los laboratorios por pacientes.\n");
         printf("0-Volver al menu anterior.\n");
-        scanf("%i",&optionswitch);
+        optionswitch=ingresarEntero();
         switch (optionswitch)
         {
         case 1:
@@ -482,7 +482,8 @@ void menuMostrarLaboratoriosPorPaciente ()
             printf("Opcion incorrecta.\n");
             break;
         }
-    } while (optionswitch != 0);
+    }
+    while (optionswitch != 0);
 }
 
 void laboratoriosPorPacienteID () /// Ingresa DNI para buscar despues por ID
@@ -591,20 +592,20 @@ void mostrarTodosLaboratoriosPorPaciente ()
         if (auxPaciente.eliminado == 0)
         {
             encontrado = 0;
-           while (fread(&auxLab,sizeof(stLaboratorios),1,bin) > 0 )
-        {
-            if (auxPaciente.idPaciente == auxLab.idPaciente)
+            while (fread(&auxLab,sizeof(stLaboratorios),1,bin) > 0 )
             {
-                if (encontrado == 0) /// Hace que se printee solamente una vez el nombre del paciente.
+                if (auxPaciente.idPaciente == auxLab.idPaciente)
                 {
-                    printf("***********************************************************************************************************************************************\n");
-                    printf("Nombre del paciente:%s, %s\n", auxPaciente.apellido,auxPaciente.nombre);
-                    encontrado = 1;
+                    if (encontrado == 0) /// Hace que se printee solamente una vez el nombre del paciente.
+                    {
+                        printf("***********************************************************************************************************************************************\n");
+                        printf("Nombre del paciente:%s, %s\n", auxPaciente.apellido,auxPaciente.nombre);
+                        encontrado = 1;
+                    }
+                    buscarPracticasRealizadas(auxLab.practicaRealizada,practicaRealizada,&precio);
+                    mostrarUnLaboratorio(auxPaciente.nombre,practicaRealizada,precio,auxLab.anio,auxLab.mes,auxLab.dia,auxLab.idLab);
                 }
-                buscarPracticasRealizadas(auxLab.practicaRealizada,practicaRealizada,&precio);
-                mostrarUnLaboratorio(auxPaciente.nombre,practicaRealizada,precio,auxLab.anio,auxLab.mes,auxLab.dia,auxLab.idLab);
             }
-        }
         }
     }
     fclose(archi);
@@ -613,7 +614,7 @@ void mostrarTodosLaboratoriosPorPaciente ()
     system("cls");
 }
 
-void mostrarUnLaboratorio (char nombre[], char practica[], int precio, int anio , int mes, int dia, int id)
+void mostrarUnLaboratorio (char nombre[], char practica[], int precio, int anio, int mes, int dia, int id)
 {
     printf("------------------------------------------------\n");
     printf("Fecha : %i - %i - %i\n", dia,mes,anio);
