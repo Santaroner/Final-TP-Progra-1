@@ -75,9 +75,7 @@ void pacientesMenu() /// USAR ESTE MENU PARA PROBAR EJERCICIOS DE PACIENTE
         printf("\n4-Dar de baja un paciente");
         printf("\n5-Buscar paciente.");
         printf("\n6-Mostrar pacientes de baja. -- Dar de alta paciente eliminado");
-        printf("\n7-Menu mostrar laboratorios por paciente.\n");
-        printf("Buscar pacientes con mayor gasto economico:\n");
-        printf("\n\n9-Arreglo dinamico --- Ordenamiento de apellidos");
+        printf("\n\n7-Lista de pacientes por apellido y nombre");
         printf("\n0-Volver al menu anterior.");
         printf("\n------------------------------------------------------------------------------------------------------------------------------------------------------\n");
         scanf("%i",&optionswitch);
@@ -105,12 +103,6 @@ void pacientesMenu() /// USAR ESTE MENU PARA PROBAR EJERCICIOS DE PACIENTE
             mostrarEliminados();
             break;
         case 7:
-            menuMostrarLaboratoriosPorPaciente();
-            break;
-        case 8:
-            printf("Buscar pacientes con mayor gasto economico:\n");
-            break;
-        case 9:
             ADP = activosADinamicos(&validosADP);
             ordenamientoSeleccionChar(ADP,validosADP);
             break;
@@ -118,7 +110,7 @@ void pacientesMenu() /// USAR ESTE MENU PARA PROBAR EJERCICIOS DE PACIENTE
             arregloOrdenamiento = arregloDinamicoLaboratoriosPorFecha (&validosOrdenamiento);
             printf("Validos vale:%i\n",validosOrdenamiento);
             ordenamientoSeleccionFecha(arregloOrdenamiento,validosOrdenamiento);
-///            mostrarLaboratoriosOrdenadosPorfecha(arregloOrdenamiento,validosOrdenamiento);
+            mostrarLaboratoriosOrdenadosPorfecha(arregloOrdenamiento,validosOrdenamiento);
             break;
         case 99:
             cargarPacientesAB();
@@ -134,11 +126,7 @@ void pacientesMenu() /// USAR ESTE MENU PARA PROBAR EJERCICIOS DE PACIENTE
         }
     } while (optionswitch != 0) ;
 }
-void deletearchi()
-{
-    FILE *archi = fopen("TestPacientes.bin", "wb");
-    fclose(archi);
-}
+
 void laboratoriosMenu() /// USAR ESTE MENU PARA PROBAR EJERCICIOS DE LABORATORIO
 {
     int optionswitch = 0;
@@ -146,7 +134,14 @@ void laboratoriosMenu() /// USAR ESTE MENU PARA PROBAR EJERCICIOS DE LABORATORIO
     {
         system("cls");
         printf("\n------------------------------------------------------------------------------------------------------------------------------------------------------\n");
-        printf("1-Cargar laboratorio \n2-Baja Laboratorio\n3-Modificar Laboratorio\n4-Consultar Laboratorio\n5-Listar Laboratorios\n0-Salir");
+        printf("1-Cargar laboratorio.\n");
+        printf("2-Dar de baja un laboratorio.\n");
+        printf("3-Modificar laboratorio.\n");
+        printf("4-Consultar laboratorio.\n");
+        printf("5-Listar Laboratorio.\n");
+        printf("6-Menu mostrar laboratorios por paciente.\n");
+        printf("7-Laboratorios ordenados por fecha.\n");
+        printf("0-Volver al menu anterior.\n");
         printf("\n------------------------------------------------------------------------------------------------------------------------------------------------------\n");
         scanf("%i",&optionswitch);
         switch(optionswitch)
@@ -166,6 +161,15 @@ void laboratoriosMenu() /// USAR ESTE MENU PARA PROBAR EJERCICIOS DE LABORATORIO
         case 5:
             mostrarLaboratoriosArchivo();
             break;
+        case 6:
+            menuMostrarLaboratoriosPorPaciente();
+            break;
+        case 7:
+            arregloOrdenamiento = arregloDinamicoLaboratoriosPorFecha (&validosOrdenamiento);
+            printf("Validos vale:%i\n",validosOrdenamiento);
+            ordenamientoSeleccionFecha(arregloOrdenamiento,validosOrdenamiento);
+            mostrarLaboratoriosOrdenadosPorfecha(arregloOrdenamiento,validosOrdenamiento);
+            break;
         case 99: /// ABRE ARCHIVO PACIENTES-SANTI.
             muestraTSP();
             break;
@@ -181,11 +185,19 @@ void laboratoriosMenu() /// USAR ESTE MENU PARA PROBAR EJERCICIOS DE LABORATORIO
 
 void practicasMenu() /// USAR ESTE MENU PARA PROBAR EJERCICIOS DE PRACTICA
 {
+    system("cls");
     int optionswitch = 0;
     do
     {
-        ///system("cls");
-        printf("1-Cargar practica\n2-Modificar practica\n3-Dar de baja una practica\n4-Dar de alta una practica\n5-Mostrar listado de practicas \n6-Buscar practica por nombre\n0-Salir\n");
+        printf("\n------------------------------------------------------------------------------------------------------------------------------------------------------\n");
+        printf("1-Cargar practica\n");
+        printf("2-Modificar practica\n");
+        printf("3-Dar de baja una practica\n");
+        printf("4-Dar de alta una practica\n");
+        printf("5-Mostrar listado de practicas\n");
+        printf("6-Buscar practica por nombre\n");
+        printf("0-Volver al menu anterior");
+        printf("\n------------------------------------------------------------------------------------------------------------------------------------------------------\n");
         scanf("%i",&optionswitch);
         switch(optionswitch)
         {
@@ -193,6 +205,7 @@ void practicasMenu() /// USAR ESTE MENU PARA PROBAR EJERCICIOS DE PRACTICA
                 cargarPracticas(ARCHIVO_PRACTICAS);
             break;
         case 2:
+            system("cls");
                 modificarPracticas(ARCHIVO_PRACTICAS);
             break;
         case 3:

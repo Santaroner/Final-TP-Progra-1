@@ -23,7 +23,7 @@ int getIDVPacientes() /// Recorre archivo Pacientes para saber cuantos ID tiene
 {
     stPaciente aux;
     int IDAux = 0;
-    FILE * archi = fopen("TestPacientes.bin", "rb");
+    FILE * archi = abrirArchivo(ARCHIVO_PACIENTES, "rb");
     while (fread(&aux,sizeof(stPaciente),1,archi) > 0 )
     {
         IDAux ++;
@@ -36,7 +36,7 @@ int getIDVPacientes() /// Recorre archivo Pacientes para saber cuantos ID tiene
 int compararIDLP (int num)
 {
     stPaciente aux;
-    FILE *archi = fopen (ARCHIVO_PACIENTES,"rb"); /// CAMBIAR MAS ADELANTE POR EL ORIGINALm Pacientes santi para practicar ahora
+    FILE *archi = abrirArchivo(ARCHIVO_PACIENTES,"rb"); /// CAMBIAR MAS ADELANTE POR EL ORIGINALm Pacientes santi para practicar ahora
     while (fread(&aux,sizeof(stPaciente),1,archi))
     {
         if (num == aux.idPaciente && aux.eliminado == 0)
@@ -52,7 +52,7 @@ int compararIDLP (int num)
 int compararIDLPrac (int num)
 {
     stPracticas aux;
-    FILE *archi = fopen (ARCHIVO_PRACTICAS,"rb");
+    FILE *archi = abrirArchivo(ARCHIVO_PRACTICAS,"rb");
     while (fread(&aux, sizeof(stPracticas), 1, archi))
     {
         if (num == aux.idPractica && aux.baja == 0)

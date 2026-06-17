@@ -66,6 +66,8 @@ void cargarPracticas(char ArchivoPracticas[30])
         printf("Desea seguir ingresando practicas? (s para seguir)");
         scanf(" %c", &seguir);
         fclose(archi_Practicas);
+        system("pause");
+        system("cls");
     }
 }
 void cargarPracticaEnArchivo(char ArchivoPracticas[30], stPracticas unaPractica, int *validosArregloPracticas)
@@ -155,21 +157,23 @@ void mostrarPracticas(stPracticas *arregloDinamicoPracticas, int *validosArreglo
           stPracticas unaPractica=arregloDinamicoPracticas[i];
           mostrarUnaPractica(unaPractica);
       }
-//    FILE *archi_Practicas=fopen(ArchivoPracticas, "rb");
-//    stPracticas practicasAux;
-//    while((fread(&practicasAux, sizeof(stPracticas), 1, archi_Practicas)) > 0)
-//    {
-//        mostrarUnaPractica(practicasAux);
-//    }
-//
-//    fclose(archi_Practicas);
+      system("pause");
+      system("cls");
 }
 void mostrarUnaPractica(stPracticas practicasAux)
 {
-    printf("idPractica: %i\n", practicasAux.idPractica);
+    char activo[] = ("Activo");
+    char inactivo[] = ("Inactivo");
+    printf("ID: %i\n", practicasAux.idPractica);
     printf("Nombre: %s\n", practicasAux.nombre);
     printf("Costo: %i\n", practicasAux.costo);
-    printf("Baja (0 activo, 1 baja): %i\n", practicasAux.baja);
+    if (practicasAux.baja == 0)
+    {
+        printf("Estado: %s\n",activo);
+    }
+    else printf("Estado: %s\n",inactivo);
+    printf("---------------------------------------\n");
+
 }
 void mostrarPracticasAlta(char archivoPracticas[30])
 {
@@ -240,7 +244,7 @@ stPracticas menuModificarPractica(stPracticas unaPractica)
     int opcion=0;
     do
     {
-    printf("Elija un dato para modificar:\n1-Nombre\n2-Costo\n0-Salir");
+    printf("Elija un dato para modificar:\n1-Nombre\n2-Costo\n0-Salir\n");
     scanf("%i",&opcion);
     switch(opcion)
     {
@@ -261,7 +265,7 @@ stPracticas menuModificarPractica(stPracticas unaPractica)
             printf("Ingrese una opcion correcta(0 a 2)");
             break;
     }
-    }while(opcion!=0);
+    }while(opcion !=0);
     return unaPractica;
 }
 void modificarPracticaEnArchivo(char ArchivoPracticas[30], stPracticas unaPractica, int posicion)
