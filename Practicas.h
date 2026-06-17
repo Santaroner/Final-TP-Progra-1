@@ -42,6 +42,7 @@ int contarPracticas(char ArchivoPracticas[30]);
 
 /// --------------------- M U E S T R A  D E  P R A C T I C A S -------------------- ///
 void mostrarPracticas(stPracticas *arregloDinamicoPracticas, int *validosArregloPracticas);
+void mostrarPracticasDesdeArchivo(char ArchivoPracticas[30]);
 void mostrarUnaPractica(stPracticas practicasAux);
 void mostrarPracticasAlta(char archivoPracticas[30]);
 void mostrarPracticasBaja(char archivoPracticas[30]);

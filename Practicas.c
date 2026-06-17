@@ -161,6 +161,16 @@ void mostrarPracticas(stPracticas *arregloDinamicoPracticas, int *validosArreglo
       system("pause");
       system("cls");
 }
+void mostrarPracticasDesdeArchivo(char ArchivoPracticas[30])
+{
+    FILE *archivoPracticas=fopen(ArchivoPracticas,"rb");
+    stPracticas unaPractica;
+    while(fread(&unaPractica,sizeof(stPracticas),1,archivoPracticas)>0)
+    {
+        mostrarUnaPractica(unaPractica);
+    }
+    fclose(archivoPracticas);
+}
 void mostrarUnaPractica(stPracticas practicasAux)
 {
     char activo[] = ("Activo");
@@ -228,9 +238,17 @@ void modificarPracticas(char ArchivoPracticas[30])
         }
         else
         {
+            mostrarPracticasDesdeArchivo(ARCHIVO_PRACTICAS);
             int posicion=0;
+            do
+            {
             printf("Elija una practica para modificar (idPractica): ");
-            scanf("%i", &posicion);
+            posicion=ingresarEntero();
+            if(posicion<1 || posicion>cantPracticas)
+            {
+                printf("Error, ingrese una practica valida (1 a %i).\n",cantPracticas);
+            }
+            }while(posicion<1 || posicion>cantPracticas);
             stPracticas unaPractica;
             fseek(archivoPracticas,(posicion-1)*sizeof(stPracticas),0);
             fread(&unaPractica,sizeof(stPracticas),1,archivoPracticas);
@@ -246,7 +264,7 @@ stPracticas menuModificarPractica(stPracticas unaPractica)
     do
     {
     printf("Elija un dato para modificar:\n1-Nombre\n2-Costo\n0-Salir\n");
-    scanf("%i",&opcion);
+    opcion=ingresarEntero();
     switch(opcion)
     {
         case 1:
@@ -285,6 +303,7 @@ void darDeBajaPracticas(char ArchivoPracticas[30])
       FILE *archivoPracticas=fopen(ArchivoPracticas,"r+b");
       int flag=0;
       flag=verificarAltas(ARCHIVO_PRACTICAS);
+      int cantPracticas=contarPracticas(ARCHIVO_PRACTICAS);
       if(flag==0)
       {
           printf("No hay practicas activas para dar de baja.\n");
@@ -293,8 +312,15 @@ void darDeBajaPracticas(char ArchivoPracticas[30])
       {
       mostrarPracticasAlta(ARCHIVO_PRACTICAS);
       int nroPractica=0;
+      do
+      {
       printf("Elija una practica para dar de baja (idPractica): ");
-      scanf("%i", &nroPractica);
+      nroPractica=ingresarEntero();
+      if(nroPractica<1 || nroPractica>cantPracticas)
+            {
+                printf("Error, ingrese una practica valida (1 a %i).\n",cantPracticas);
+            }
+      }while(nroPractica<1 || nroPractica>cantPracticas);
       stPracticas unaPractica;
       fseek(archivoPracticas,(nroPractica-1)*sizeof(stPracticas),0);
       fread(&unaPractica,sizeof(stPracticas),1,archivoPracticas);
@@ -312,6 +338,7 @@ stPracticas darDeBajaUnaPractica(stPracticas unaPractica)
 void darDeAltaPracticas(char ArchivoPracticas[30])
 {
       FILE *archivoPracticas=fopen(ArchivoPracticas,"r+b");
+      int cantPracticas=contarPracticas(ARCHIVO_PRACTICAS);
       int flag=0;
       flag=verificarBajas(ARCHIVO_PRACTICAS);
       if(flag==0)
@@ -322,8 +349,15 @@ void darDeAltaPracticas(char ArchivoPracticas[30])
       {
       mostrarPracticasBaja(ARCHIVO_PRACTICAS);
       int nroPractica=0;
+      do
+      {
       printf("Elija una practica para dar de alta (idPractica): ");
-      scanf("%i", &nroPractica);
+      nroPractica=ingresarEntero();
+      if(nroPractica<1 || nroPractica>cantPracticas)
+      {
+          printf("Error, ingrese una practica valida (1 a %i)",cantPracticas);
+      }
+      }while(nroPractica<1 || nroPractica>cantPracticas);
       stPracticas unaPractica;
       fseek(archivoPracticas,(nroPractica-1)*sizeof(stPracticas),0);
       fread(&unaPractica,sizeof(stPracticas),1,archivoPracticas);
@@ -372,10 +406,16 @@ int verificarBajas(char ArchivoPracticas[30])
 /// ------------------- B U S Q U E D A  D E  P R A C T I C A S ------------------- ///
 void buscarPracticasPorNombre()
 {
+    int flag=1;
     char nombre[30];
+    limpiarBuffer();
     printf("Ingrese el nombre de la practica a buscar: ");
     getchar();
+    do
+    {
     fgets(nombre,30,stdin);
+    flag=ingresarSoloLetras(nombre);
+    }while(flag==0);
     nombre [strcspn(nombre,"\n")] = '\0';
     buscarPracticaPorNombre(nombre,ARCHIVO_PRACTICAS);
 }
@@ -408,8 +448,8 @@ void menuBusquedaPorNombre(stPracticas unaPractica, int posicion)
     int opcion=0;
     do
     {
-    printf("Que desea hacer con la practica?\n1-Modificar nombre o costo\n2-Dar de alta\n3-Dar de baja\n0-Salir");
-    scanf("%i", &opcion);
+    printf("Que desea hacer con la practica?\n1-Modificar nombre o costo\n2-Dar de alta\n3-Dar de baja\n0-Salir\n");
+    opcion=ingresarEntero();
     switch(opcion)
     {
         case 1: unaPractica=menuModificarPractica(unaPractica);

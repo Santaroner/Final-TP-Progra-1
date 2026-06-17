@@ -7,7 +7,7 @@
 
 1779069850 source:c:\users\rafa\documents\tp final ras\tp lab\structs.c
 
-1781720830 source:c:\users\usuario\documents\github\final-tp-progra-1\laboratorios.c
+1781729309 source:c:\users\usuario\documents\github\final-tp-progra-1\laboratorios.c
 	<stdio.h>
 	<string.h>
 	<stdlib.h>
@@ -117,14 +117,14 @@
 	<ctype.h>
 	<string.h>
 
-1781724852 source:c:\users\usuario\documents\github\final-tp-progra-1\utilities.c
+1781727871 source:c:\users\usuario\documents\github\final-tp-progra-1\utilities.c
 	<stdio.h>
 	"Pacientes.h"
 	"Practicas.h"
 	"Laboratorios.h"
 	"Menus.h"
 
-1781580470 c:\users\usuario\documents\github\final-tp-progra-1\practicas.h
+1781730449 c:\users\usuario\documents\github\final-tp-progra-1\practicas.h
 	"Utilities.h"
 	"Pacientes.h"
 	<stdio.h>
