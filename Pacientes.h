@@ -34,6 +34,7 @@ void cargaPaciente();  /// Llama a las diferentes funciones con validaciones y i
  void mostrarEliminados ();
  extern stPaciente *pacientes;
  extern int validos;
+ void mostrarUnPaciente (stPaciente paciente);
  /// ----------------------------------------------------- M O D I F I C A R    P A C I E N T E S ------------------------------------------------------ ///
 
 void buscarPaciente(stPaciente *pacientes, int validos);
@@ -67,7 +68,6 @@ void laboratoriosPorPacienteID ();
 void mostrarLaboratoriosUnPaciente (char DNI[]);
 void mostrarUnLaboratorio (char nombre[], char practica[], int precio, int anio , int mes, int dia,int id); /// Devuelve el nombre de la practica a mostrarLaboratoriosPorPaciente
 void mostrarTodosLaboratoriosPorPaciente ();
-
 
 /// ----- Carga de archivos para test
 void cargarPacientesAB(); /// Heroes

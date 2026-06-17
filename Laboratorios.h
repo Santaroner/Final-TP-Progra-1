@@ -35,6 +35,18 @@ typedef struct
  int validarMes();
  int validarDia(int mes);
 
+ /// ORDENAMIENTO LABS POR FECHA
+stLaboratorios * arregloDinamicoLaboratoriosPorFecha (int *validosOrdenamiento);
+stLaboratorios * asignarMemoriaLaboratoriosPorFecha (stLaboratorios * arregloOrdenamiento, stLaboratorios lab, int pos);
+int fechaAEntero (stLaboratorios lab);
+void ordenamientoSeleccionFecha(stLaboratorios arreglo[], int validos);
+int findMinorFecha(stLaboratorios arreglo[], int validos, int posicion);
+void ordenamientoSeleccionFecha(stLaboratorios arreglo[], int validos);
+
+void buscarPracticasRealizadas(int practicaID, char practicaRealizada[],int *precio);
+void mostrarLaboratoriosOrdenadosPorfecha (stLaboratorios arreglo[],int validos);
+int buscandoIDPractica() ;
+
 
  int buscandoIDPacientes(); /// rafa probando busca id
  void muestraTSP();
