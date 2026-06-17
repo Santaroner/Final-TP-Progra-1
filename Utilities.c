@@ -137,7 +137,7 @@ int ingresarSoloLetrasSinEspacios (char palabra[]) /// Ingreso solo letras SIN e
 
     while (palabra [i] != '\0' && palabra[i] != ' \n')  /// '\0' Cuando llega al final del arreglo
     {
-        if(!isalpha(palabra[i]) ) /// Isalpha es verdadero cuando el caracter no es una letra - por eso ! --- palabra[i] != ' ' para que no se ingresen espacios. Valido para DNI, nombre, celular
+        if(!isalpha(palabra[i])) /// Isalpha es verdadero cuando el caracter no es una letra - por eso ! --- palabra[i] != ' ' para que no se ingresen espacios. Valido para DNI, nombre, celular
         {
             return 0; /// Si retorna 0 es falso
         }
@@ -145,7 +145,20 @@ int ingresarSoloLetrasSinEspacios (char palabra[]) /// Ingreso solo letras SIN e
     }
     return 1; /// Si no hizo return en el 0, es verdadero.
 }
+int ingresarSoloLetras (char palabra[]) /// Ingreso solo letras SIN espacios
+{
+    int i = 0;
 
+    while (palabra [i] != '\0')  /// '\0' Cuando llega al final del arreglo
+    {
+        if(!isalpha(palabra[i]) && palabra[i]!=' ') /// Isalpha es verdadero cuando el caracter no es una letra - por eso ! --- palabra[i] != ' ' para que no se ingresen espacios. Valido para DNI, nombre, celular
+        {
+            return 0; /// Si retorna 0 es falso
+        }
+        i++;
+    }
+    return 1; /// Si no hizo return en el 0, es verdadero.
+}
 int ingresarSoloNumerosEnArreglo (char numeros[])
 {
     int i = 0;
@@ -215,6 +228,23 @@ int ingresarEntero()
 
     return numero;
 }
+char ingresoSoloSNEnScan(char a, char b)
+{
+    char letra;
+
+    do
+    {
+        scanf(" %c", &letra);
+
+        if (letra!=tolower(a) && letra!=tolower(b))
+        {
+            printf("Error, ingrese solo S o N.\n");
+        }
+
+    } while (letra!=tolower(a) && letra!=tolower(b));
+
+    return letra;
+}
 char ingresoSoloLetraEnScan()
 {
     char letra;
@@ -234,7 +264,11 @@ char ingresoSoloLetraEnScan()
 }
 
 /// VALIDACIONES
-
+void limpiarBuffer()
+{
+    char c;
+    while((c=getchar())!='\n' && c!=EOF);
+}
 char * primerLetraMayuscula (char cadena[])
 {
     if (cadena != '\0')

@@ -10,33 +10,34 @@ int generaId() ///
 }
 void ingreseNombre(char nombre[30])
 {
-    int flag=0;
+    int flag=0, flag2=1;
     do
     {
         printf("Ingrese el nombre de la practica: ");
         getchar();
+        void limpiarBuffer();
         fgets(nombre,30,stdin);
-        nombre [strcspn(nombre,"\n")] = '\0';
+        nombre=primerLetraMayuscula(nombre);
+        borrarSaltoDeLinea(nombre);
+        flag2=ingresarSoloLetras(nombre);
+        if(flag2==0)
+        {
+            printf("Error, ingrese solo letras.\n");
+        }
         flag=buscarNombreIgualPractica(nombre,ARCHIVO_PRACTICAS);
         if(flag==1)
         {
             printf("La practica que quiere cargar ya esta ingresada, ingrese otra.\n");
         }
     }
-    while(flag==1);
+    while(flag==1 || flag2==0);
 }
 int ingreseCosto(int costo)
 {
 
         printf("Ingrese el costo de la practica (1000$ a 10000$): ");
         costo = ingresarEnteroMinMax(1000,10000);
-//        scanf("%i", &costo);
-//        if(costo<1000 || costo>10000)
-//        {
-//            printf("Error, el costo debe estar entre $1000 y $10000.\n");
-//        }
-
-    return costo;
+        return costo;
 }
 int ingreseBaja(int baja)
 {
@@ -57,14 +58,14 @@ void cargarPracticas(char ArchivoPracticas[30])
 {
     char seguir='s';
     stPracticas nuevaPractica;
-    while(seguir=='s')
+    while(tolower(seguir)=='s')
     {
         ///FILE *archi_Practicas=fopen(ArchivoPracticas, "ab"); /// si se declara el archivo arriba y se cierra despues del while no se llega a actualizar el buffer del ID al poner nueva practica
         FILE *archi_Practicas=fopen(ArchivoPracticas, "ab");
         nuevaPractica = cargarUnaPractica();
         fwrite(&nuevaPractica, sizeof(stPracticas), 1, archi_Practicas);
-        printf("Desea seguir ingresando practicas? (s para seguir)");
-        scanf(" %c", &seguir);
+        printf("Desea seguir ingresando practicas? (S/N)");
+        seguir=ingresoSoloSNEnScan('s','n');
         fclose(archi_Practicas);
         system("pause");
         system("cls");
@@ -249,20 +250,22 @@ stPracticas menuModificarPractica(stPracticas unaPractica)
     switch(opcion)
     {
         case 1:
-            printf("Ingrese un nuevo nombre: ");
-            getchar();
-            fgets(unaPractica.nombre,30,stdin);
-            unaPractica.nombre [strcspn(unaPractica.nombre,"\n")] = '\0';
+              ingreseNombre(unaPractica.nombre);
+//            printf("Ingrese un nuevo nombre: ");
+//            getchar();
+//            fgets(unaPractica.nombre,30,stdin);
+//            unaPractica.nombre [strcspn(unaPractica.nombre,"\n")] = '\0';
             break;
         case 2:
-            printf("Ingrese un nuevo costo: ");
-            scanf("%i", &unaPractica.costo);
+              unaPractica.costo=ingreseCosto(unaPractica.costo);
+//            printf("Ingrese un nuevo costo: ");
+//            scanf("%i", &unaPractica.costo);
             break;
         case 0:
             printf("Vuelva pronto.\n");
             break;
         default:
-            printf("Ingrese una opcion correcta(0 a 2)");
+            printf("Ingrese una opcion correcta(0 a 2)\n");
             break;
     }
     }while(opcion !=0);
@@ -403,8 +406,8 @@ void buscarPracticaPorNombre(char nombrePractica[30], char ArchivoPracticas[30])
 void menuBusquedaPorNombre(stPracticas unaPractica, int posicion)
 {
     int opcion=0;
-    //do
-    //{
+    do
+    {
     printf("Que desea hacer con la practica?\n1-Modificar nombre o costo\n2-Dar de alta\n3-Dar de baja\n0-Salir");
     scanf("%i", &opcion);
     switch(opcion)
@@ -420,10 +423,10 @@ void menuBusquedaPorNombre(stPracticas unaPractica, int posicion)
         break;
         case 0: printf("Vuelva pronto!\n");
         break;
-        default: printf("Ingrese un numero correcto (0 a 3)");
+        default: printf("Ingrese un numero correcto (0 a 3)\n");
         break;
     }
-    //}while(opcion!=0);
+    }while(opcion!=0);
 }
 /// -------------------------------------- T E S T /// R A  F A /// ------------------------------------------ ///
 

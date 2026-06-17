@@ -18,15 +18,18 @@ int getIDVPacientes();
 int getIDVPracticas();
 int getIDVLaboratorio();
 void borrarSaltoDeLinea(char cadena[]);
+void limpiarBuffer();
 char * primerLetraMayuscula (char cadena[]);
 FILE * abrirArchivo (char nombreArchivo[],char modo[]);
 
 /// Validaciones
 int ingresarSoloLetrasSinEspacios (char palabra[]);
+int ingresarSoloLetras (char palabra[]);
 int ingresarSoloNumerosEnArreglo (char numeros[]);
 int ingresarSoloNumeros (int numeros); ///
 int ingresarEntero();
 int ingresarEnteroMinMax(int min, int max); /// Si ingresa un dato que no sea numero no retorna 1, solo para numeros ingresados con scanf, no con strings en fgets
+char ingresoSoloSNEnScan(char a, char b);
 char ingresoSoloLetraEnScan(); /// Si ingresa un dato que no no sea letra no retorna 1
 
 /// TESTEO DE ARCHIVOS
