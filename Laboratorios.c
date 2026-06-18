@@ -453,19 +453,38 @@ void laboratoriosPorPacienteID () /// Ingresa DNI para buscar despues por ID
 {
     system("cls");
     char DNI [12];
+
     printf("Ingrese el DNI de paciente a buscar.\n");
     getchar();
     fgets(DNI,10,stdin);
     borrarSaltoDeLinea(DNI);
+
     int flag = busquedaPorDNI(DNI);
-    if (flag == 0)
+    if (flag == -1)
     {
-        /// hasta aca bien
-        mostrarLaboratoriosUnPaciente(DNI);
+          printf("El DNI no esta activo en nuestros registros.");
+          printf("Desea intentar con otro DNI? (1-Si / 0-No)");
+          if (ingresarEntero() == 1)
+          {
+              system("cls");
+              laboratoriosPorPacienteID();
+          }
+          return;
     }
-    else printf("El DNI no está activo en nuestros registros.\n");
+
+    mostrarLaboratoriosUnPaciente(DNI);
+    system("pause");
+    system("cls");
+
+    printf("Desea buscar otro paciente? (1-Si / 0-No)");
+    if (ingresarEntero() == 1)
+    {
+        system("cls");
+        laboratoriosPorPacienteID();  // recursiva
+    }
 }
 
+//        mostrarLaboratoriosUnPaciente(DNI);
 void mostrarLaboratoriosUnPaciente (char DNI[]) ///
 {
     FILE *archi = abrirArchivo(ARCHIVO_LABORATORIOS,"rb");
@@ -508,8 +527,7 @@ void mostrarLaboratoriosUnPaciente (char DNI[]) ///
     printf("El gasto total del paciente fue de :%i\n",total);
     fclose(archi);
     fclose(bin);
-    system("pause");
-    system("cls");
+
 }
 
 void buscarPracticasRealizadas(int practicaID, char practicaRealizada[],int *precio)
