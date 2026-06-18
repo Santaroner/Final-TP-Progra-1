@@ -295,7 +295,7 @@
 	"Practicas.h"
 	<stdio.h>
 
-1781221577 source:c:\users\fheex\onedrive\documentos\github\final-tp-progra-1\main.c
+1781772427 source:c:\users\fheex\onedrive\documentos\github\final-tp-progra-1\main.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
@@ -304,7 +304,7 @@
 	"Practicas.h"
 	"Menus.h"
 
-1781371467 c:\users\fheex\onedrive\documentos\github\final-tp-progra-1\practicas.h
+1781772427 c:\users\fheex\onedrive\documentos\github\final-tp-progra-1\practicas.h
 	"Utilities.h"
 	"Pacientes.h"
 	<stdio.h>
@@ -322,7 +322,7 @@
 	"Practicas.h"
 	"Utilities.h"
 
-1781416097 c:\users\fheex\onedrive\documentos\github\final-tp-progra-1\laboratorios.h
+1781777537 c:\users\fheex\onedrive\documentos\github\final-tp-progra-1\laboratorios.h
 	<stdio.h>
 	<string.h>
 	<ctype.h>
@@ -330,13 +330,14 @@
 	"Utilities.h"
 	"Practicas.h"
 
-1781415411 c:\users\fheex\onedrive\documentos\github\final-tp-progra-1\pacientes.h
+1781772427 c:\users\fheex\onedrive\documentos\github\final-tp-progra-1\pacientes.h
 	<stdio.h>
 	<string.h>
 	<ctype.h>
 	"Utilities.h"
+	"Laboratorios.h"
 
-1781415411 c:\users\fheex\onedrive\documentos\github\final-tp-progra-1\utilities.h
+1781772427 c:\users\fheex\onedrive\documentos\github\final-tp-progra-1\utilities.h
 	"Pacientes.h"
 	"Practicas.h"
 	"Laboratorios.h"
@@ -433,22 +434,22 @@
 	"Utilities.h"
 	"Practicas.h"
 
-1781567031 source:c:\users\fheex\onedrive\documentos\github\final-tp-progra-1\menus.c
+1781772427 source:c:\users\fheex\onedrive\documentos\github\final-tp-progra-1\menus.c
 	"Pacientes.h"
 	"Practicas.h"
 	<stdio.h>
 
-1781415674 source:c:\users\fheex\onedrive\documentos\github\final-tp-progra-1\practicas.c
+1781772427 source:c:\users\fheex\onedrive\documentos\github\final-tp-progra-1\practicas.c
 	"Practicas.h"
 
-1781415411 source:c:\users\fheex\onedrive\documentos\github\final-tp-progra-1\utilities.c
+1781772427 source:c:\users\fheex\onedrive\documentos\github\final-tp-progra-1\utilities.c
 	<stdio.h>
 	"Pacientes.h"
 	"Practicas.h"
 	"Laboratorios.h"
 	"Menus.h"
 
-1781559597 source:c:\users\fheex\onedrive\documentos\github\final-tp-progra-1\pacientes.c
+1781772427 source:c:\users\fheex\onedrive\documentos\github\final-tp-progra-1\pacientes.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>

@@ -250,6 +250,8 @@ void modificarLaboratorio()
         return;
     }
 
+    procesoMenuModificar(&lab);
+/*
     int opcion;
     printf("Que desea modificar?\n");
     printf("1- Fecha\n");
@@ -282,7 +284,7 @@ void modificarLaboratorio()
         fclose(archi);
         return;
     }
-
+*/
     fseek(archi, posEncontrado * sizeof(stLaboratorios), SEEK_SET);
     fwrite(&lab, sizeof(stLaboratorios), 1, archi);
     printf("Laboratorio modificado correctamente.\n");
@@ -290,6 +292,38 @@ void modificarLaboratorio()
     fclose(archi);
 }
 
+void procesoMenuModificar(stLaboratorios *lab)
+{
+    int opcion;
+    printf("Que desea modificar?\n");
+    printf("1- Fecha\n");
+    printf("2- Practica\n");
+    printf("Opcion: ");
+    opcion = ingresarEntero();
+
+    switch (opcion) {
+case 1:
+    lab->anio = validarAnio();
+    lab->mes = validarMes();
+    lab->dia = validarDia(lab->mes);
+    printf("Fecha actualizada correctamente.\n");
+    system("pause");
+    system("cls");
+    break;
+case 2:
+    do {
+        printf("Ingrese nuevo ID de practica: ");
+        lab->practicaRealizada = ingresarEntero();
+    } while (compararIDLPrac(lab->practicaRealizada));
+    printf("Practica modificada correctamente.\n");
+    system("pause");
+    system("cls");
+    break;
+default:
+    printf("Opcion invalida.\n");
+    break;
+    }
+}
 void consultarLaboratorio()
 {
     int idBuscar;
@@ -332,7 +366,7 @@ void consultarLaboratorio()
 
     if (encontrado == 0)
 
-        printf("Laboratorio no encontrado o de baja");
+        printf("Laboratorio no encontrado o de baja.\n");
 
     fclose(archi);
     system("pause");

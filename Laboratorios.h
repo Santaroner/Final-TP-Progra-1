@@ -35,6 +35,7 @@ typedef struct
 
  void bajaLaboratorio(); /// baja logica
  void modificarLaboratorio();
+ void procesoMenuModificar(stLaboratorios *lab);
  void consultarLaboratorio();
  void encontrarDatosPaciente (int id, char nombre[], char apellido[]);
 
