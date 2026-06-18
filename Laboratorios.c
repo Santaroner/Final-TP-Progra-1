@@ -276,53 +276,44 @@ void procesoMenuModificar(stLaboratorios *lab)
         break;
     }
 }
+
 void consultarLaboratorio()
 {
-    int idBuscar;
-    int encontrado = 0;
+    int idBuscar, pos;
     stLaboratorios lab;
-    int precio; /// para pasar parametro, pero no necesitamos acá pasar el precio
-    char nombre[30]; /// nombre para printear del paciente
-    char apellido[30];/// apellido para printear del paciente
-    char nombrePractica[30];
+    int precio;
+    char nombre[30], apellido[30], nombrePractica[30];
+
     printf("Ingresar ID del laboratorio a consultar: ");
     idBuscar=ingresarEntero();
 
-    FILE *archi = abrirArchivo(ARCHIVO_LABORATORIOS, "rb");
-    if (archi == NULL)
+    pos = buscarLaboratorioPorID(idBuscar, &lab);
+    if (pos == -1)
     {
-        printf("Error al abrir");
+        printf("Laboratorio no encontrado o de baja.\n");
+        printf("Desea intentar con otro ID? (1-Si / 0-No): ");
+        if (ingresarEntero() == 1)
+        {
+            system("cls");
+            consultarLaboratorio();
+        }
         return;
     }
 
-    while (fread(&lab, sizeof(stLaboratorios), 1, archi)> 0)
+    buscarPracticasRealizadas(lab.practicaRealizada, nombrePractica, &precio);
+    encontrarDatosPaciente(lab.idPaciente, nombre, apellido);
+    printf("--------------------------------------------------\n");
+    printf("ID laboratorio: %d\nPaciente: %s, %s\nPractica: %s\nFecha : %i-%i-%i\n",
+           lab.idLab, apellido, nombre, nombrePractica,
+           lab.dia, lab.mes, lab.anio);
+    printf("--------------------------------------------------\n");
+
+    printf("Desea consultar otro laboratorio? (1-Si / 0-No): ");
+    if (ingresarEntero() == 1)
     {
-        if (lab.idLab == idBuscar) ///if (lab.idLab == idBuscar && lab.baja == 0)
-        {
-            buscarPracticasRealizadas(lab.practicaRealizada,nombrePractica,&precio);
-            encontrarDatosPaciente(lab.idPaciente,nombre,apellido);
-            printf("--------------------------------------------------\n");
-            printf("ID laboratorio: %d\nPaciente: %s, %s\nPractica: %s\nFecha : %i-%i-%i\n",
-                   lab.idLab,
-                   apellido,
-                   nombre,
-                   nombrePractica,
-                   lab.dia,
-                   lab.mes,
-                   lab.anio);
-            printf("--------------------------------------------------\n");
-            encontrado = 1;
-            break;
-        }
+        system("cls");
+        consultarLaboratorio();
     }
-
-    if (encontrado == 0)
-
-        printf("Laboratorio no encontrado o de baja.\n");
-
-    fclose(archi);
-    system("pause");
-    system("cls");
 }
 
 void encontrarDatosPaciente (int id, char nombre[], char apellido[])
