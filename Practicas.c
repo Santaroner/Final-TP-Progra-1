@@ -62,7 +62,7 @@ stPracticas cargarUnaPractica()
         unaPractica.baja=ingreseBaja(unaPractica.baja);
         return unaPractica;
 }
-void cargarPracticas(char ArchivoPracticas[30])
+void cargarPracticas(char ArchivoPracticas[])
 {
     char seguir='s';
     stPracticas nuevaPractica;
@@ -79,7 +79,7 @@ void cargarPracticas(char ArchivoPracticas[30])
         system("cls");
     }
 }
-void cargarPracticaEnArchivo(char ArchivoPracticas[30], stPracticas unaPractica, int *validosArregloPracticas)
+void cargarPracticaEnArchivo(char ArchivoPracticas[], stPracticas unaPractica, int *validosArregloPracticas)
 {
     FILE *archi_Practicas=fopen(ArchivoPracticas, "ab");
     fwrite(&unaPractica,sizeof(stPracticas),1,archi_Practicas);
@@ -88,14 +88,14 @@ void cargarPracticaEnArchivo(char ArchivoPracticas[30], stPracticas unaPractica,
 }
 
 /// ------ C R E A C I O N  Y  C A R G A  D E  A R R E G L O  D I N A M I C O ------- ///
-stPracticas *cargarArregloDinamicoPracticas(char ArchivoPracticas[30], stPracticas *arregloDinamicoPracticas, int *validosArregloPracticas)
+stPracticas *cargarArregloDinamicoPracticas(char ArchivoPracticas[], stPracticas *arregloDinamicoPracticas, int *validosArregloPracticas)
 {
     int cantPracticas=contarPracticas(ARCHIVO_PRACTICAS);
     arregloDinamicoPracticas=(stPracticas *)realloc(arregloDinamicoPracticas, cantPracticas*sizeof(stPracticas));
     traspasoDatos(arregloDinamicoPracticas,ARCHIVO_PRACTICAS,validosArregloPracticas);
     return arregloDinamicoPracticas;
 }
-void traspasoDatos(stPracticas *arregloDinamicoPracticas, char ArchivoPracticas[30], int *validosArregloPracticas)
+void traspasoDatos(stPracticas *arregloDinamicoPracticas, char ArchivoPracticas[], int *validosArregloPracticas)
 {
     FILE *archivoPracticas=fopen(ArchivoPracticas,"rb");
     stPracticas unaPractica;
@@ -126,7 +126,7 @@ void muestraArreglo(stPracticas *arregloDinamicoPracticas, int *validosArregloPr
 }
 
 /// --------------------------- V A L I D A C I O N E S -------------------------- ///
-int buscarNombreIgualPractica(char nombrePractica[30], char ArchivoPracticas[30])
+int buscarNombreIgualPractica(char nombrePractica[30], char ArchivoPracticas[])
 {
     FILE *archivoPracticas=fopen(ArchivoPracticas,"rb");
     int flag=0;
@@ -148,7 +148,7 @@ int buscarNombreIgualPractica(char nombrePractica[30], char ArchivoPracticas[30]
 }
 
 /// --------------------- C O N T E O  D E  P R A C T I C A S -------------------- ///
-int contarPracticas(char ArchivoPracticas[30])
+int contarPracticas(char ArchivoPracticas[])
 {
     FILE *archivoPracticas=fopen(ARCHIVO_PRACTICAS,"rb");
     fseek(archivoPracticas,0,2);
@@ -169,7 +169,7 @@ void mostrarPracticas(stPracticas *arregloDinamicoPracticas, int *validosArreglo
       system("pause");
       system("cls");
 }
-void mostrarPracticasDesdeArchivo(char ArchivoPracticas[30])
+void mostrarPracticasDesdeArchivo(char ArchivoPracticas[])
 {
     FILE *archivoPracticas=fopen(ArchivoPracticas,"rb");
     stPracticas unaPractica;
@@ -196,7 +196,7 @@ void mostrarUnaPractica(stPracticas practicasAux)
     printf("---------------------------------------\n");
 
 }
-void mostrarPracticasAlta(char archivoPracticas[30])
+void mostrarPracticasAlta(char archivoPracticas[])
 {
     FILE *archi_Practicas=fopen(archivoPracticas, "rb");
     stPracticas practicasAux;
@@ -206,7 +206,7 @@ void mostrarPracticasAlta(char archivoPracticas[30])
     }
     fclose(archi_Practicas);
 }
-void mostrarPracticasBaja(char archivoPracticas[30])
+void mostrarPracticasBaja(char archivoPracticas[])
 {
     FILE *archi_Practicas=fopen(archivoPracticas, "rb");
     stPracticas practicasAux;
@@ -240,7 +240,7 @@ void mostrarUnaPracticaBaja(stPracticas practicasAux)
 }
 
 /// --------------------- M O D I F I C A R  P R A C T I C A S -------------------- ///
-void modificarPracticas(char ArchivoPracticas[30])
+void modificarPracticas(char ArchivoPracticas[])
 {
         FILE *archivoPracticas=fopen(ArchivoPracticas,"r+b");
         int cantPracticas=contarPracticas(ARCHIVO_PRACTICAS);
@@ -294,7 +294,7 @@ stPracticas menuModificarPractica(stPracticas unaPractica)
     system("cls");
     return unaPractica;
 }
-void modificarPracticaEnArchivo(char ArchivoPracticas[30], stPracticas unaPractica, int posicion)
+void modificarPracticaEnArchivo(char ArchivoPracticas[], stPracticas unaPractica, int posicion)
 {
     FILE *archivoPracticas=fopen(ArchivoPracticas,"r+b");
     fseek(archivoPracticas,(posicion-1)*sizeof(stPracticas),0);
@@ -303,7 +303,7 @@ void modificarPracticaEnArchivo(char ArchivoPracticas[30], stPracticas unaPracti
 }
 
 /// ----------- A L T A  Y  B A J A  L O G I C A  D E  P R A C T I C A S ---------- ///
-void darDeBajaPracticas(char ArchivoPracticas[30])
+void darDeBajaPracticas(char ArchivoPracticas[])
 {
       FILE *archivoPracticas=fopen(ArchivoPracticas,"r+b");
       int flag=0;
@@ -342,7 +342,7 @@ stPracticas darDeBajaUnaPractica(stPracticas unaPractica)
     unaPractica.baja=1;
     return unaPractica;
 }
-void darDeAltaPracticas(char ArchivoPracticas[30])
+void darDeAltaPracticas(char ArchivoPracticas[])
 {
       FILE *archivoPracticas=fopen(ArchivoPracticas,"r+b");
       int cantPracticas=contarPracticas(ARCHIVO_PRACTICAS);
@@ -381,7 +381,7 @@ stPracticas darDeAltaUnaPractica(stPracticas unaPractica)
     unaPractica.baja=0;
     return unaPractica;
 }
-int verificarAltas(char ArchivoPracticas[30])
+int verificarAltas(char ArchivoPracticas[])
 {
     FILE *archivoPracticas=fopen(ArchivoPracticas,"rb");
     int flag=0;
@@ -396,7 +396,7 @@ int verificarAltas(char ArchivoPracticas[30])
     fclose(archivoPracticas);
     return flag;
 }
-int verificarBajas(char ArchivoPracticas[30])
+int verificarBajas(char ArchivoPracticas[])
 {
     FILE *archivoPracticas=fopen(ArchivoPracticas,"rb");
     int flag=0;
@@ -444,7 +444,7 @@ void buscarPracticasPorNombre()
     nombre [strcspn(nombre,"\n")] = '\0';
     buscarPracticaPorNombre(nombre,ARCHIVO_PRACTICAS);
 }
-void buscarPracticaPorNombre(char nombrePractica[30], char ArchivoPracticas[30])
+void buscarPracticaPorNombre(char nombrePractica[30], char ArchivoPracticas[])
 {
     FILE *archivoPracticas=abrirArchivo(ArchivoPracticas,"rb");
     int res=1;
