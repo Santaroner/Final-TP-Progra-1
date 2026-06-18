@@ -31,10 +31,8 @@ void cargarLaboratorio(stLaboratorios *lab) /// Duda si agregar pac y prac.
         lab ->mes = validarMes();
         lab ->dia = validarDia(lab ->mes);
 
-        printf("Ingrese ID del paciente: ");
         lab->idPaciente = buscandoIDPacientes();
 
-        printf("Ingrese ID de practica: ");
         lab->practicaRealizada = buscandoIDPractica();
 
         lab->baja = 0;
@@ -355,7 +353,7 @@ int buscandoIDPacientes()
     int aux;
     do
     {
-        printf("Ingrese el ID a buscar:\n");
+        printf("Ingrese el ID de paciente a buscar:\n");
         newID=ingresarEntero();
         aux = compararIDLP(newID);
         if ( aux == 0)
@@ -378,7 +376,7 @@ int buscandoIDPractica()
     int aux;
     do
     {
-        printf("Ingrese el ID a buscar:\n");
+        printf("Ingrese el ID de practica a buscar:\n");
         newID=ingresarEntero();
         aux = compararIDLPrac(newID);
         if ( aux == 0)
