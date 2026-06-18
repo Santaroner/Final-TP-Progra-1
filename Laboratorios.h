@@ -38,6 +38,8 @@ typedef struct
  void procesoMenuModificar(stLaboratorios *lab);
  void consultarLaboratorio();
  void encontrarDatosPaciente (int id, char nombre[], char apellido[]);
+ void guardarLaboratorio(stLaboratorios *lab, int pos);
+ int buscarLaboratorioPorID(int idBuscar, stLaboratorios *lab);
 
 
  /// ----------------------------------------------------- O R D E N A M I E N T O /// M U E S T R A -------------------------------------------------- ///

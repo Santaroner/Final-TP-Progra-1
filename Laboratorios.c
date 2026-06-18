@@ -218,78 +218,37 @@ void mostrarLaboratoriosArchivo()
 
 void modificarLaboratorio()
 {
-    int idBuscar;
-    int pos = 0;
-    int posEncontrado = -1;
+    int idBuscar, pos;
     stLaboratorios lab;
 
-    printf("Ingrese ID de Lab a modificar:\n ");
-    idBuscar=ingresarEntero();
+    printf("Ingrese ID de Lab a modificar: \n");
+    idBuscar = ingresarEntero();
 
-    FILE *archi = abrirArchivo(ARCHIVO_LABORATORIOS, "r+b");
-    if (archi == NULL)
+    pos = buscarLaboratorioPorID(idBuscar, &lab);
+    if (pos == -1)
     {
-        printf("Error al abrir archivo. \n");
-        return;
-    }
-
-    while(fread(&lab, sizeof(stLaboratorios), 1, archi)> 0)
-    {
-        if (lab.idLab == idBuscar && lab.baja == 0)
+        printf("Laboratorio no encontrado o de baja.\n");
+        printf("Desea intentar con otro ID? (1-Si / 0-No)");
+        int reintento = ingresarEntero();
+        if (reintento == 1)
         {
-            posEncontrado = pos;
-            break;
+            system("cls");
+            modificarLaboratorio();
         }
-        pos++;
-    }
-
-    if (posEncontrado == -1)
-    {
-        printf("Laboratorio no encontrado o de baja. \n");
-        fclose(archi);
         return;
     }
 
     procesoMenuModificar(&lab);
-/*
-    int opcion;
-    printf("Que desea modificar?\n");
-    printf("1- Fecha\n");
-    printf("2- Practica\n");
-    opcion=ingresarEntero();
-
-    switch (opcion)
-    {
-    case 1:
-        lab.anio = validarAnio();
-        lab.mes  = validarMes();
-        lab.dia  = validarDia(lab.mes);
-        printf("Fecha actualizada correctamente.\n");
-        system("pause");
-        system("cls");
-        break;
-    case 2:
-        do
-        {
-            printf("Ingrese nuevo ID de practica: ");
-            lab.practicaRealizada=ingresarEntero();
-        }
-        while (compararIDLPrac(lab.practicaRealizada));
-        printf("Practica modificada correctamente.\n");
-        system("pause");
-        system("cls");
-        break;
-    default:
-        printf("Opcion invalida.\n");
-        fclose(archi);
-        return;
-    }
-*/
-    fseek(archi, posEncontrado * sizeof(stLaboratorios), SEEK_SET);
-    fwrite(&lab, sizeof(stLaboratorios), 1, archi);
+    guardarLaboratorio(&lab, pos);
     printf("Laboratorio modificado correctamente.\n");
 
-    fclose(archi);
+    printf("Desea modificar otro laboratorio? (1-Si / 0-No)");
+    int otro = ingresarEntero();
+    if (otro == 1)
+    {
+        system("cls");
+        modificarLaboratorio();
+    }
 }
 
 void procesoMenuModificar(stLaboratorios *lab)
@@ -301,27 +260,30 @@ void procesoMenuModificar(stLaboratorios *lab)
     printf("Opcion: ");
     opcion = ingresarEntero();
 
-    switch (opcion) {
-case 1:
-    lab->anio = validarAnio();
-    lab->mes = validarMes();
-    lab->dia = validarDia(lab->mes);
-    printf("Fecha actualizada correctamente.\n");
-    system("pause");
-    system("cls");
-    break;
-case 2:
-    do {
-        printf("Ingrese nuevo ID de practica: ");
-        lab->practicaRealizada = ingresarEntero();
-    } while (compararIDLPrac(lab->practicaRealizada));
-    printf("Practica modificada correctamente.\n");
-    system("pause");
-    system("cls");
-    break;
-default:
-    printf("Opcion invalida.\n");
-    break;
+    switch (opcion)
+    {
+    case 1:
+        lab->anio = validarAnio();
+        lab->mes = validarMes();
+        lab->dia = validarDia(lab->mes);
+        printf("Fecha actualizada correctamente.\n");
+        system("pause");
+        system("cls");
+        break;
+    case 2:
+        do
+        {
+            printf("Ingrese nuevo ID de practica: ");
+            lab->practicaRealizada = ingresarEntero();
+        }
+        while (compararIDLPrac(lab->practicaRealizada));
+        printf("Practica modificada correctamente.\n");
+        system("pause");
+        system("cls");
+        break;
+    default:
+        printf("Opcion invalida.\n");
+        break;
     }
 }
 void consultarLaboratorio()
@@ -448,6 +410,36 @@ int buscandoIDPractica() /// rafa probando busca id - - - - - - - funcion en uti
     return -1;
 }
 
+int buscarLaboratorioPorID(int idBuscar, stLaboratorios *lab)
+{
+    int pos = 0;
+    FILE *archi = abrirArchivo(ARCHIVO_LABORATORIOS, "r+b");
+    if (archi == NULL)
+    {
+        printf("Error al abrir archivo.\n");
+        return -1;
+    }
+
+    while (fread(lab, sizeof(stLaboratorios), 1, archi) > 0)
+    {
+        if (lab->idLab == idBuscar && lab->baja == 0)
+        {
+            fclose(archi);
+            return pos;
+        }
+        pos ++;
+    }
+    fclose(archi);
+    return -1;
+}
+
+void guardarLaboratorio(stLaboratorios *lab, int pos)
+{
+    FILE *archi = abrirArchivo(ARCHIVO_LABORATORIOS, "r+b");
+    fseek(archi, pos * sizeof(stLaboratorios), SEEK_SET);
+    fwrite(lab, sizeof(stLaboratorios), 1, archi);
+    fclose(archi);
+}
 
 
 /// ----------------------------------------------------- O R D E N A R ------------ P A C I E N T E   ------------------------------------------------------ ///
