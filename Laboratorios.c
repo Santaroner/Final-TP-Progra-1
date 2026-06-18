@@ -72,6 +72,8 @@ stLaboratorios * cargarLaboratorios()
         }
         printf("Desea cargar otro laboratorio? (s/n): ");
         seguir=ingresoSoloSNEnScan('s', 'n');
+        system("pause");
+        system("cls");
     }
     printf("Carga finalizada.\n");
 
@@ -577,7 +579,7 @@ void mostrarTodosLaboratoriosPorPaciente ()
                 {
                     if (encontrado == 0) /// Hace que se printee solamente una vez el nombre del paciente.
                     {
-                        printf("***********************************************************************************************************************************************\n");
+                        printf("- - - - - - - - - - - - - - - - - - - P A C I E N T E  - - - - - - - - - - - - - - - - - - - - - - - - - -\n");
                         printf("Nombre del paciente:%s, %s\n", auxPaciente.apellido,auxPaciente.nombre);
                         encontrado = 1;
                     }

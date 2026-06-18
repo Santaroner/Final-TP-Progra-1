@@ -109,17 +109,6 @@ int getIDVLaboratorio()
     return IDAux;
 }
 
-/// ----------------------------- PRE CARGA PARA TEST DE ARCHIVOS
-
-
-
-/// -------------- FUNCIONES ANTI ADRIAN ---- solo numeros ///
-
-void borrarSaltoDeLinea(char cadena[])
-{
-    cadena[strcspn(cadena,"\n")] = '\0';
-}
-
 FILE * abrirArchivo (char nombreArchivo[],char modo[])
 {
     FILE *archi = fopen(nombreArchivo,modo);
@@ -131,9 +120,24 @@ FILE * abrirArchivo (char nombreArchivo[],char modo[])
 
     return archi;
 }
+
+/// ----------------------------------------------------- V A L I D A C I O N E S  ------------------------------------------------------ ///
+
+void borrarSaltoDeLinea(char cadena[])
+{
+    cadena[strcspn(cadena,"\n")] = '\0';
+}
+
+
 int ingresarSoloLetrasSinEspacios (char palabra[]) /// Ingreso solo letras SIN espacios
 {
     int i = 0;
+
+    if(strlen(palabra) == 0)
+    {
+        printf("No puede dejar el campo vacio..\n");
+        return 0;
+    }
 
     while (palabra [i] != '\0')  /// '\0' Cuando llega al final del arreglo
     {
@@ -149,6 +153,12 @@ int ingresarSoloLetras (char palabra[]) /// Ingreso solo letras SIN espacios
 {
     int i = 0;
 
+    if(strlen(palabra) == 0)
+    {
+        printf("No puede dejar el campo vacio..\n");
+        return 0;
+    }
+
     while (palabra [i] != '\0')  /// '\0' Cuando llega al final del arreglo
     {
         if(!isalpha(palabra[i]) && palabra[i]!=' ') /// Isalpha es verdadero cuando el caracter no es una letra - por eso ! --- palabra[i] != ' ' para que no se ingresen espacios. Valido para DNI, nombre, celular
@@ -162,6 +172,12 @@ int ingresarSoloLetras (char palabra[]) /// Ingreso solo letras SIN espacios
 int ingresarSoloNumerosEnArreglo (char numeros[])
 {
     int i = 0;
+
+    if(strlen(numeros) == 0)
+    {
+        printf("No puede dejar el campo vacio..\n");
+        return 0;
+    }
 
     while (numeros[i] != '\0' && numeros[i] != '\n') /// Mientras no haya \n o \0
     {

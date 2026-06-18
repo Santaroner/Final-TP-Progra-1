@@ -64,24 +64,9 @@ void ordenamientoSeleccionChar(stPaciente *ADR,int validosADR);
 
 void menuMostrarLaboratoriosPorPaciente ();
 void laboratoriosPorPacienteID ();
-//void mostrarLaboratoriosPorPacientes (int ID);
 void mostrarLaboratoriosUnPaciente (char DNI[]);
 void mostrarUnLaboratorio (char nombre[], char practica[], int precio, int anio , int mes, int dia,int id); /// Devuelve el nombre de la practica a mostrarLaboratoriosPorPaciente
 void mostrarTodosLaboratoriosPorPaciente ();
-
-/// ----- Carga de archivos para test
-void cargarPacientesAB(); /// Heroes
-void cargarPracticaTest(); /// Carga 15 practicas
-void cargarLaboTest(); /// Carga 40 laboratorios
-
-
-/// ORDENAMIENTO LABS POR FECHA
-stLaboratorios * arregloDinamicoLaboratoriosPorFecha (int *validosOrdenamiento);
-stLaboratorios * asignarMemoriaLaboratoriosPorFecha (stLaboratorios * arregloOrdenamiento, stLaboratorios lab, int pos);
-int fechaAEntero (stLaboratorios lab);
-void ordenamientoSeleccionFecha(stLaboratorios arreglo[], int validos);
-int findMinorFecha(stLaboratorios arreglo[], int validos, int posicion);
-void ordenamientoSeleccionFecha(stLaboratorios arreglo[], int validos);
 
 
 #endif // PACIENTES_H_INCLUDED

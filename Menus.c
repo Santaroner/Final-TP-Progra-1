@@ -10,11 +10,11 @@ void practicasMenu();
 
 /// Variables
 int validosArregloPracticas=0;
-int validosPacientes = 0;
-stPracticas *arregloDinamicoPracticas=NULL;
+int validosPacientes = 0; /// Validos para cargar estructura
+stPracticas *arregloDinamicoPracticas=NULL; /// Arreglo para mostrar archivo
 stLaboratorios *arregloDinamico = NULL;
 stLaboratorios *arregloOrdenamiento = NULL;
-int validosOrdenamiento = 0;
+int validosOrdenamiento = 0; /// Ordenamiento por apellido
 int validosADP;
 stPaciente *ADP = NULL; /// arreglo dinamico pacientes para funcion mostrar
 stPracticas practicas[20];
@@ -24,12 +24,12 @@ void mainMenu()
     do
 {
     system("cls");
-    printf("\n------------------------------------------------------------------------------------------------------------------------------------------------------");
+    printf("\n--------------------------------------------------------------------------------------------------------------------");
     printf("\n1-Pacientes");
     printf("\n2-Laboratorios");
     printf("\n3-Practicas");
     printf("\n0-Salir");
-    printf("\n------------------------------------------------------------------------------------------------------------------------------------------------------\n");
+    printf("\n--------------------------------------------------------------------------------------------------------------------\n");
     optionswitch = ingresarEntero();
     switch(optionswitch)
     {
@@ -67,28 +67,27 @@ void pacientesMenu() /// USAR ESTE MENU PARA PROBAR EJERCICIOS DE PACIENTE
     system("cls");
     do
     {
-//        system("cls");
-        printf("\n------------------------------------------------------------------------------------------------------------------------------------------------------");
+        printf("\n--------------------------------------------------------------------------------------------------------------------");
         printf("\n1-Cargar paciente");
         printf("\n2-Mostrar Pacientes.");
         printf("\n3-Modificar Pacientes.");
         printf("\n4-Dar de baja un paciente");
         printf("\n5-Buscar paciente.");
         printf("\n6-Mostrar pacientes de baja. -- Dar de alta paciente eliminado");
-        printf("\n\n7-Lista de pacientes por apellido y nombre");
-        printf("\n0-Volver al menu anterior.");
-        printf("\n------------------------------------------------------------------------------------------------------------------------------------------------------\n");
+        printf("\n7-Lista de pacientes por apellido y nombre");
+        printf("\n\n0-Volver al menu anterior.");
+        printf("\n--------------------------------------------------------------------------------------------------------------------\n");
         optionswitch = ingresarEntero();
         switch(optionswitch)
         {
         case 1:
+            limpiarBuffer();
             cargarPacientes();
             break;
         case 2:
             getIDVPacientes();
             getIDVPracticas();
             validosPacientes = mostrarArchivo();
-            printf("Validos vale:%i\n",validosPacientes);
             break;
         case 3:
             buscarPaciente(pacientes,validosPacientes);
@@ -105,17 +104,7 @@ void pacientesMenu() /// USAR ESTE MENU PARA PROBAR EJERCICIOS DE PACIENTE
         case 7:
             ADP = activosADinamicos(&validosADP);
             ordenamientoSeleccionChar(ADP,validosADP);
-            break;
-        case 10:
-            arregloOrdenamiento = arregloDinamicoLaboratoriosPorFecha (&validosOrdenamiento);
-            printf("Validos vale:%i\n",validosOrdenamiento);
-            ordenamientoSeleccionFecha(arregloOrdenamiento,validosOrdenamiento);
-            mostrarLaboratoriosOrdenadosPorfecha(arregloOrdenamiento,validosOrdenamiento);
-            break;
-        case 99:
-            cargarPacientesAB();
-            cargarPracticaTest();
-            cargarLaboTest();
+            free(ADP);
             break;
         case 0:
             printf("Vuelva pronto.\n");
@@ -133,7 +122,7 @@ void laboratoriosMenu() /// USAR ESTE MENU PARA PROBAR EJERCICIOS DE LABORATORIO
     do
     {
         system("cls");
-        printf("\n------------------------------------------------------------------------------------------------------------------------------------------------------\n");
+        printf("\n--------------------------------------------------------------------------------------------------------------------\n");
         printf("1-Cargar laboratorio.\n");
         printf("2-Dar de baja un laboratorio.\n");
         printf("3-Modificar laboratorio.\n");
@@ -141,12 +130,13 @@ void laboratoriosMenu() /// USAR ESTE MENU PARA PROBAR EJERCICIOS DE LABORATORIO
         printf("5-Listar Laboratorio.\n");
         printf("6-Menu mostrar laboratorios por paciente.\n");
         printf("7-Laboratorios ordenados por fecha.\n");
-        printf("0-Volver al menu anterior.\n");
-        printf("\n------------------------------------------------------------------------------------------------------------------------------------------------------\n");
+        printf("0-Volver al menu anterior.");
+        printf("\n--------------------------------------------------------------------------------------------------------------------\n");
         optionswitch = ingresarEntero();
         switch(optionswitch)
         {
         case 1:
+            limpiarBuffer();
             cargarLaboratorios();
             break;
         case 2:
@@ -165,16 +155,19 @@ void laboratoriosMenu() /// USAR ESTE MENU PARA PROBAR EJERCICIOS DE LABORATORIO
             menuMostrarLaboratoriosPorPaciente();
             break;
         case 7:
+            validosOrdenamiento = 0;
             arregloOrdenamiento = arregloDinamicoLaboratoriosPorFecha (&validosOrdenamiento);
-//            printf("Validos vale:%i\n",validosOrdenamiento);
             ordenamientoSeleccionFecha(arregloOrdenamiento,validosOrdenamiento);
             mostrarLaboratoriosOrdenadosPorfecha(arregloOrdenamiento,validosOrdenamiento);
+            free(arregloOrdenamiento);
+            arregloOrdenamiento = NULL;
             break;
         case 0:
-            printf("Vuelva pronto.\n");
+            printf("Volviendo al menu anterior.\n");
+            system("pause");
             break;
         default :
-            printf("Numero incorrecto\n0 para salir.\n");
+            printf("Numero incorrecto\n0-Para volver al menu anterior.\n");
             break;
         }
     } while (optionswitch != 0) ;
@@ -186,7 +179,7 @@ void practicasMenu() /// USAR ESTE MENU PARA PROBAR EJERCICIOS DE PRACTICA
     int optionswitch = 0;
     do
     {
-        printf("\n------------------------------------------------------------------------------------------------------------------------------------------------------\n");
+        printf("\n--------------------------------------------------------------------------------------------------------------------\n");
         printf("1-Cargar practica\n");
         printf("2-Modificar practica\n");
         printf("3-Dar de baja una practica\n");
@@ -194,11 +187,12 @@ void practicasMenu() /// USAR ESTE MENU PARA PROBAR EJERCICIOS DE PRACTICA
         printf("5-Mostrar listado de practicas\n");
         printf("6-Buscar practica por nombre\n");
         printf("0-Volver al menu anterior");
-        printf("\n------------------------------------------------------------------------------------------------------------------------------------------------------\n");
+        printf("\n--------------------------------------------------------------------------------------------------------------------\n");
         optionswitch = ingresarEntero();
         switch(optionswitch)
         {
         case 1:
+                limpiarBuffer();
                 cargarPracticas(ARCHIVO_PRACTICAS);
             break;
         case 2:
@@ -215,6 +209,8 @@ void practicasMenu() /// USAR ESTE MENU PARA PROBAR EJERCICIOS DE PRACTICA
                 validosArregloPracticas=0;
                 arregloDinamicoPracticas=cargarArregloDinamicoPracticas(ARCHIVO_PRACTICAS,arregloDinamicoPracticas,&validosArregloPracticas);
                 mostrarPracticas(arregloDinamicoPracticas,&validosArregloPracticas);
+                free(arregloDinamicoPracticas);
+                arregloDinamicoPracticas = NULL;
             break;
         case 6:
                 buscarPracticasPorNombre();

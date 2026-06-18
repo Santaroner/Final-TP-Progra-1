@@ -37,7 +37,6 @@ void cargarPacientes()
         else
         {
             validos++;
-            printf("Validos vale:%i\n",validos);
         }
     }
 }
@@ -82,11 +81,11 @@ void cargarNombrePaciente(char nombre[30])
     system("cls");
     char aux[30];
     int flag = 0;
+//    getchar();
     do
     {
         printf("Ingrese el nombre del paciente:\n");
-        getchar();
-//        limpiarBuffer();
+
         fgets(aux,30,stdin);
         if (strchr(aux,'\n') != NULL) /// Si se ingresan mas de 30 letras fgets no tiene espacio para \n por lo que la condicion no se cumple
         {
@@ -96,7 +95,6 @@ void cargarNombrePaciente(char nombre[30])
                 printf("Nombre ingresado correctamente.\n");
                 strcpy(nombre,aux);
                 primerLetraMayuscula(nombre);
-                printf("Nombre.%s\n",nombre);
                 system("pause");
                 flag = 1;
             } else printf("Error.\n");
@@ -126,7 +124,6 @@ void cargarApellidoPaciente(char apellido[])
                     printf("Apellido guardado.\n"); /// test ------------------------------------------------------------------- borrar deps
                     strcpy(apellido,aux);
                     primerLetraMayuscula(apellido);
-                    printf("Apellido:%s",apellido);
                     system("pause");
                     flag = 1; /// Si se cambia la flag es porque es ingreso el nombre correctamente > fin de bucle
             }
@@ -324,10 +321,10 @@ void buscarPaciente(stPaciente *pacientes, int validos)
     int flag = 0;
     int temp = 0;
     stPaciente busqueda;
+    getchar();
     do
     {
         printf("Ingrese el DNI del paciente a modificar\n");
-        getchar();
         fgets(aux,10,stdin);
         if (strchr(aux,'\n') != NULL)
         {
@@ -405,10 +402,10 @@ void cambiarNombrePaciente(int pos)
     char aux [30];
     stPaciente auxiliar;
     int flag = 0;
+    getchar();
     do
     {
         printf("Ingrese el nombre actualizado del paciente:\n");
-        getchar();
         fgets(aux, 30,stdin);
         if (strchr(aux,'\n') != NULL) ///
         {
@@ -417,7 +414,7 @@ void cambiarNombrePaciente(int pos)
             {
                 printf("Nombre dentro de los parametros acordados\n");
                 flag = 1;
-            } else printf("Ingrese solamente letras por favor :) \n");
+            } else printf("Ingrese solamente letras por favor.\n");
         }
         else
         {
@@ -433,6 +430,8 @@ void cambiarNombrePaciente(int pos)
     fseek(archi, -(long)sizeof(stPaciente), SEEK_CUR);
     fwrite(&auxiliar,sizeof(stPaciente),1,archi);
     fclose(archi); /// Copia el nombre cargado por usuario (aux) en la estructura
+    system("pause");
+    system("cls");
 }
 
 void cambiarApellidoPaciente(int pos)
@@ -440,10 +439,10 @@ void cambiarApellidoPaciente(int pos)
     char nuevoApellido [30];
     stPaciente aux;
     int flag = 0;
+    getchar();
     do
     {
         printf("Ingrese el Apellido actualizado del paciente:\n");
-        getchar();
         fgets(nuevoApellido,30,stdin);
         if (strchr(nuevoApellido,'\n') != NULL)
         {
@@ -453,7 +452,7 @@ void cambiarApellidoPaciente(int pos)
                 printf("Nombre dentro de los parametros acordados\n");
                 primerLetraMayuscula(nuevoApellido);
                 flag = 1;
-            } else printf("Ingrese solamente letras por favor :) \n");
+            } else printf("Ingrese solamente letras por favor\n");
         }
         else
         {
@@ -477,6 +476,8 @@ void cambiarApellidoPaciente(int pos)
     fseek(archi, -(long)sizeof(stPaciente), SEEK_CUR);
     fwrite(&aux,sizeof(stPaciente),1,archi);
     fclose(archi);
+    system("pause");
+    system("cls");
 }
 
 void cambiarMovilPaciente(int pos)
@@ -484,10 +485,10 @@ void cambiarMovilPaciente(int pos)
     char nuevoMovil [12];
     stPaciente aux;
     int flag = 0;
+    getchar();
     do
     {
         printf("Ingrese el celular actualizado del paciente:\n");
-        getchar();
         fgets(nuevoMovil, 12,stdin);
         if (strchr(nuevoMovil,'\n') != NULL)
         {
@@ -576,7 +577,7 @@ void bajaPaciente()
         if (strcmpi(aux,paciente.dni) == 0 && paciente.eliminado == 0)
         {
             contadorPos = i ;
-            printf("Paciente encontrado.\n");
+            printf("Paciente encontrado y dado de baja.\n");
             paciente.eliminado = 1;
             eliminado = paciente; /// Copia el paciente para que no cambie en la nueva iteracion del bucle
             flag = 1; /// Cambia flag para que no printee que no se ha encontrado ningun paciente
@@ -661,8 +662,15 @@ int busquedaPorDNI (char DNI[])
             return flag;
         }
     }
+    if (flag == 1)
+    {
+        printf("El paciente no esta en los registros\n");
+    }
     fclose(archi);
+    system("pause");
+    system("cls");
     return flag; /// si flag 0 paciente encontrado
+
 }
 int busquedaPorApellido (char apellido[])
 {
@@ -748,34 +756,6 @@ void altaViejoPaciente ()
     system("cls");
 }
 
-//int confirmarBajaPaciente (char nombre[], char apellido[])
-//{
-//    char confirmar;
-//    int letra;
-//    do
-//    {
-//        printf("Esta seguro que desea dar de baja al paciente %s, %s?S/N",nombre,apellido);
-//        letra = scanf(" %c",&confirmar);
-//        if (letra == 1 && tolower(confirmar) == 's')
-//        {
-//            return 0;
-//        }
-//        else if(letra == 1 && tolower(confirmar) == 'n' )
-//        {
-//            return 1;
-//        }
-//        else if(letra == 1 && tolower(confirmar) != 'n' || tolower(confirmar) != 's');
-//        {
-//            printf("Opcion incorrecta. S para confimar la baja - N para cancelar la baja del paciente\n");
-//        }
-//        if (letra == 0)
-//        {
-//            printf("No puede ingresar letras ni simbolos\nS para confirmar - N para cancelar la baja del paciente.\n");
-//        }
-//
-//    } while (tolower(confirmar) != 's' && tolower(confirmar) != 'n');
-//}
-
 /// ----------------------------------------------------- O R D E N A R ------------ P A C I E N T E &&& A R R E G L O --- D I N A M I C O   ------------------------------------------------------ ///
 
 stPaciente * activosADinamicos (int *validosADP)
@@ -827,8 +807,8 @@ void mostrarADP (stPaciente *aux, int *validosADP)
 //       ,aux[i].idPaciente);
 //    printf("--------------------------------------------\n");
 }
-    system("pause");
-    system("cls");
+//    system("pause");
+//    system("cls");
 }
 
 
@@ -873,4 +853,6 @@ void ordenamientoSeleccionChar(stPaciente *ADR,int validosADR)
         i++;
     }
     for (int i = 0; i < validosADR ; i++){printf(" %s, %s \n----------\n", ADR[i].apellido,ADR[i].nombre);}
+    system("pause");
+    system("cls");
 }

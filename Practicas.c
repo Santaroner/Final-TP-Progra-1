@@ -11,11 +11,11 @@ int generaId() ///
 void ingreseNombre(char nombre[30])
 {
     int flag=0, flag2=1, flag3=0;
+//    getchar();
     do
     {
         printf("Ingrese el nombre de la practica: ");
-        getchar();
-        void limpiarBuffer();
+//        void limpiarBuffer();
         fgets(nombre,30,stdin);
         if (strchr(nombre,'\n') != NULL) /// La condicion se cumple cuando hay espacio para el \n y no se exceden los 30 caracteres
         {
@@ -42,7 +42,6 @@ void ingreseNombre(char nombre[30])
 }
 int ingreseCosto(int costo)
 {
-
         printf("Ingrese el costo de la practica (1000$ a 10000$): ");
         costo = ingresarEnteroMinMax(1000,10000);
         return costo;
