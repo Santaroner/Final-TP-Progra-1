@@ -70,6 +70,10 @@ void cargarPracticas(char ArchivoPracticas[30])
     {
         ///FILE *archi_Practicas=fopen(ArchivoPracticas, "ab"); /// si se declara el archivo arriba y se cierra despues del while no se llega a actualizar el buffer del ID al poner nueva practica
         FILE *archi_Practicas=fopen(ArchivoPracticas, "ab");
+        if(archi_Practicas==NULL)
+        {
+            printf("Error al abrir el archivo.\n");
+        }
         nuevaPractica = cargarUnaPractica();
         fwrite(&nuevaPractica, sizeof(stPracticas), 1, archi_Practicas);
         printf("Desea seguir ingresando practicas? (S/N)");
@@ -82,6 +86,10 @@ void cargarPracticas(char ArchivoPracticas[30])
 void cargarPracticaEnArchivo(char ArchivoPracticas[30], stPracticas unaPractica, int *validosArregloPracticas)
 {
     FILE *archi_Practicas=fopen(ArchivoPracticas, "ab");
+    if(archi_Practicas==NULL)
+        {
+            printf("Error al abrir el archivo.\n");
+        }
     fwrite(&unaPractica,sizeof(stPracticas),1,archi_Practicas);
     (*validosArregloPracticas)++;
     fclose(archi_Practicas);
@@ -101,6 +109,7 @@ void traspasoDatos(stPracticas *arregloDinamicoPracticas, char ArchivoPracticas[
     stPracticas unaPractica;
     if(archivoPracticas==NULL)
     {
+        printf("Error al abrir el archivo.\n");
         *validosArregloPracticas=0;
     }
     int i=0;
@@ -132,6 +141,7 @@ int buscarNombreIgualPractica(char nombrePractica[30], char ArchivoPracticas[30]
     int flag=0;
     if(archivoPracticas==NULL)
     {
+        printf("Error al abrir el archivo.\n");
         flag=0;
     }
     stPracticas unaPractica;
@@ -151,6 +161,10 @@ int buscarNombreIgualPractica(char nombrePractica[30], char ArchivoPracticas[30]
 int contarPracticas(char ArchivoPracticas[30])
 {
     FILE *archivoPracticas=fopen(ARCHIVO_PRACTICAS,"rb");
+    if(archivoPracticas==NULL)
+        {
+            printf("Error al abrir el archivo.\n");
+        }
     fseek(archivoPracticas,0,2);
     int cantidadDePracticas=ftell(archivoPracticas)/sizeof(stPracticas);
     fclose(archivoPracticas);
@@ -172,6 +186,10 @@ void mostrarPracticas(stPracticas *arregloDinamicoPracticas, int *validosArreglo
 void mostrarPracticasDesdeArchivo(char ArchivoPracticas[30])
 {
     FILE *archivoPracticas=fopen(ArchivoPracticas,"rb");
+    if(archivoPracticas==NULL)
+        {
+            printf("Error al abrir el archivo.\n");
+        }
     stPracticas unaPractica;
     while(fread(&unaPractica,sizeof(stPracticas),1,archivoPracticas)>0)
     {
@@ -199,6 +217,10 @@ void mostrarUnaPractica(stPracticas practicasAux)
 void mostrarPracticasAlta(char archivoPracticas[30])
 {
     FILE *archi_Practicas=fopen(archivoPracticas, "rb");
+    if(archi_Practicas==NULL)
+        {
+            printf("Error al abrir el archivo.\n");
+        }
     stPracticas practicasAux;
     while((fread(&practicasAux, sizeof(stPracticas), 1, archi_Practicas)) > 0)
     {
@@ -209,6 +231,10 @@ void mostrarPracticasAlta(char archivoPracticas[30])
 void mostrarPracticasBaja(char archivoPracticas[30])
 {
     FILE *archi_Practicas=fopen(archivoPracticas, "rb");
+    if(archi_Practicas==NULL)
+        {
+            printf("Error al abrir el archivo.\n");
+        }
     stPracticas practicasAux;
     while((fread(&practicasAux, sizeof(stPracticas), 1, archi_Practicas)) > 0)
     {
@@ -243,6 +269,10 @@ void mostrarUnaPracticaBaja(stPracticas practicasAux)
 void modificarPracticas(char ArchivoPracticas[30])
 {
         FILE *archivoPracticas=fopen(ArchivoPracticas,"r+b");
+        if(archivoPracticas==NULL)
+        {
+            printf("Error al abrir el archivo.\n");
+        }
         int cantPracticas=contarPracticas(ARCHIVO_PRACTICAS);
         if(cantPracticas==0)
         {
@@ -295,6 +325,10 @@ stPracticas menuModificarPractica(stPracticas unaPractica)
 void modificarPracticaEnArchivo(char ArchivoPracticas[30], stPracticas unaPractica, int posicion)
 {
     FILE *archivoPracticas=fopen(ArchivoPracticas,"r+b");
+    if(archivoPracticas==NULL)
+        {
+            printf("Error al abrir el archivo.\n");
+        }
     fseek(archivoPracticas,(posicion-1)*sizeof(stPracticas),0);
     fwrite(&unaPractica,sizeof(stPracticas),1,archivoPracticas);
     fclose(archivoPracticas);
@@ -304,6 +338,10 @@ void modificarPracticaEnArchivo(char ArchivoPracticas[30], stPracticas unaPracti
 void darDeBajaPracticas(char ArchivoPracticas[30])
 {
       FILE *archivoPracticas=fopen(ArchivoPracticas,"r+b");
+      if(archivoPracticas==NULL)
+        {
+            printf("Error al abrir el archivo.\n");
+        }
       int flag=0;
       flag=verificarAltas(ARCHIVO_PRACTICAS);
       int cantPracticas=contarPracticas(ARCHIVO_PRACTICAS);
@@ -341,6 +379,10 @@ stPracticas darDeBajaUnaPractica(stPracticas unaPractica)
 void darDeAltaPracticas(char ArchivoPracticas[30])
 {
       FILE *archivoPracticas=fopen(ArchivoPracticas,"r+b");
+      if(archivoPracticas==NULL)
+        {
+            printf("Error al abrir el archivo.\n");
+        }
       int cantPracticas=contarPracticas(ARCHIVO_PRACTICAS);
       int flag=0;
       flag=verificarBajas(ARCHIVO_PRACTICAS);
@@ -378,6 +420,10 @@ stPracticas darDeAltaUnaPractica(stPracticas unaPractica)
 int verificarAltas(char ArchivoPracticas[30])
 {
     FILE *archivoPracticas=fopen(ArchivoPracticas,"rb");
+    if(archivoPracticas==NULL)
+        {
+            printf("Error al abrir el archivo.\n");
+        }
     int flag=0;
     stPracticas unaPractica;
     while(fread(&unaPractica,sizeof(stPracticas),1,archivoPracticas)>0)
@@ -393,6 +439,10 @@ int verificarAltas(char ArchivoPracticas[30])
 int verificarBajas(char ArchivoPracticas[30])
 {
     FILE *archivoPracticas=fopen(ArchivoPracticas,"rb");
+    if(archivoPracticas==NULL)
+        {
+            printf("Error al abrir el archivo.\n");
+        }
     int flag=0;
     stPracticas unaPractica;
     while(fread(&unaPractica,sizeof(stPracticas),1,archivoPracticas)>0)
@@ -411,7 +461,7 @@ void buscarPracticasPorNombre()
 {
     int flag=1;
     char nombre[30];
-    limpiarBuffer();
+    ///limpiarBuffer();
     printf("Ingrese el nombre de la practica a buscar: ");
     getchar();
     int flag2=0;
@@ -435,12 +485,15 @@ void buscarPracticasPorNombre()
         printf("No se pueden ingresar mas de 30 caracteres.\n");
     }
     }while(flag!=1 || flag2==0);
-    nombre [strcspn(nombre,"\n")] = '\0';
     buscarPracticaPorNombre(nombre,ARCHIVO_PRACTICAS);
 }
 void buscarPracticaPorNombre(char nombrePractica[30], char ArchivoPracticas[30])
 {
     FILE *archivoPracticas=abrirArchivo(ArchivoPracticas,"rb");
+    if(archivoPracticas==NULL)
+        {
+            printf("Error al abrir el archivo.\n");
+        }
     int res=1;
     int posicion=0;
     stPracticas unaPractica;
@@ -459,12 +512,6 @@ void buscarPracticaPorNombre(char nombrePractica[30], char ArchivoPracticas[30])
     if(res!=0)
     {
         printf("La practica buscada no se encuentra cargada.\n");
-    }
-    else
-    {
-//        printf("La practica fue encontrada exitosamente: \n");
-//        mostrarUnaPractica(unaPractica);
-//        menuBusquedaPorNombre(unaPractica,posicion);
     }
     fclose(archivoPracticas);
 }
