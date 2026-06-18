@@ -229,7 +229,7 @@ int validarDNI (char DNI[])
 
     if (archi == NULL)
     {
-        printf("Error al abrir archivo.\”");
+        printf("Error al abrir archivo.\n");
         return -1;
     }
 
@@ -362,7 +362,7 @@ void buscarPaciente(stPaciente *pacientes, int validos)
 void menuModificarPaciente (int pos)
 {
     int optionswitch;
-    printf("El paciente ha sido encontrado.\Ingrese el dato a modificar:\n1-Nombre\n2-Apellido\n3-Movil\n0-Salir\n");
+    printf("El paciente ha sido encontrado.\nIngrese el dato a modificar:\n1-Nombre\n2-Apellido\n3-Movil\n0-Salir\n");
     optionswitch = ingresarEntero();
     switch(optionswitch)
     {
@@ -430,7 +430,7 @@ void cambiarNombrePaciente(int pos)
     fread(&auxiliar,sizeof(stPaciente),1,archi);
     primerLetraMayuscula(aux);
     strcpy(auxiliar.nombre,aux);
-    fseek(archi, -sizeof(stPaciente),SEEK_CUR);
+    fseek(archi, -(long)sizeof(stPaciente), SEEK_CUR);
     fwrite(&auxiliar,sizeof(stPaciente),1,archi);
     fclose(archi); /// Copia el nombre cargado por usuario (aux) en la estructura
 }
@@ -474,7 +474,7 @@ void cambiarApellidoPaciente(int pos)
                    aux.apellido,
                    aux.dni,
                    aux.movil);
-    fseek(archi, -sizeof(stPaciente),SEEK_CUR);
+    fseek(archi, -(long)sizeof(stPaciente), SEEK_CUR);
     fwrite(&aux,sizeof(stPaciente),1,archi);
     fclose(archi);
 }
@@ -510,7 +510,7 @@ void cambiarMovilPaciente(int pos)
     FILE *archi = abrirArchivo(ARCHIVO_PACIENTES,"r+b");
     fseek(archi,(pos-1)* sizeof(stPaciente), SEEK_SET);
     fread(&aux,sizeof(stPaciente),1,archi);
-    fseek(archi,-sizeof(stPaciente),SEEK_CUR);
+    fseek(archi, -(long)sizeof(stPaciente), SEEK_CUR);
     strcpy(aux.movil,nuevoMovil);
     fwrite(&aux,sizeof(stPaciente),1,archi);
     fclose(archi);
@@ -552,7 +552,7 @@ void cambiarDNIPaciente(int pos)
                    aux.dni,
                    aux.movil);
     strcpy(aux.dni,nuevoDNI);
-    fseek(archi,-sizeof(stPaciente),SEEK_CUR);
+    fseek(archi, -(long)sizeof(stPaciente), SEEK_CUR);
     fwrite(&aux,sizeof(stPaciente),1,archi);
     fclose(archi);
 }
@@ -705,8 +705,6 @@ void altaViejoPaciente ()
     int flag = 0;
     int pos = 0;
     int auxPos = 0;
-    int eliminado = 0;
-    int confirmar;
     stPaciente paciente;
     stPaciente copiar;
     FILE *archi = abrirArchivo(ARCHIVO_PACIENTES,"r+b");

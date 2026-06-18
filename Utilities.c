@@ -271,11 +271,12 @@ void limpiarBuffer()
 }
 char * primerLetraMayuscula (char cadena[])
 {
-    if (cadena != '\0')
+    if (cadena[0] != '\0')
     {
         cadena[0] = toupper(cadena[0]);
         return cadena;
     }
+    return cadena;
 }
 
 /// --------------------------------------- T E S T    A R C H I V O S ------------------------------------------------------------------------------ ///

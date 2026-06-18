@@ -343,7 +343,7 @@
 	<ctype.h>
 	<string.h>
 
-1781726366 source:c:\users\rafa\documents\tp final ras\tp lab\final-tp-progra-1\laboratorios.c
+1781744363 source:c:\users\rafa\documents\tp final ras\tp lab\final-tp-progra-1\laboratorios.c
 	<stdio.h>
 	<string.h>
 	<stdlib.h>
@@ -359,14 +359,14 @@
 	"Utilities.h"
 	"Laboratorios.h"
 
-1781720914 c:\users\rafa\documents\tp final ras\tp lab\final-tp-progra-1\utilities.h
+1781729377 c:\users\rafa\documents\tp final ras\tp lab\final-tp-progra-1\utilities.h
 	"Pacientes.h"
 	"Practicas.h"
 	"Laboratorios.h"
 	<ctype.h>
 	<string.h>
 
-1781720914 c:\users\rafa\documents\tp final ras\tp lab\final-tp-progra-1\practicas.h
+1781745074 c:\users\rafa\documents\tp final ras\tp lab\final-tp-progra-1\practicas.h
 	"Utilities.h"
 	"Pacientes.h"
 	<stdio.h>
@@ -375,7 +375,7 @@
 	<time.h>
 	<ctype.h>
 
-1781721309 c:\users\rafa\documents\tp final ras\tp lab\final-tp-progra-1\laboratorios.h
+1781744363 c:\users\rafa\documents\tp final ras\tp lab\final-tp-progra-1\laboratorios.h
 	<stdio.h>
 	<string.h>
 	<ctype.h>
@@ -401,7 +401,7 @@
 	"Practicas.h"
 	"Utilities.h"
 
-1781720914 source:c:\users\rafa\documents\tp final ras\tp lab\final-tp-progra-1\pacientes.c
+1781745328 source:c:\users\rafa\documents\tp final ras\tp lab\final-tp-progra-1\pacientes.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
@@ -409,19 +409,19 @@
 	"Pacientes.h"
 	"Utilities.h"
 
-1781720914 source:c:\users\rafa\documents\tp final ras\tp lab\final-tp-progra-1\utilities.c
+1781744363 source:c:\users\rafa\documents\tp final ras\tp lab\final-tp-progra-1\utilities.c
 	<stdio.h>
 	"Pacientes.h"
 	"Practicas.h"
 	"Laboratorios.h"
 	"Menus.h"
 
-1781720914 source:c:\users\rafa\documents\tp final ras\tp lab\final-tp-progra-1\menus.c
+1781744363 source:c:\users\rafa\documents\tp final ras\tp lab\final-tp-progra-1\menus.c
 	"Pacientes.h"
 	"Practicas.h"
 	<stdio.h>
 
-1781720914 source:c:\users\rafa\documents\tp final ras\tp lab\final-tp-progra-1\practicas.c
+1781745073 source:c:\users\rafa\documents\tp final ras\tp lab\final-tp-progra-1\practicas.c
 	"Practicas.h"
 
 1781566897 source:c:\users\fheex\onedrive\documentos\github\final-tp-progra-1\laboratorios.c
