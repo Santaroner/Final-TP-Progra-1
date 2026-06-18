@@ -135,7 +135,7 @@ int ingresarSoloLetrasSinEspacios (char palabra[]) /// Ingreso solo letras SIN e
 {
     int i = 0;
 
-    while (palabra [i] != '\0' && palabra[i] != ' \n')  /// '\0' Cuando llega al final del arreglo
+    while (palabra [i] != '\0')  /// '\0' Cuando llega al final del arreglo
     {
         if(!isalpha(palabra[i])) /// Isalpha es verdadero cuando el caracter no es una letra - por eso ! --- palabra[i] != ' ' para que no se ingresen espacios. Valido para DNI, nombre, celular
         {
@@ -271,11 +271,12 @@ void limpiarBuffer()
 }
 char * primerLetraMayuscula (char cadena[])
 {
-    if (cadena != '\0')
+    if (cadena[0] != '\0')
     {
         cadena[0] = toupper(cadena[0]);
         return cadena;
     }
+    return cadena;
 }
 
 /// --------------------------------------- T E S T    A R C H I V O S ------------------------------------------------------------------------------ ///

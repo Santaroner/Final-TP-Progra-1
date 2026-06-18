@@ -19,23 +19,27 @@ typedef struct
  } stLaboratorios;
 
 
+ /// --------------------------------------------------------- C A R G A   P A C I E N T E S -------------------------------------------------------- ///
  void cargarLaboratorio(stLaboratorios *lab);
  stLaboratorios * cargarLaboratorios();
- //int validarFecha(int anio, int mes, int dia);
+
+ /// ------------------------------------------------------- M U E S T R A  //// V A L I D A R -------------------------------------------------------- ///
+
  void mostrarLaboratorios(stLaboratorios *laboratorios,int validosL); /// muestra
  void mostrarLaboratoriosArchivo(); /// muestra
- void bajaLaboratorio(); /// baja logica
+  int validarAnio();
+ int validarMes();
+ int validarDia(int mes);
 
+ /// ----------------------------------------------------- M O D I F I C A R    P A C I E N T E S ------------------------------------------------------ ///
+
+ void bajaLaboratorio(); /// baja logica
  void modificarLaboratorio();
  void consultarLaboratorio();
  void encontrarDatosPaciente (int id, char nombre[], char apellido[]);
 
- /// Validar fecha
- int validarAnio();
- int validarMes();
- int validarDia(int mes);
 
- /// ORDENAMIENTO LABS POR FECHA
+ /// ----------------------------------------------------- O R D E N A M I E N T O /// M U E S T R A -------------------------------------------------- ///
 stLaboratorios * arregloDinamicoLaboratoriosPorFecha (int *validosOrdenamiento);
 stLaboratorios * asignarMemoriaLaboratoriosPorFecha (stLaboratorios * arregloOrdenamiento, stLaboratorios lab, int pos);
 int fechaAEntero (stLaboratorios lab);
@@ -45,11 +49,10 @@ void ordenamientoSeleccionFecha(stLaboratorios arreglo[], int validos);
 
 void buscarPracticasRealizadas(int practicaID, char practicaRealizada[],int *precio);
 void mostrarLaboratoriosOrdenadosPorfecha (stLaboratorios arreglo[],int validos);
-int buscandoIDPractica() ;
+int buscandoIDPractica();
 
 
  int buscandoIDPacientes(); /// rafa probando busca id
- void muestraTSP();
 void mostrarPracticasSanti ();
 
 #endif // LABORATORIOS_H_INCLUDED
