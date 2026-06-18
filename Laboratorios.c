@@ -480,7 +480,7 @@ void laboratoriosPorPacienteID () /// Ingresa DNI para buscar despues por ID
     if (ingresarEntero() == 1)
     {
         system("cls");
-        laboratoriosPorPacienteID();  // recursiva
+        laboratoriosPorPacienteID();
     }
 }
 
