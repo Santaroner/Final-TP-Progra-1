@@ -126,43 +126,35 @@ int validarDia(int mes)
 
 void bajaLaboratorio()
 {
-    int idBuscar;
-    int pos = 0;
-    int posEncontrado = -1;
+    int idBuscar, pos;
     stLaboratorios lab;
 
     printf("Ingrese ID a dar de baja: ");
-    idBuscar=ingresarEntero();
+    idBuscar = ingresarEntero();
 
-    FILE *archi = abrirArchivo(ARCHIVO_LABORATORIOS, "r+b");
-    if (archi == NULL)
+    pos = buscarLaboratorioPorID(idBuscar, &lab);
+    if (pos == -1)
     {
-        printf("Error al abrir");
+        printf("Laboratorio no encontrado o ya de baja.\n");
+        printf("Desea intentar con otro ID? (1-Si / 0-No)");
+        if (ingresarEntero() == 1)
+        {
+            system("cls");
+            bajaLaboratorio();
+        }
         return;
     }
 
-    while (fread(&lab, sizeof(stLaboratorios), 1, archi)> 0)
-    {
-        if (lab.idLab == idBuscar && lab.baja == 0)
-        {
-            posEncontrado = pos;
-            lab.baja = 1;
-            break;
-        }
-        pos++;
-    }
+    lab.baja = 1;
+    guardarLaboratorio(&lab, pos);
+    printf("Laboratorio dado de baja.\n");
 
-    if (posEncontrado != -1)
+    printf("Desea dar de baja otro laboratorio? (1-Si / 0-No)");
+    if (ingresarEntero() == 1)
     {
-        fseek(archi, posEncontrado * sizeof(stLaboratorios), SEEK_SET);
-        fwrite(&lab, sizeof(stLaboratorios), 1,archi);
-        printf("Laboratorio dado de baja\n");
+        system("cls");
+        bajaLaboratorio();
     }
-    else
-        printf("Laboratorio no encontrado o ya de baja\n");
-    system("pause");
-    system("cls");
-    fclose(archi);
 }
 /// ---------------------------------------------- C A R G A  ----- L A B O R A T O R I O  ------------------------------------------------------------------
 
@@ -357,7 +349,7 @@ void encontrarDatosPaciente (int id, char nombre[], char apellido[])
     system("pause");
     system("cls");
 }
-int buscandoIDPacientes() /// rafa probando busca id - - - - - - - funcion en utilities /// Integrar solo int
+int buscandoIDPacientes()
 {
     int newID = 0;
     int aux;
@@ -373,12 +365,6 @@ int buscandoIDPacientes() /// rafa probando busca id - - - - - - - funcion en ut
         }
         else if (aux == 1)
         {
-//        printf("Desea ingresar otro ID?S/N\n");
-//        scanf(" %c", &confirmar);
-//        if (tolower(confirmar) == 's')
-//        {
-//
-//        }
             printf("El ID no existe. Ingrese un ID valido por favor.\n");
         }
     }
@@ -386,7 +372,7 @@ int buscandoIDPacientes() /// rafa probando busca id - - - - - - - funcion en ut
     return -1;
 }
 
-int buscandoIDPractica() /// rafa probando busca id - - - - - - - funcion en utilities /// Integrar solo int
+int buscandoIDPractica()
 {
     int newID = 0;
     int aux;
@@ -438,6 +424,7 @@ void guardarLaboratorio(stLaboratorios *lab, int pos)
     FILE *archi = abrirArchivo(ARCHIVO_LABORATORIOS, "r+b");
     fseek(archi, pos * sizeof(stLaboratorios), SEEK_SET);
     fwrite(lab, sizeof(stLaboratorios), 1, archi);
+    fflush(archi);
     fclose(archi);
 }
 
