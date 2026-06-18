@@ -17,28 +17,28 @@ void ingreseNombre(char nombre[30])
         getchar();
         void limpiarBuffer();
         fgets(nombre,30,stdin);
-        if (strchr(nombre,'\n') != NULL)
+        if (strchr(nombre,'\n') != NULL) /// La condicion se cumple cuando hay espacio para el \n y no se exceden los 30 caracteres
         {
         nombre=primerLetraMayuscula(nombre);
         borrarSaltoDeLinea(nombre);
-        flag2=ingresarSoloLetras(nombre);
+        flag2=ingresarSoloLetras(nombre); /// Verifico que solo ingrese letras
         if(flag2==0)
         {
             printf("Error, ingrese solo letras.\n");
         }
-        flag=buscarNombreIgualPractica(nombre,ARCHIVO_PRACTICAS);
+        flag=buscarNombreIgualPractica(nombre,ARCHIVO_PRACTICAS); /// Verifico que no ingrese un nombre de practica ya ingresado
         if(flag==1)
         {
             printf("La practica que quiere cargar ya esta ingresada, ingrese otra.\n");
         }
         flag3=1;
         }
-        else
+        else /// Si se excede de 30 caracteres, que limpie el buffer
         {
             while (getchar () != '\n'); ///
             printf("No se pueden ingresar mas de 30 caracteres.\n");
         }
-    }while(flag==1 || flag2==0 || flag3==0);
+    }while(flag==1 || flag2==0 || flag3==0); /// Uso 3 condiciones, si alguna de ellas se cumple, se sigue pidiendo el nombre
 }
 int ingreseCosto(int costo)
 {
@@ -74,10 +74,10 @@ void cargarPracticas(char ArchivoPracticas[])
         {
             printf("Error al abrir el archivo.\n");
         }
-        nuevaPractica = cargarUnaPractica();
-        fwrite(&nuevaPractica, sizeof(stPracticas), 1, archi_Practicas);
+        nuevaPractica = cargarUnaPractica(); /// Llamo a la funcion que crea una practica
+        fwrite(&nuevaPractica, sizeof(stPracticas), 1, archi_Practicas); /// Esa practica cargada la cargo en el archivo
         printf("Desea seguir ingresando practicas? (S/N)");
-        seguir=ingresoSoloSNEnScan('s','n');
+        seguir=ingresoSoloSNEnScan('s','n'); /// Llamo a la funcion que asegura que solo se pueda ingresar la letra S o N
         fclose(archi_Practicas);
         system("pause");
         system("cls");
@@ -99,7 +99,7 @@ void cargarPracticaEnArchivo(char ArchivoPracticas[], stPracticas unaPractica, i
 stPracticas *cargarArregloDinamicoPracticas(char ArchivoPracticas[], stPracticas *arregloDinamicoPracticas, int *validosArregloPracticas)
 {
     int cantPracticas=contarPracticas(ARCHIVO_PRACTICAS);
-    arregloDinamicoPracticas=(stPracticas *)realloc(arregloDinamicoPracticas, cantPracticas*sizeof(stPracticas));
+    arregloDinamicoPracticas=(stPracticas *)realloc(arregloDinamicoPracticas, cantPracticas*sizeof(stPracticas)); /// Redimensiono el arreglo segun la cantidad de practicas que esten cargadas en el archivo
     traspasoDatos(arregloDinamicoPracticas,ARCHIVO_PRACTICAS,validosArregloPracticas);
     return arregloDinamicoPracticas;
 }
@@ -113,7 +113,7 @@ void traspasoDatos(stPracticas *arregloDinamicoPracticas, char ArchivoPracticas[
         *validosArregloPracticas=0;
     }
     int i=0;
-    while(fread(&unaPractica,sizeof(stPracticas),1,archivoPracticas)>0)
+    while(fread(&unaPractica,sizeof(stPracticas),1,archivoPracticas)>0) /// Hago que lea cada practica del archivo y las vaya cargando en los campos del arreglo
     {
         arregloDinamicoPracticas[i]=unaPractica;
         i++;
@@ -148,7 +148,7 @@ int buscarNombreIgualPractica(char nombrePractica[30], char ArchivoPracticas[])
     while(fread(&unaPractica,sizeof(stPracticas),1,archivoPracticas)>0)
     {
         int res=strcmpi(unaPractica.nombre,nombrePractica);
-        if(res==0)
+        if(res==0) /// Si es cero, quiere decir que encontro un nombre que es igual al ingresado
         {
             flag=1;
         }
@@ -166,7 +166,7 @@ int contarPracticas(char ArchivoPracticas[])
             printf("Error al abrir el archivo.\n");
         }
     fseek(archivoPracticas,0,2);
-    int cantidadDePracticas=ftell(archivoPracticas)/sizeof(stPracticas);
+    int cantidadDePracticas=ftell(archivoPracticas)/sizeof(stPracticas); /// Divido el tamaño en bytes del archivo por el tamaño en bytes de un registro de practicas
     fclose(archivoPracticas);
     return cantidadDePracticas;
 }
@@ -177,7 +177,7 @@ void mostrarPracticas(stPracticas *arregloDinamicoPracticas, int *validosArreglo
       int limite=*validosArregloPracticas;
       for(int i=0;i<limite;i++)
       {
-          stPracticas unaPractica=arregloDinamicoPracticas[i];
+          stPracticas unaPractica=arregloDinamicoPracticas[i]; /// Recorro el arreglo y voy mostrando de a una practica
           mostrarUnaPractica(unaPractica);
       }
       system("pause");
@@ -191,7 +191,7 @@ void mostrarPracticasDesdeArchivo(char ArchivoPracticas[])
             printf("Error al abrir el archivo.\n");
         }
     stPracticas unaPractica;
-    while(fread(&unaPractica,sizeof(stPracticas),1,archivoPracticas)>0)
+    while(fread(&unaPractica,sizeof(stPracticas),1,archivoPracticas)>0) /// Es lo mismo que la anterior funcion, nada mas que esta lo hace desde el archivo
     {
         mostrarUnaPractica(unaPractica);
     }
@@ -206,15 +206,15 @@ void mostrarUnaPractica(stPracticas practicasAux)
     printf("ID: %i\n", practicasAux.idPractica);
     printf("Nombre: %s\n", practicasAux.nombre);
     printf("Costo: %i\n", practicasAux.costo);
-    if (practicasAux.baja == 0)
+    if (practicasAux.baja == 0) /// Si es cero, lo muestra como activo
     {
         printf("Estado: %s\n",activo);
     }
-    else printf("Estado: %s\n",inactivo);
+    else printf("Estado: %s\n",inactivo); /// Si no es cero, lo muestra como inactivo
     printf("---------------------------------------\n");
 
 }
-void mostrarPracticasAlta(char archivoPracticas[])
+void mostrarPracticasAlta(char archivoPracticas[]) /// Funcion que muestra las practicas que esten activas
 {
     FILE *archi_Practicas=fopen(archivoPracticas, "rb");
     if(archi_Practicas==NULL)
@@ -228,7 +228,7 @@ void mostrarPracticasAlta(char archivoPracticas[])
     }
     fclose(archi_Practicas);
 }
-void mostrarPracticasBaja(char archivoPracticas[])
+void mostrarPracticasBaja(char archivoPracticas[]) /// Funcion que muestra las practicas que esten inactivas
 {
     FILE *archi_Practicas=fopen(archivoPracticas, "rb");
     if(archi_Practicas==NULL)
@@ -244,7 +244,7 @@ void mostrarPracticasBaja(char archivoPracticas[])
 }
 void mostrarUnaPracticaAlta(stPracticas practicasAux)
 {
-    if(practicasAux.baja==0)
+    if(practicasAux.baja==0) /// Si se cumple la condicion de que este activa, se muestra
     {
     printf("idPractica: %i\n", practicasAux.idPractica);
     printf("Nombre: %s\n", practicasAux.nombre);
@@ -255,7 +255,7 @@ void mostrarUnaPracticaAlta(stPracticas practicasAux)
 }
 void mostrarUnaPracticaBaja(stPracticas practicasAux)
 {
-    if(practicasAux.baja==1)
+    if(practicasAux.baja==1) /// Si se cumple la condicion de que este inactiva, se muestra
     {
     printf("idPractica: %i\n", practicasAux.idPractica);
     printf("Nombre: %s\n", practicasAux.nombre);
@@ -273,30 +273,30 @@ void modificarPracticas(char ArchivoPracticas[])
         {
             printf("Error al abrir el archivo.\n");
         }
-        int cantPracticas=contarPracticas(ARCHIVO_PRACTICAS);
+        int cantPracticas=contarPracticas(ARCHIVO_PRACTICAS); /// Cuento la cantidad de practicas con la funcion correspondiente
         if(cantPracticas==0)
         {
             printf("No hay practicas cargadas para modificar.\n");
         }
         else
         {
-            mostrarPracticasDesdeArchivo(ARCHIVO_PRACTICAS);
+            mostrarPracticasDesdeArchivo(ARCHIVO_PRACTICAS); /// Muestro la lista de practicas desde el archivo por comodidad
             int posicion=0;
             do
             {
             printf("Elija una practica para modificar (idPractica): ");
-            posicion=ingresarEntero();
+            posicion=ingresarEntero(); /// Con esta funcion me garantizo que solo se ingresen numeros
             if(posicion<1 || posicion>cantPracticas)
             {
                 printf("Error, ingrese una practica valida (1 a %i).\n",cantPracticas);
             }
-            }while(posicion<1 || posicion>cantPracticas);
+            }while(posicion<1 || posicion>cantPracticas); /// Con estas condiciones me garantizo que se ingrese una de las practicas que este cargada
             stPracticas unaPractica;
-            fseek(archivoPracticas,(posicion-1)*sizeof(stPracticas),0);
-            fread(&unaPractica,sizeof(stPracticas),1,archivoPracticas);
-            unaPractica=menuModificarPractica(unaPractica);
-            fseek(archivoPracticas,(posicion-1)*sizeof(stPracticas),0);
-            fwrite(&unaPractica,sizeof(stPracticas),1,archivoPracticas);
+            fseek(archivoPracticas,(posicion-1)*sizeof(stPracticas),0); /// Me posiciono al inicio de la practica elegida
+            fread(&unaPractica,sizeof(stPracticas),1,archivoPracticas); /// Leo esa practica
+            unaPractica=menuModificarPractica(unaPractica); /// Llamo a una funcion que ofrece un menu de modificacion y retorna la practica modificada
+            fseek(archivoPracticas,(posicion-1)*sizeof(stPracticas),0); /// Me vuelvo a posicionar al inicio de esa practica
+            fwrite(&unaPractica,sizeof(stPracticas),1,archivoPracticas); /// La escribo
         }
         fclose(archivoPracticas);
 }
@@ -304,7 +304,7 @@ stPracticas menuModificarPractica(stPracticas unaPractica)
 {
     int opcion=0;
     printf("Elija un dato para modificar:\n1-Nombre\n2-Costo\n0-Salir\n");
-    opcion=ingresarEntero();
+    opcion=ingresarEntero(); /// Me garantizo que solo ingrese numeros
     switch(opcion)
     {
         case 1:
@@ -353,7 +353,7 @@ void darDeBajaPracticas(char ArchivoPracticas[])
       }
       else
       {
-      mostrarPracticasAlta(ARCHIVO_PRACTICAS);
+      mostrarPracticasAlta(ARCHIVO_PRACTICAS); /// Muestro las practicas que esten activas
       int nroPractica=0;
       do
       {
@@ -365,11 +365,11 @@ void darDeBajaPracticas(char ArchivoPracticas[])
             }
       }while(nroPractica<1 || nroPractica>cantPracticas);
       stPracticas unaPractica;
-      fseek(archivoPracticas,(nroPractica-1)*sizeof(stPracticas),0);
+      fseek(archivoPracticas,(nroPractica-1)*sizeof(stPracticas),0); /// Aca sucede lo mismo que explique en la funcion de modificar practicas
       fread(&unaPractica,sizeof(stPracticas),1,archivoPracticas);
-      unaPractica=darDeBajaUnaPractica(unaPractica);
+      unaPractica=darDeBajaUnaPractica(unaPractica); /// Llamo a esta funcion que retorna una practica dada de baja
       fseek(archivoPracticas,(nroPractica-1)*sizeof(stPracticas),0);
-      fwrite(&unaPractica,sizeof(stPracticas),1,archivoPracticas);
+      fwrite(&unaPractica,sizeof(stPracticas),1,archivoPracticas); /// Escribo esa funcion dada de baja en el archivo
       }
       fclose(archivoPracticas);
       system("pause");
@@ -377,7 +377,7 @@ void darDeBajaPracticas(char ArchivoPracticas[])
 }
 stPracticas darDeBajaUnaPractica(stPracticas unaPractica)
 {
-    unaPractica.baja=1;
+    unaPractica.baja=1; /// Cambia a 1, es decir, la pasa a inactiva
     return unaPractica;
 }
 void darDeAltaPracticas(char ArchivoPracticas[])
@@ -396,7 +396,7 @@ void darDeAltaPracticas(char ArchivoPracticas[])
       }
       else
       {
-      mostrarPracticasBaja(ARCHIVO_PRACTICAS);
+      mostrarPracticasBaja(ARCHIVO_PRACTICAS); /// Muestro solo las practicas que esten inactivas
       int nroPractica=0;
       do
       {
@@ -410,9 +410,9 @@ void darDeAltaPracticas(char ArchivoPracticas[])
       stPracticas unaPractica;
       fseek(archivoPracticas,(nroPractica-1)*sizeof(stPracticas),0);
       fread(&unaPractica,sizeof(stPracticas),1,archivoPracticas);
-      unaPractica=darDeAltaUnaPractica(unaPractica);
+      unaPractica=darDeAltaUnaPractica(unaPractica); /// Llamo a esta funcion que retorna una practica dada de alta
       fseek(archivoPracticas,(nroPractica-1)*sizeof(stPracticas),0);
-      fwrite(&unaPractica,sizeof(stPracticas),1,archivoPracticas);
+      fwrite(&unaPractica,sizeof(stPracticas),1,archivoPracticas); /// Escribo esa practica dada de alta en el archivo
       }
       fclose(archivoPracticas);
       system("pause");
@@ -420,10 +420,10 @@ void darDeAltaPracticas(char ArchivoPracticas[])
 }
 stPracticas darDeAltaUnaPractica(stPracticas unaPractica)
 {
-    unaPractica.baja=0;
+    unaPractica.baja=0; /// La cambia a 0, es decir, la pasa a activa
     return unaPractica;
 }
-int verificarAltas(char ArchivoPracticas[])
+int verificarAltas(char ArchivoPracticas[]) /// Esta funcion verifica si hay practicas dadas de alta
 {
     FILE *archivoPracticas=fopen(ArchivoPracticas,"rb");
     if(archivoPracticas==NULL)
@@ -436,13 +436,13 @@ int verificarAltas(char ArchivoPracticas[])
     {
         if(unaPractica.baja==0)
         {
-            flag=1;
+            flag=1; /// Si la practica esta activa, flag vale 1
         }
     }
     fclose(archivoPracticas);
     return flag;
 }
-int verificarBajas(char ArchivoPracticas[])
+int verificarBajas(char ArchivoPracticas[]) /// Esta funcion verifica que haya practicas dadas de baja
 {
     FILE *archivoPracticas=fopen(ArchivoPracticas,"rb");
     if(archivoPracticas==NULL)
@@ -455,7 +455,7 @@ int verificarBajas(char ArchivoPracticas[])
     {
         if(unaPractica.baja==1)
         {
-            flag=1;
+            flag=1; /// Si la practica esta inactiva, flag vale 1
         }
     }
     fclose(archivoPracticas);
@@ -474,10 +474,10 @@ void buscarPracticasPorNombre()
     do
     {
     fgets(nombre,30,stdin);
-    if (strchr(nombre,'\n') != NULL)
+    if (strchr(nombre,'\n') != NULL) /// Si no se exceden los 30 caracteres del string, esta condicion se cumple
     {
     nombre [strcspn(nombre,"\n")] = '\0';
-    flag=ingresarSoloLetras(nombre);
+    flag=ingresarSoloLetras(nombre); /// Garantizo que solo se ingresen letras
 
     if(flag==0)
     {
@@ -485,13 +485,13 @@ void buscarPracticasPorNombre()
     }
     flag2=1;
     }
-    else
+    else /// Si la condicion de los 30 caracteres no se cumple, se limpia el buffer y se avisa por pantalla el error
     {
         while (getchar () != '\n'); ///
         printf("No se pueden ingresar mas de 30 caracteres.\n");
     }
-    }while(flag!=1 || flag2==0);
-    buscarPracticaPorNombre(nombre,ARCHIVO_PRACTICAS);
+    }while(flag!=1 || flag2==0); /// Estas dos condiciones son fundamentales para que solo se ingresen letras y no se excedan los 30 caracteres
+    buscarPracticaPorNombre(nombre,ARCHIVO_PRACTICAS); /// Llamo a una funcion que compara el nombre ingresado con los cargados en el archivo
 }
 void buscarPracticaPorNombre(char nombrePractica[30], char ArchivoPracticas[])
 {
@@ -501,21 +501,21 @@ void buscarPracticaPorNombre(char nombrePractica[30], char ArchivoPracticas[])
             printf("Error al abrir el archivo.\n");
         }
     int res=1;
-    int posicion=0;
+    int posicion=1;
     stPracticas unaPractica;
 
-    while(fread(&unaPractica,sizeof(stPracticas),1,archivoPracticas)>0)
+    while(fread(&unaPractica,sizeof(stPracticas),1,archivoPracticas)>0) /// Voy leyendo el archivo y comparando el nombre ingresado por el usuario con los del archivo
     {
-        if (strcmpi(unaPractica.nombre,nombrePractica) == 0)
+        if (strcmpi(unaPractica.nombre,nombrePractica) == 0) /// Si es cero, quiere decir que es igual
         {
             printf("La practica fue encontrada exitosamente: \n");
-            mostrarUnaPractica(unaPractica);
-            menuBusquedaPorNombre(unaPractica,posicion);
-            res = 0;
+            mostrarUnaPractica(unaPractica); /// Muestro la practica encontrada
+            menuBusquedaPorNombre(unaPractica,posicion); /// Llamo a una funcion que ofrece un menu para modificar la practica
+            res = 0; /// Lo paso a cero para que no se cumpla la condicion de abajo
         }
-        posicion++;
+        posicion++; /// Voy sumando las posicion ya que la necesito para la funcion del menu
     }
-    if(res!=0)
+    if(res!=0) /// Si no se encontro ninguna practica que tenga el mismo nombre, se cumple la condicion
     {
         printf("La practica buscada no se encuentra cargada.\n");
     }
@@ -526,16 +526,14 @@ void menuBusquedaPorNombre(stPracticas unaPractica, int posicion)
     system("pause");
     system("cls");
     int opcion=0;
-    do
-    {
     printf("Que desea hacer con la practica?\n1-Modificar nombre o costo\n2-Dar de alta\n3-Dar de baja\n0-Salir\n");
     opcion=ingresarEntero();
     switch(opcion)
     {
-        case 1: unaPractica=menuModificarPractica(unaPractica);
-        modificarPracticaEnArchivo(ARCHIVO_PRACTICAS,unaPractica, posicion);
+        case 1: unaPractica=menuModificarPractica(unaPractica); /// Llamo a la funcion que otorga un menu de modificacion
+        modificarPracticaEnArchivo(ARCHIVO_PRACTICAS,unaPractica, posicion); /// Cargo esa practica retornada en el archivo
         break;
-        case 2: unaPractica=darDeAltaUnaPractica(unaPractica);
+        case 2: unaPractica=darDeAltaUnaPractica(unaPractica); /// Lo mismo con el resto
         modificarPracticaEnArchivo(ARCHIVO_PRACTICAS,unaPractica,posicion);
         break;
         case 3: unaPractica=darDeBajaUnaPractica(unaPractica);
@@ -546,7 +544,6 @@ void menuBusquedaPorNombre(stPracticas unaPractica, int posicion)
         default: printf("Ingrese un numero correcto (0 a 3)\n");
         break;
     }
-    }while(opcion!=0);
     system("pause");
     system("cls");
 }
