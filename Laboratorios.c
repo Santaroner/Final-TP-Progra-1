@@ -86,7 +86,7 @@ int validarAnio()
         printf("Ingrese el anio(1990-2026): ");
         aux = ingresarEntero();
         if (aux < 1990 || aux > 2026)
-            printf("Año equivocado, recuerde (entre 1990 y 2026) \n");
+            printf("Anio equivocado, recuerde (entre 1990 y 2026) \n");
     }
     while (aux < 1990 || aux > 2026);
     return aux;
