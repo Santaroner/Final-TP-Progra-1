@@ -30,7 +30,7 @@ void mainMenu()
     printf("\n3-Practicas");
     printf("\n0-Salir");
     printf("\n------------------------------------------------------------------------------------------------------------------------------------------------------\n");
-    scanf("%i",&optionswitch);
+    optionswitch = ingresarEntero();
     switch(optionswitch)
     {
     case 1: pacientesMenu();
@@ -78,7 +78,7 @@ void pacientesMenu() /// USAR ESTE MENU PARA PROBAR EJERCICIOS DE PACIENTE
         printf("\n\n7-Lista de pacientes por apellido y nombre");
         printf("\n0-Volver al menu anterior.");
         printf("\n------------------------------------------------------------------------------------------------------------------------------------------------------\n");
-        scanf("%i",&optionswitch);
+        optionswitch = ingresarEntero();
         switch(optionswitch)
         {
         case 1:
@@ -143,7 +143,7 @@ void laboratoriosMenu() /// USAR ESTE MENU PARA PROBAR EJERCICIOS DE LABORATORIO
         printf("7-Laboratorios ordenados por fecha.\n");
         printf("0-Volver al menu anterior.\n");
         printf("\n------------------------------------------------------------------------------------------------------------------------------------------------------\n");
-        scanf("%i",&optionswitch);
+        optionswitch = ingresarEntero();
         switch(optionswitch)
         {
         case 1:
@@ -166,12 +166,9 @@ void laboratoriosMenu() /// USAR ESTE MENU PARA PROBAR EJERCICIOS DE LABORATORIO
             break;
         case 7:
             arregloOrdenamiento = arregloDinamicoLaboratoriosPorFecha (&validosOrdenamiento);
-            printf("Validos vale:%i\n",validosOrdenamiento);
+//            printf("Validos vale:%i\n",validosOrdenamiento);
             ordenamientoSeleccionFecha(arregloOrdenamiento,validosOrdenamiento);
             mostrarLaboratoriosOrdenadosPorfecha(arregloOrdenamiento,validosOrdenamiento);
-            break;
-        case 99: /// ABRE ARCHIVO PACIENTES-SANTI.
-            muestraTSP();
             break;
         case 0:
             printf("Vuelva pronto.\n");
@@ -198,7 +195,7 @@ void practicasMenu() /// USAR ESTE MENU PARA PROBAR EJERCICIOS DE PRACTICA
         printf("6-Buscar practica por nombre\n");
         printf("0-Volver al menu anterior");
         printf("\n------------------------------------------------------------------------------------------------------------------------------------------------------\n");
-        scanf("%i",&optionswitch);
+        optionswitch = ingresarEntero();
         switch(optionswitch)
         {
         case 1:

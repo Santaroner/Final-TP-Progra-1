@@ -290,6 +290,8 @@ stPracticas menuModificarPractica(stPracticas unaPractica)
             printf("Ingrese una opcion correcta(0 a 2)\n");
             break;
     }
+    system("pause");
+    system("cls");
     return unaPractica;
 }
 void modificarPracticaEnArchivo(char ArchivoPracticas[30], stPracticas unaPractica, int posicion)
@@ -332,6 +334,8 @@ void darDeBajaPracticas(char ArchivoPracticas[30])
       fwrite(&unaPractica,sizeof(stPracticas),1,archivoPracticas);
       }
       fclose(archivoPracticas);
+      system("pause");
+      system("cls");
 }
 stPracticas darDeBajaUnaPractica(stPracticas unaPractica)
 {
@@ -369,6 +373,8 @@ void darDeAltaPracticas(char ArchivoPracticas[30])
       fwrite(&unaPractica,sizeof(stPracticas),1,archivoPracticas);
       }
       fclose(archivoPracticas);
+      system("pause");
+      system("cls");
 }
 stPracticas darDeAltaUnaPractica(stPracticas unaPractica)
 {

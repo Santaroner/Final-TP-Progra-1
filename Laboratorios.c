@@ -34,12 +34,8 @@ void cargarLaboratorio(stLaboratorios *lab) /// Duda si agregar pac y prac.
         printf("Ingrese ID del paciente: ");
         lab->idPaciente = buscandoIDPacientes();
 
-
-//        scanf("%d",&lab->idPaciente);
-
         printf("Ingrese ID de practica: ");
         lab->practicaRealizada = buscandoIDPractica();
-//        scanf("%d", &lab->practicaRealizada);
 
         lab->baja = 0;
 
@@ -47,7 +43,6 @@ void cargarLaboratorio(stLaboratorios *lab) /// Duda si agregar pac y prac.
         seguir=ingresoSoloLetraEnScan();
     }
     while (tolower(seguir) != 's');
-
 
     fwrite(lab, sizeof(stLaboratorios), 1, Laboratorios);
     printf("Laboratorio: ID: %d | Anio: %d | Mes: %d | Dia: %d\n",
@@ -161,10 +156,10 @@ void bajaLaboratorio()
     {
         fseek(archi, posEncontrado * sizeof(stLaboratorios), SEEK_SET);
         fwrite(&lab, sizeof(stLaboratorios), 1,archi);
-        printf("Laboratorio dado de baja");
+        printf("Laboratorio dado de baja\n");
     }
     else
-        printf("Laboratorio no encontrado o ya de baja");
+        printf("Laboratorio no encontrado o ya de baja\n");
     system("pause");
     system("cls");
     fclose(archi);
@@ -275,7 +270,6 @@ void modificarLaboratorio()
         do
         {
             printf("Ingrese nuevo ID de practica: ");
-//            scanf("%d", &lab.practicaRealizada);
             lab.practicaRealizada=ingresarEntero();
         }
         while (compararIDLPrac(lab.practicaRealizada));
@@ -317,7 +311,7 @@ void consultarLaboratorio()
 
     while (fread(&lab, sizeof(stLaboratorios), 1, archi)> 0)
     {
-        if (lab.idLab == idBuscar && lab.baja == 0)
+        if (lab.idLab == idBuscar) ///if (lab.idLab == idBuscar && lab.baja == 0)
         {
             buscarPracticasRealizadas(lab.practicaRealizada,nombrePractica,&precio);
             encontrarDatosPaciente(lab.idPaciente,nombre,apellido);
@@ -349,7 +343,6 @@ void encontrarDatosPaciente (int id, char nombre[], char apellido[])
 {
     stPaciente aux;
     FILE * archi = abrirArchivo(ARCHIVO_PACIENTES,"rb");
-    int flag = 1;
     if (archi == NULL)
     {
         printf("Error al abrir archivo.\n");
@@ -362,18 +355,16 @@ void encontrarDatosPaciente (int id, char nombre[], char apellido[])
             mostrarUnPaciente(aux);
             strcpy(nombre,aux.nombre);
             strcpy(apellido,aux.apellido);
-            flag = 0;
-            system("pause");
-            system("cls");
         }
     }
     fclose(archi);
+    system("pause");
+    system("cls");
 }
 int buscandoIDPacientes() /// rafa probando busca id - - - - - - - funcion en utilities /// Integrar solo int
 {
     int newID = 0;
     int aux;
-    char confirmar;
     do
     {
         printf("Ingrese el ID a buscar:\n");
@@ -396,6 +387,7 @@ int buscandoIDPacientes() /// rafa probando busca id - - - - - - - funcion en ut
         }
     }
     while (aux != 0);
+    return -1;
 }
 
 int buscandoIDPractica() /// rafa probando busca id - - - - - - - funcion en utilities /// Integrar solo int
@@ -404,7 +396,7 @@ int buscandoIDPractica() /// rafa probando busca id - - - - - - - funcion en uti
     int aux;
     do
     {
-        printf("Ingrese el ID a buscar:\”");
+        printf("Ingrese el ID a buscar:\n");
         newID=ingresarEntero();
         aux = compararIDLPrac(newID);
         if ( aux == 0)
@@ -419,40 +411,9 @@ int buscandoIDPractica() /// rafa probando busca id - - - - - - - funcion en uti
     }
     while (aux != 0);
 
-    return 1;
+    return -1;
 }
 
-void muestraTSP () /// TEST SANTI PACIENTES
-{
-    printf("entra");
-    stPaciente aux;
-    FILE *archi = abrirArchivo ("PacientesSanti.bin","rb");
-    while (fread(&aux,sizeof(stPaciente),1,archi) > 0 )
-    {
-        printf("ID :%i\nNombre:%s\nApellido:%s\nDNI:%s\nMovil:%s\n\n",
-               aux.idPaciente,
-               aux.nombre,
-               aux.apellido,
-               aux.dni,
-               aux.movil);
-    }
-    fclose(archi);
-}
-
-void mostrarPracticasSanti ()
-{
-    FILE * archi = abrirArchivo ("PracticasSanti.bin","rb");
-    if (archi == NULL) printf("El archivo no se pudo abrir\n");
-    stPracticas aux;
-    while (fread(&aux,sizeof(stPracticas),1,archi) > 0)
-    {
-        printf("idPractica: %i\n", aux.idPractica);
-        printf("Nombre: %s\n", aux.nombre);
-        printf("Costo: %i\n", aux.costo);
-        printf("Baja (0 activo, 1 baja): %i\n", aux.baja);
-    }
-    fclose(archi);
-}
 
 
 /// ----------------------------------------------------- O R D E N A R ------------ P A C I E N T E   ------------------------------------------------------ ///
@@ -462,7 +423,7 @@ void menuMostrarLaboratoriosPorPaciente ()
     int optionswitch = 0;
     do
     {
-        printf("1-Mostrar laboratorios de paciente por ID\n");
+        printf("1-Mostrar laboratorios de paciente por DNI\n");
         printf("2-Listado de todos los laboratorios por pacientes.\n");
         printf("0-Volver al menu anterior.\n");
         optionswitch=ingresarEntero();
@@ -578,8 +539,6 @@ void mostrarTodosLaboratoriosPorPaciente ()
     stLaboratorios auxLab;
     int encontrado = 0;
     int precio = 0;
-    int aux = 0;
-    int cant = 0;
     char practicaRealizada[30]; /// String a traer y printear
     if (archi == NULL || bin == NULL)
     {
@@ -667,14 +626,12 @@ int fechaAEntero (stLaboratorios lab) /// Vuelve toda la fecha en un numero ente
 int findMinorFecha(stLaboratorios arreglo[], int validos, int posicion)
 {
     int posicionMenor = posicion;
-    stLaboratorios menor;
     int subindice = posicion + 1;
     while (subindice < validos)
     {
-        if (fechaAEntero(arreglo[subindice]) > fechaAEntero(arreglo[posicionMenor]))
+        if (fechaAEntero(arreglo[subindice]) < fechaAEntero(arreglo[posicionMenor]))
         {
             posicionMenor = subindice;
-            menor = arreglo[subindice];
         }
         subindice++;
     }
