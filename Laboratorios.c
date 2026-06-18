@@ -38,7 +38,7 @@ void cargarLaboratorio(stLaboratorios *lab) /// Duda si agregar pac y prac.
         lab->baja = 0;
 
         printf("Confirmar datos? (s/n) ");
-        seguir=ingresoSoloLetraEnScan();
+        seguir=ingresoSoloSNEnScan('s', 'n');
     }
     while (tolower(seguir) != 's');
 
@@ -71,7 +71,7 @@ stLaboratorios * cargarLaboratorios()
             printf("Error al asignar memoria.\n");
         }
         printf("Desea cargar otro laboratorio? (s/n): ");
-        seguir=ingresoSoloLetraEnScan();
+        seguir=ingresoSoloSNEnScan('s', 'n');
     }
     printf("Carga finalizada.\n");
 

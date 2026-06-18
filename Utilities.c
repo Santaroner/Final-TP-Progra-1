@@ -235,6 +235,7 @@ char ingresoSoloSNEnScan(char a, char b)
     do
     {
         scanf(" %c", &letra);
+        while(getchar() != '\n');
 
         if (letra!=tolower(a) && letra!=tolower(b))
         {
@@ -252,6 +253,7 @@ char ingresoSoloLetraEnScan()
     do
     {
         scanf(" %c", &letra);
+        while(getchar() != '\n');
 
         if (!isalpha(letra))
         {
